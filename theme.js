@@ -407,18 +407,18 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode aside#sidebar-drawer,
     html.light-mode .sidebar-glass,
     html.light-mode aside.sidebar-glass {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
+      background: rgba(146, 166, 186, 0.55) !important;
+      background-color: rgba(146, 166, 186, 0.55) !important;
       border-color: rgba(0, 0, 0, 0.08) !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
-      backdrop-filter: blur(20px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
     }
     html.light-mode aside#sidebar-drawer:hover,
     html.light-mode .sidebar-glass:hover,
     html.light-mode aside.sidebar-glass:hover {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
+      background: rgba(146, 166, 186, 0.75) !important;
+      background-color: rgba(146, 166, 186, 0.75) !important;
     }
     html.light-mode main > section#hero > div > div,
     /* Day / Light Theme Cards & Containers (Services, Projects, Leadership, Registration, Contact Info) */
@@ -430,13 +430,13 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .it-card-container,
     html.light-mode [id^="carousel-wrapper-"] > div > div,
     html.light-mode .glass-panel {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
+      background: rgba(146, 166, 186, 0.55) !important;
+      background-color: rgba(146, 166, 186, 0.55) !important;
       color: #0f172a !important;
       border: 1px solid rgba(255, 255, 255, 0.6) !important;
       box-shadow: none !important;
-      backdrop-filter: blur(20px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
     }
 
     html.light-mode section#methodology .glass-panel:hover,
