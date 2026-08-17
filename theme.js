@@ -891,48 +891,8 @@ function updateToggleButtons() {
   }
 }
 
-// Auto Initialize & Header Hover Interaction Listener
+// Auto Initialize
 document.addEventListener("DOMContentLoaded", () => {
   updateToggleButtons();
   setTimeout(updateToggleButtons, 200);
-
-  // Setup Header Hover Interaction Toast Notice
-  const header =
-    document.getElementById("main-header") || document.querySelector("header");
-  if (header) {
-    let hoverToast = document.getElementById("header-hover-interaction-toast");
-    if (!hoverToast) {
-      hoverToast = document.createElement("div");
-      hoverToast.id = "header-hover-interaction-toast";
-      hoverToast.className =
-        "fixed top-16 left-1/2 -translate-x-1/2 z-[100] px-5 py-2.5 bg-primary text-background font-mono text-xs font-bold rounded-full shadow-2xl transition-all duration-300 opacity-0 pointer-events-none border border-white/20";
-      hoverToast.innerText =
-        "You are hovering the header. What additional questions or specific actions regarding the header design do you have? Please provide your request.";
-      document.body.appendChild(hoverToast);
-    }
-
-    const showToast = () => {
-      if (hoverToast) {
-        hoverToast.style.opacity = "1";
-        hoverToast.style.transform = "translate(-50%, 0)";
-      }
-    };
-    const hideToast = () => {
-      if (hoverToast) {
-        hoverToast.style.opacity = "0";
-        hoverToast.style.transform = "translate(-50%, -10px)";
-      }
-    };
-
-    header.addEventListener("mouseenter", showToast);
-    header.addEventListener("mouseleave", hideToast);
-
-    const navContainer =
-      header.querySelector(".max-w-container-max") ||
-      header.querySelector("nav");
-    if (navContainer) {
-      navContainer.addEventListener("mouseenter", showToast);
-      navContainer.addEventListener("mouseleave", hideToast);
-    }
-  }
 });
