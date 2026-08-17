@@ -39,6 +39,7 @@
     }
   ],
   "rewrites": [
+    { "source": "/", "destination": "/index.html" },
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/admin-dashboard", "destination": "/admin-dashboard.html" },
     { "source": "/enquire", "destination": "/enquire.html" },
