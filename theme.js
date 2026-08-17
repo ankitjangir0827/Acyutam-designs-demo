@@ -12,6 +12,14 @@ window.sanitizeInput = function(str) {
     .replace(/\//g, "&#x2F;");
 };
 
+/**
+ * Remove AI Studio Fingerprint (Zero-Width & Invisible Unicode Characters)
+ */
+window.removeAIFingerprint = function(codeText) {
+  if (typeof codeText !== 'string') return codeText || '';
+  return codeText.replace(/[\u200B\u200C\u200D\u2060\uFEFF]/g, '');
+};
+
 (() => {
   const themeStyles = `
     /* Hardware Acceleration & Smooth 60 FPS Rendering */
