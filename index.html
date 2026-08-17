@@ -276,8 +276,12 @@
       width: 100vw;
       height: 100vh;
       overflow: hidden;
-      background: #000;
+      background: #3C3C3C !important;
       z-index: 20;
+    }
+
+    html.light-mode .sticky-stage {
+      background: #92A6BA !important;
     }
 
     #sequence-canvas {
@@ -453,8 +457,8 @@
         </a>
 
         <!-- Golden Bordered ENQUIRE Button -->
-        <a href="enquire.html" id="header-enquire-btn" class="border border-primary/60 text-on-surface px-2.5 py-1.5 sm:px-4 sm:py-2 hover:border-primary hover:text-primary hover:bg-primary/10 transition-all font-label-caps text-xs tracking-widest uppercase shrink-0 flex items-center gap-1" title="Initiate Project Enquiry">
-          <span class="material-symbols-outlined text-base sm:hidden">edit_note</span>
+        <a href="enquire.html" id="header-enquire-btn" class="border border-primary/60 text-on-surface p-1.5 sm:px-4 sm:py-2 hover:border-primary hover:text-primary hover:bg-primary/10 transition-all font-label-caps text-xs tracking-widest uppercase shrink-0 flex items-center justify-center gap-1 rounded-sm" title="Initiate Project Enquiry">
+          <svg class="w-5 h-5 fill-current text-primary shrink-0 sm:hidden" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
           <span class="enquire-text-label hidden sm:inline">ENQUIRE</span>
         </a>
 
