@@ -1,13 +1,93 @@
 /**
- * Day & Night Theme Manager for ACHYUTAM BUILDER
- * Inspired by interactive canvas & CSS spring-animated Day/Night toggle switch.
+ * Global Security & Input Sanitization Helper
  */
+window.sanitizeInput = function(str) {
+  if (typeof str !== 'string') return str || '';
+  return str
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#x27;")
+    .replace(/\//g, "&#x2F;");
+};
+
 (() => {
   const themeStyles = `
+    /* Hardware Acceleration & Smooth 60 FPS Rendering */
+    .glass-panel,
+    .glass-panel-hero,
+    .it-card-container,
+    .project-card-item,
+    header#main-header,
+    #auth-modal > div {
+      will-change: transform, opacity;
+      transform: translateZ(0);
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+
     /* Dark Mode Root Overrides */
     body {
       background-color: #3C3C3C !important;
       color: #e5e2e1 !important;
+    }
+
+    /* Mandatory 180 Degree Clockwise Rotation for Logo Images */
+    .logo-mark-flipped,
+    img.logo-mark-flipped,
+    img[src*="logo"],
+    img[alt*="Logo"],
+    img[alt*="logo"],
+    a[title*="ACHYUTAM BUILDER"] img {
+      transform: rotate(180deg) !important;
+    }
+
+    /* === 16:9 Image Responsiveness & Zero Distortion === */
+    img,
+    .project-card-item img,
+    .it-card-container .it-card-image,
+    .card-slideshow-container img,
+    #right-img-container img,
+    #left-img-container img,
+    .aspect-\[4\/3\] img,
+    .aspect-\[16\/9\] img {
+      object-fit: cover !important;
+      object-position: center !important;
+    }
+
+    @media (max-width: 768px) {
+      /* Mobile Hero Proportional Heights & 16:9 Aspect Ratios */
+      .hero-responsive-image-container,
+      #hero-slider-bg-container,
+      #left-img-container,
+      #right-img-container {
+        min-height: 50vh !important;
+        max-height: 65vh !important;
+      }
+      
+      .project-card-item .aspect-\[4\/3\],
+      .project-card-item .aspect-\[16\/9\],
+      .project-card-item .image-container {
+        aspect-ratio: 16 / 9 !important;
+        height: auto !important;
+        min-height: 220px !important;
+      }
+
+      /* Mobile Header Refinements (< 768px): Hide text branding, show ONLY Logo Icon */
+      header#main-header a[title*="ACHYUTAM BUILDER"] > div:nth-child(2),
+      header#main-header .brand-text-container {
+        display: none !important;
+      }
+
+      /* Compact Action Buttons on Mobile (< 768px): Hide text labels, show ONLY icons */
+      #auth-header-btn #auth-btn-text,
+      #header-enquire-btn span.enquire-text-label {
+        display: none !important;
+      }
+      #header-enquire-btn {
+        padding: 0.375rem 0.625rem !important;
+      }
     }
 
     /* Light Mode Root Overrides & Glassmorphism Blur Effects */
@@ -118,24 +198,38 @@
     }
 
     main > section#hero > div > div,
-    .glass-panel-hero {
-      background: rgba(14, 14, 18, 0.6) !important;
-      background-color: rgba(14, 14, 18, 0.6) !important;
+    .glass-panel-hero,
+    .it-card-container,
+    .project-card-item,
+    [id^="carousel-wrapper-"] > div > div {
       backdrop-filter: blur(24px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4) !important;
-    }
-    section#methodology,
-    section#details,
-    section#achyutam-details,
-    .glass-panel {
-      background-color: #3C3C3C !important;
-      backdrop-filter: blur(24px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      background-color: rgba(15, 23, 42, 0.45) !important;
+      background: rgba(15, 23, 42, 0.45) !important;
       border: 1px solid rgba(255, 255, 255, 0.12) !important;
       box-shadow: none !important;
+      transition: backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  -webkit-backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
+                  border-color 0.3s ease,
+                  box-shadow 0.3s ease,
+                  text-shadow 0.4s ease !important;
+      will-change: backdrop-filter, background-color;
+    }
+
+    /* Static Content Section Glass Panels (Executive Leadership, Registration, Contact Info Cards) */
+    section#methodology .glass-panel,
+    section#details .glass-panel,
+    section#achyutam-details .glass-panel,
+    .glass-panel {
+      background: rgba(26, 36, 56, 0.65) !important;
+      background-color: rgba(26, 36, 56, 0.65) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      box-shadow: none !important;
       border-radius: 0px !important;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease !important;
     }
 
     /* === REMOVE ALL CARD SHADOWS & APPLY SHARP EDGES === */
@@ -147,31 +241,26 @@
       font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', sans-serif;
     }
 
-    .it-card-container,
-    .project-card-item,
-    .glass-panel,
-    .glass-panel-hero,
-    [id^="carousel-wrapper-"] > div > div,
-    [id^="carousel-wrapper-"] > div > div > a > div {
-      --it-card-padding: 1.5rem;
-      --it-card-border-radius: 0px;
-      --it-card-shadow: none;
-
-      background: rgba(255, 255, 255, 0.08) !important;
-      border-radius: 0px !important;
-      overflow: hidden !important;
-      box-shadow: none !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
-      transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out !important;
-    }
-
+    /* Hero & Project Card Hover — Transparent over Background Image */
+    .glass-panel-hero:hover,
     .it-card-container:hover,
     .project-card-item:hover,
-    .glass-panel:hover,
-    [id^="carousel-wrapper-"] > div > div:hover {
-      transform: translateY(-5px) !important;
-      box-shadow: none !important;
+    [id^="carousel-wrapper-"] > div > div:hover,
+    section#hero:hover .glass-panel-hero {
+      backdrop-filter: blur(0px) !important;
+      -webkit-backdrop-filter: blur(0px) !important;
+      background-color: transparent !important;
+      background: transparent !important;
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    /* Static Section Glass Panel Hover — Elevated Frosted Card */
+    section#methodology .glass-panel:hover,
+    section#details .glass-panel:hover,
+    section#achyutam-details .glass-panel:hover,
+    .glass-panel:hover {
       border-color: #ff7722 !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35) !important;
     }
 
     .it-card-container a.it-card-link,
@@ -229,16 +318,20 @@
       background-color: #e5e7eb !important;
     }
 
-    /* Light Mode Glassmorphism Overrides */
+    /* Light Mode Day Theme Overrides — Color Code #92A6BA */
     html.light-mode header#main-header,
     html.light-mode header#main-header > div,
     html.light-mode header.header-glass,
     html.light-mode header.sticky-header,
     html.light-mode nav.header-glass,
-    html.light-mode .header-glass {
-      background: rgba(255, 255, 255, 0.65) !important;
-      border-color: rgba(0, 0, 0, 0.08) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+    html.light-mode .header-glass,
+    html.light-mode #desktop-nav div.absolute,
+    html.light-mode div.absolute.top-full {
+      background: #92A6BA !important;
+      background-color: #92A6BA !important;
+      color: #0f172a !important;
+      border-color: rgba(0, 0, 0, 0.12) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     }
@@ -259,7 +352,8 @@
     html.light-mode aside#sidebar-drawer,
     html.light-mode .sidebar-glass,
     html.light-mode aside.sidebar-glass {
-      background: rgba(255, 255, 255, 0.45) !important;
+      background: #92A6BA !important;
+      background-color: #92A6BA !important;
       border-color: rgba(0, 0, 0, 0.08) !important;
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
@@ -268,39 +362,46 @@
     html.light-mode aside#sidebar-drawer:hover,
     html.light-mode .sidebar-glass:hover,
     html.light-mode aside.sidebar-glass:hover {
-      background: rgba(255, 255, 255, 0.65) !important;
+      background: #92A6BA !important;
+      background-color: #92A6BA !important;
     }
     html.light-mode main > section#hero > div > div,
-    html.light-mode .glass-panel-hero {
-      background: rgba(255, 255, 255, 0.55) !important;
-      background-color: rgba(255, 255, 255, 0.55) !important;
+    /* Day / Light Theme Static Section Cards (Leadership, Registration, Contact Info) */
+    html.light-mode section#methodology .glass-panel,
+    html.light-mode section#details .glass-panel,
+    html.light-mode section#achyutam-details .glass-panel,
+    html.light-mode .glass-panel {
+      background: rgba(255, 255, 255, 0.45) !important;
+      background-color: rgba(255, 255, 255, 0.45) !important;
       color: #0f172a !important;
-      border: 1px solid rgba(0, 0, 0, 0.1) !important;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.06) !important;
-      backdrop-filter: blur(24px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      box-shadow: none !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     }
+
+    html.light-mode section#methodology .glass-panel:hover,
+    html.light-mode section#details .glass-panel:hover,
+    html.light-mode section#achyutam-details .glass-panel:hover,
+    html.light-mode .glass-panel:hover {
+      background: rgba(255, 255, 255, 0.65) !important;
+      background-color: rgba(255, 255, 255, 0.65) !important;
+      border-color: #ff7722 !important;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12) !important;
+    }
+
     html.light-mode section#methodology,
     html.light-mode section#details,
     html.light-mode section#achyutam-details,
-    html.light-mode .glass-panel,
-    html.light-mode .project-card-item,
-    html.light-mode .it-card-container,
     html.light-mode .bg-surface-container-low,
     html.light-mode .bg-surface-container,
     html.light-mode .bg-surface-container-high,
-    html.light-mode [id^="carousel-wrapper-"] > div > div,
-    html.light-mode [id^="carousel-wrapper-"] > div > div > a > div,
-    html.light-mode [id^="carousel-wrapper-"] > div > div > a > div > div,
-    html.light-mode [id^="carousel-wrapper-"] div {
+    html.light-mode .bg-surface-container-lowest,
+    html.light-mode .bg-surface-dim {
       background: #92A6BA !important;
       background-color: #92A6BA !important;
       color: #0f172a !important;
       border: 1px solid rgba(0, 0, 0, 0.12) !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-      backdrop-filter: blur(24px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
     }
 
     html.light-mode .project-card-item h3,
@@ -315,12 +416,50 @@
       color: #1e293b !important;
     }
 
-    html.light-mode .glass-panel:hover,
+    html.light-mode .glass-panel-hero:hover,
     html.light-mode .project-card-item:hover,
     html.light-mode .it-card-container:hover,
-    html.light-mode [id^="carousel-wrapper-"] > div > div:hover {
-      box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.35) !important;
-      border-color: #ff7722 !important;
+    html.light-mode [id^="carousel-wrapper-"] > div > div:hover,
+    html.light-mode section#hero:hover .glass-panel-hero {
+      backdrop-filter: blur(0px) !important;
+      -webkit-backdrop-filter: blur(0px) !important;
+      background-color: transparent !important;
+      background: transparent !important;
+      border-color: rgba(255, 255, 255, 0.2) !important;
+    }
+
+    .glass-panel-hero:hover h1,
+    .glass-panel-hero:hover h2,
+    .glass-panel-hero:hover h3,
+    .glass-panel-hero:hover p,
+    .glass-panel-hero:hover span,
+    .glass-panel-hero:hover div,
+    .glass-panel:hover h1,
+    .glass-panel:hover h2,
+    .glass-panel:hover h3,
+    .glass-panel:hover p,
+    .glass-panel:hover span,
+    .glass-panel:hover div,
+    .project-card-item:hover h3,
+    .project-card-item:hover p,
+    .project-card-item:hover span,
+    section#hero:hover .glass-panel-hero h1,
+    section#hero:hover .glass-panel-hero h2,
+    section#hero:hover .glass-panel-hero h3,
+    section#hero:hover .glass-panel-hero p,
+    section#hero:hover .glass-panel-hero span,
+    section#hero:hover .glass-panel-hero div,
+    html.light-mode .glass-panel-hero:hover h1,
+    html.light-mode .glass-panel-hero:hover h2,
+    html.light-mode .glass-panel-hero:hover h3,
+    html.light-mode .glass-panel-hero:hover p,
+    html.light-mode .glass-panel-hero:hover span,
+    html.light-mode section#hero:hover .glass-panel-hero h1,
+    html.light-mode section#hero:hover .glass-panel-hero h2,
+    html.light-mode section#hero:hover .glass-panel-hero h3,
+    html.light-mode section#hero:hover .glass-panel-hero p,
+    html.light-mode section#hero:hover .glass-panel-hero span {
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
     }
     html.light-mode .bg-surface,
     html.light-mode .bg-surface-container-highest,
@@ -329,7 +468,8 @@
     html.light-mode .bg-\[\#1c1b22\],
     html.light-mode .bg-\[\#222129\],
     html.light-mode .bg-background {
-      background-color: rgba(255, 255, 255, 0.65) !important;
+      background-color: #92A6BA !important;
+      background: #92A6BA !important;
       color: #0f172a !important;
       border-color: rgba(0, 0, 0, 0.08) !important;
       backdrop-filter: blur(16px) !important;
@@ -337,7 +477,8 @@
     }
     html.light-mode .bg-surface-dim,
     html.light-mode .bg-surface-container-lowest {
-      background-color: rgba(255, 255, 255, 0.65) !important;
+      background-color: #92A6BA !important;
+      background: #92A6BA !important;
       color: #0f172a !important;
     }
     html.light-mode .text-on-surface {
@@ -891,8 +1032,44 @@ function updateToggleButtons() {
   }
 }
 
-// Auto Initialize
+// Auto Initialize & Video Visibility Guard
 document.addEventListener("DOMContentLoaded", () => {
   updateToggleButtons();
   setTimeout(updateToggleButtons, 200);
+
+  const preloaderVideo = document.getElementById("preloader-video");
+  if (preloaderVideo && "IntersectionObserver" in window) {
+    const videoObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) {
+            preloaderVideo.pause();
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
+    videoObserver.observe(preloaderVideo);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.hidden) {
+      if (preloaderVideo) preloaderVideo.pause();
+    }
+  });
+
+  // Global Image Lazy Loading & Fallback Guard
+  const allImgs = document.querySelectorAll("img:not([loading])");
+  allImgs.forEach((img) => img.setAttribute("loading", "lazy"));
 });
+
+// Global Image Loading Error Fallback to logo.png
+document.addEventListener("error", (e) => {
+  if (e.target && e.target.tagName === "IMG") {
+    const img = e.target;
+    if (!img.dataset.fallbackTried) {
+      img.dataset.fallbackTried = "true";
+      img.src = "logo.png";
+    }
+  }
+}, true);

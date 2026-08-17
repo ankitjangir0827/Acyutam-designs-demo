@@ -63,15 +63,15 @@ service cloud.firestore {
     }
 
     // Enquiries Collection: /enquiries/{enquiryId}
-    // Public creation requires valid enquiry schema, while read/update/delete strictly requires verified Admin or Document Owner
+    // Creation requires verified authentication and valid enquiry schema; read/update/delete strictly requires verified Admin or Document Owner
     match /enquiries/{enquiryId} {
-      allow create: if isValidEnquirySubmission();
+      allow create: if isVerifiedUser() && isValidEnquirySubmission();
       allow read, update, delete: if isAdmin() || isDocOwner();
     }
 
     // Enquire Collection: /Enquire/{enquiryId}
     match /Enquire/{enquiryId} {
-      allow create: if isValidEnquirySubmission();
+      allow create: if isVerifiedUser() && isValidEnquirySubmission();
       allow read, update, delete: if isAdmin() || isDocOwner();
     }
 

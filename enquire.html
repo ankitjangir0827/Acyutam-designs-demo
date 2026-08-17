@@ -42,9 +42,8 @@
   <meta name="geo.region" content="IN-RJ">
   <meta name="geo.placename" content="Sikar, Rajasthan">
   <meta name="geo.position" content="27.6094;75.1398">
-  <meta name="ICBM" content="27.6094, 75.1398">
-
-  <link rel="icon" type="image/png" href="photos and videos/logo.png" />
+  <link rel="canonical" href="https://achyutambuilder.com/enquire.html" />
+  <link rel="icon" type="image/png" href="logo.png" />
   <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
   <script src="theme.js"></script>
   <script type="module" src="firebase-config.js"></script>
@@ -1516,11 +1515,11 @@
         return;
       }
 
-      const name = document.getElementById('user-name')?.value || '';
-      const phone = document.getElementById('user-phone')?.value || '';
-      const email = document.getElementById('user-email')?.value || '';
-      const typology = document.getElementById('user-typology')?.value || '';
-      const message = document.getElementById('user-message')?.value || '';
+      const name = window.sanitizeInput ? window.sanitizeInput(document.getElementById('user-name')?.value || '') : (document.getElementById('user-name')?.value || '');
+      const phone = window.sanitizeInput ? window.sanitizeInput(document.getElementById('user-phone')?.value || '') : (document.getElementById('user-phone')?.value || '');
+      const email = window.sanitizeInput ? window.sanitizeInput(document.getElementById('user-email')?.value || '') : (document.getElementById('user-email')?.value || '');
+      const typology = window.sanitizeInput ? window.sanitizeInput(document.getElementById('user-typology')?.value || '') : (document.getElementById('user-typology')?.value || '');
+      const message = window.sanitizeInput ? window.sanitizeInput(document.getElementById('user-message')?.value || '') : (document.getElementById('user-message')?.value || '');
 
       const submitBtn = e.target.querySelector('button[type="submit"]');
       if (submitBtn) {
