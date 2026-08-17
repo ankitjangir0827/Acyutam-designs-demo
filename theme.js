@@ -13,7 +13,7 @@ window.sanitizeInput = function(str) {
 };
 
 /**
- * Remove AI Studio Fingerprint (Zero-Width & Invisible Unicode Characters)
+ * Remove Invisible Unicode Characters & Formatting Helper
  */
 window.removeAIFingerprint = function(codeText) {
   if (typeof codeText !== 'string') return codeText || '';
@@ -137,21 +137,22 @@ window.removeAIFingerprint = function(codeText) {
     }
 
     .card-tag-badge {
-      background: rgba(15, 25, 48, 0.88) !important;
+      background: rgba(32, 31, 31, 0.88) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
       border-color: rgba(255, 255, 255, 0.2) !important;
       border-radius: 0px !important;
     }
     html.light-mode .card-tag-badge {
-      background: rgba(15, 25, 48, 0.88) !important;
+      background: #92A6BA !important;
+      background-color: #92A6BA !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-color: rgba(255, 255, 255, 0.25) !important;
+      border-color: rgba(0, 0, 0, 0.15) !important;
       border-radius: 0px !important;
     }
     html.light-mode .card-tag-badge span {
-      color: #ff8c3b !important;
+      color: #ff7722 !important;
     }
 
     /* Contact Section, Footer, Buttons & Table Headers Styling */
@@ -212,6 +213,19 @@ window.removeAIFingerprint = function(codeText) {
       border-radius: 2rem !important;
     }
 
+    /* Header Inter Font Guarantee */
+    header#main-header,
+    header#main-header *,
+    .header-glass,
+    .header-glass *,
+    #desktop-nav a,
+    #desktop-nav div,
+    #auth-header-btn,
+    #header-enquire-btn,
+    #header-my-enquiries-btn {
+      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    }
+
     /* Global Glass & Backdrop Blur Styling */
     header#main-header > div,
     .header-glass,
@@ -230,8 +244,8 @@ window.removeAIFingerprint = function(codeText) {
     [id^="carousel-wrapper-"] > div > div {
       backdrop-filter: blur(24px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-      background-color: rgba(15, 23, 42, 0.45) !important;
-      background: rgba(15, 23, 42, 0.45) !important;
+      background-color: rgba(60, 60, 60, 0.45) !important;
+      background: rgba(60, 60, 60, 0.45) !important;
       border: 1px solid rgba(255, 255, 255, 0.12) !important;
       box-shadow: none !important;
       transition: backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -243,19 +257,34 @@ window.removeAIFingerprint = function(codeText) {
       will-change: backdrop-filter, background-color;
     }
 
-    /* Static Content Section Glass Panels (Executive Leadership, Registration, Contact Info Cards) */
+    /* Static Content Section Glass Panels (Executive Leadership, Registration, Contact Info & Services Cards) */
     section#methodology .glass-panel,
     section#details .glass-panel,
     section#achyutam-details .glass-panel,
+    section#services .glass-panel,
     .glass-panel {
-      background: rgba(26, 36, 56, 0.65) !important;
-      background-color: rgba(26, 36, 56, 0.65) !important;
+      background: rgba(60, 60, 60, 0.45) !important;
+      background-color: rgba(60, 60, 60, 0.45) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
       border: 1px solid rgba(255, 255, 255, 0.15) !important;
       box-shadow: none !important;
       border-radius: 0px !important;
       transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease !important;
+    }
+
+    /* Prototype / Syne Display Font for Slide, Service & Project Card Titles */
+    #slide-title,
+    h1.font-display-lg,
+    section#services h3,
+    section#services .font-headline-md,
+    .service-card-title,
+    .project-card-item h3,
+    [id^="carousel-wrapper-"] h3,
+    .it-card-title,
+    .prototype-title {
+      font-family: 'Syne', 'Protest Strike', sans-serif !important;
+      letter-spacing: -0.01em !important;
     }
 
     /* === REMOVE ALL CARD SHADOWS & APPLY SHARP EDGES === */
@@ -392,13 +421,17 @@ window.removeAIFingerprint = function(codeText) {
       background-color: #92A6BA !important;
     }
     html.light-mode main > section#hero > div > div,
-    /* Day / Light Theme Static Section Cards (Leadership, Registration, Contact Info) */
+    /* Day / Light Theme Cards & Containers (Services, Projects, Leadership, Registration, Contact Info) */
     html.light-mode section#methodology .glass-panel,
     html.light-mode section#details .glass-panel,
     html.light-mode section#achyutam-details .glass-panel,
+    html.light-mode section#services .glass-panel,
+    html.light-mode .project-card-item,
+    html.light-mode .it-card-container,
+    html.light-mode [id^="carousel-wrapper-"] > div > div,
     html.light-mode .glass-panel {
-      background: rgba(255, 255, 255, 0.45) !important;
-      background-color: rgba(255, 255, 255, 0.45) !important;
+      background: #92A6BA !important;
+      background-color: #92A6BA !important;
       color: #0f172a !important;
       border: 1px solid rgba(255, 255, 255, 0.6) !important;
       box-shadow: none !important;
@@ -409,9 +442,13 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode section#methodology .glass-panel:hover,
     html.light-mode section#details .glass-panel:hover,
     html.light-mode section#achyutam-details .glass-panel:hover,
+    html.light-mode section#services .glass-panel:hover,
+    html.light-mode .project-card-item:hover,
+    html.light-mode .it-card-container:hover,
+    html.light-mode [id^="carousel-wrapper-"] > div > div:hover,
     html.light-mode .glass-panel:hover {
-      background: rgba(255, 255, 255, 0.65) !important;
-      background-color: rgba(255, 255, 255, 0.65) !important;
+      background: #92A6BA !important;
+      background-color: #92A6BA !important;
       border-color: #ff7722 !important;
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12) !important;
     }
@@ -419,6 +456,7 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode section#methodology,
     html.light-mode section#details,
     html.light-mode section#achyutam-details,
+    html.light-mode section#services,
     html.light-mode .bg-surface-container-low,
     html.light-mode .bg-surface-container,
     html.light-mode .bg-surface-container-high,
@@ -432,12 +470,14 @@ window.removeAIFingerprint = function(codeText) {
 
     html.light-mode .project-card-item h3,
     html.light-mode [id^="carousel-wrapper-"] h3,
+    html.light-mode section#services h3,
     html.light-mode .it-card-container .it-card-title {
       color: #0f172a !important;
     }
 
     html.light-mode .project-card-item p,
     html.light-mode [id^="carousel-wrapper-"] p,
+    html.light-mode section#services p,
     html.light-mode .it-card-container .it-card-description {
       color: #1e293b !important;
     }

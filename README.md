@@ -1,20 +1,23 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://ai.google.dev/static/site-assets/images/share-ais-513315318.png" />
-</div>
+# Achyutam Builder — Engineering & Architecture
 
-# Run and deploy your AI Studio app
+Official web platform for Achyutam Builder® — Premier Turnkey Construction, Residential Estates, Commercial Complexes, Industrial Heavy Plants, and Cultural Architectural Architecture in Sikar and Rajasthan.
 
-This contains everything you need to run your app locally.
-
-View your app in AI Studio: https://ai.studio/apps/b2bfa7b1-aebb-42e5-9126-e4e3d3d03b47
-
-## Run Locally
-
-**Prerequisites:**  Node.js
-
+## 🚀 Local Development
 
 1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+   ```bash
+   npm install
+   ```
+
+2. Start the production dev server:
+   ```bash
+   npm run dev
+   # or
+   node serve.js
+   ```
+
+3. Open `http://localhost:3005` in your browser.
+
+## 🌐 Production Deployment (Vercel)
+
+This project is pre-configured with [`vercel.json`](vercel.json) for instant clean URL routing, security headers, and static asset caching on Vercel.

@@ -1,6 +1,5 @@
 {
   "name": "Achyutam Builder - Turnkey Construction & Architectural Engineering",
   "description": "Achyutam Builder & Architects — Premium Turnkey Construction, Vedic Heritage Landmarks, and Architectural Engineering led by CEO Er. Ram Gopal Jangir.",
-  "requestFramePermissions": [],
-  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+  "requestFramePermissions": []
 }
