@@ -290,69 +290,71 @@
       display: block;
     }
 
-    #preloader {
-      position: fixed;
-      inset: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 9999;
+    /* 1. Fullscreen Background using uploaded texture image */
+    #preloader,
+    #preloader-overlay,
+    html.light-mode #preloader {
+      position: fixed !important;
+      top: 0 !important;
+      left: 0 !important;
+      width: 100vw !important;
+      height: 100vh !important;
+      z-index: 99999 !important;
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: space-between !important;
+      align-items: center !important;
       background-image: url('preloader_background.webp') !important;
       background-size: cover !important;
       background-position: center !important;
       background-repeat: no-repeat !important;
+      overflow: hidden !important;
       transition: opacity 0.8s ease, visibility 0.8s;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      align-items: center;
-      overflow: hidden;
     }
 
-    #preloader.hidden {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
+    #preloader.hidden,
+    #preloader-overlay.hidden {
+      opacity: 0 !important;
+      visibility: hidden !important;
+      pointer-events: none !important;
     }
 
+    /* 2. Responsive 16:9 Video Box for Phone, Tablet & Desktop */
+    .video-container,
     .preloader-video-wrapper {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 90vw;
-      max-width: 1200px;
-      position: relative;
-      z-index: 20;
-    }
-
-    .preloader-video-element {
-      width: 100%;
-      height: auto;
+      width: 90vw !important;
+      max-width: 1200px !important;
       aspect-ratio: 16 / 9 !important;
-      object-fit: contain !important;
-      border-radius: 8px;
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      position: relative !important;
+      z-index: 20 !important;
+      margin: auto !important;
     }
 
+    .video-container video,
+    .preloader-video-element {
+      width: 100% !important;
+      height: 100% !important;
+      object-fit: contain !important; /* Video stretch nahi hogi aur background image blend rahegi */
+      border-radius: 8px !important;
+    }
+
+    /* 3. Mobile & Tablet Specific Breakpoints */
     @media (max-width: 768px) {
+      .video-container,
       .preloader-video-wrapper {
-        width: 95vw;
-        max-width: 95vw;
-      }
-      .preloader-video-element {
-        width: 95vw;
-        aspect-ratio: 16 / 9 !important;
-        object-fit: contain !important;
+        width: 95vw !important; /* Tablet / Large Phone */
+        max-width: 95vw !important;
       }
     }
 
     @media (max-width: 480px) {
+      .video-container,
       .preloader-video-wrapper {
-        width: 100vw;
-        max-width: 100vw;
-      }
-      .preloader-video-element {
-        width: 100vw;
-        aspect-ratio: 16 / 9 !important;
-        object-fit: contain !important;
+        width: 100vw !important; /* Small Mobile */
+        max-width: 100vw !important;
       }
     }
 

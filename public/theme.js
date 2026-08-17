@@ -595,8 +595,12 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .sticky-stage {
       background: #f1f5f9 !important;
     }
+    #preloader,
     html.light-mode #preloader {
-      background: #ffffff !important;
+      background-image: url('preloader_background.webp') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
     }
     html.light-mode .blur-transition-bottom-to-top {
       background: linear-gradient(to top, rgba(255, 255, 255, 1) 0%, rgba(255, 255, 255, 0.7) 40%, rgba(255, 255, 255, 0) 100%) !important;
