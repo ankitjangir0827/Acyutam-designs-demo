@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PORTFOLIO ADMIN PORTAL — ACHYUTAM BUILDER®</title>
+  <link rel="icon" type="image/png" href="photos and videos/logo.png" />
+  
+  <!-- Google Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;800&family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+  <script src="theme.js"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            background: '#0a0a0e',
+            surface: '#131318',
+            'surface-dim': '#0f0f13',
+            'surface-container-lowest': '#08080b',
+            'surface-container-low': '#18171f',
+            'surface-container': '#201f28',
+            'surface-container-high': '#292834',
+            'on-surface': '#e5e2e1',
+            'on-surface-variant': '#d5c4ab',
+            primary: '#ff7722',
+            'primary-hover': '#e65c00',
+            'primary-container': '#ffdca1',
+            'outline': '#9e8f78',
+            'outline-variant': '#514532'
+          },
+          fontFamily: {
+            display: ['Cinzel', 'serif'],
+            'display-lg': ['Playfair Display', 'serif'],
+            sans: ['Inter', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+            'label-caps': ['Space Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body {
+      background-color: #0a0a0e;
+      color: #e5e2e1;
+      font-family: 'Inter', sans-serif;
+    }
+    .header-glass {
+      background: rgba(14, 14, 18, 0.88);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .glass-panel {
+      background: rgba(24, 23, 30, 0.7);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(81, 69, 50, 0.4);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .gold-gradient-text {
+      background: linear-gradient(135deg, #fff2cc 0%, #ffdca1 50%, #d4af37 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #0e0e12;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #514532;
+      border-radius: 3px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #ffdca1;
+    }
+
+    /* Light Theme Compatibility Overrides */
+    html.light-mode body {
+      background-color: #F8F9FA !important;
+      color: #0f172a !important;
+    }
+    html.light-mode .header-glass {
+      background: #92A6BA !important;
+      border-bottom-color: rgba(15, 23, 42, 0.15) !important;
+    }
+    html.light-mode .glass-panel {
+      background: #FFFFFF !important;
+      border-color: #E2E8F0 !important;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+      color: #0f172a !important;
+    }
+    html.light-mode .gold-gradient-text {
+      background: none !important;
+      -webkit-text-fill-color: #d97706 !important;
+      color: #d97706 !important;
+    }
+    html.light-mode input, 
+    html.light-mode textarea, 
+    html.light-mode select {
+      background-color: #F1F5F9 !important;
+      color: #0f172a !important;
+      border-color: #CBD5E1 !important;
+    }
+    html.light-mode thead tr {
+      background-color: #92A6BA !important;
+      color: #0f172a !important;
+    }
+    html.light-mode #admin-name-display {
+      color: #0f172a !important;
+    }
+    html.light-mode .text-on-surface-variant {
+      color: #475569 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-[#0a0a0e] text-on-surface antialiased selection:bg-primary selection:text-black relative overflow-x-hidden">
+
+  <!-- Ambient Decorative Background Glows -->
+  <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
+  <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[160px] pointer-events-none z-0"></div>
+
+  <!-- Access Guard Overlay (Strict Verified Admin Gate) -->
+  <div id="admin-access-guard" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/95 backdrop-blur-xl p-6">
+    <div class="max-w-md w-full bg-surface border border-red-500/40 rounded-2xl p-8 text-center shadow-[0_0_50px_rgba(239,68,68,0.2)] flex flex-col items-center gap-4">
+      <div class="w-16 h-16 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400">
+        <span class="material-symbols-outlined text-4xl">admin_panel_settings</span>
+      </div>
+      <h2 class="font-display text-2xl text-red-400 font-bold tracking-wider">RESTRICTED ACCESS</h2>
+      <p class="text-xs text-on-surface-variant leading-relaxed">
+        This portal is strictly reserved for verified ACHYUTAM BUILDER administrators. Please log in with a verified administrator account.
+      </p>
+      <div class="flex gap-3 w-full mt-2 font-mono text-xs">
+        <a href="index.html" class="flex-1 py-3 bg-primary text-black font-semibold tracking-widest uppercase rounded-lg hover:bg-primary-hover transition-all text-center">
+          Go to Home Page
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Header Component (Matching Site Architecture & Responsive Layout) -->
+  <header class="sticky top-0 z-50 header-glass py-3 px-4 sm:px-8 border-b border-outline-variant/30">
+    <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-4 font-mono text-xs tracking-widest uppercase">
+      
+      <!-- Left Side: Logo & Brand Title -->
+      <!-- Brand Logo Link with Circular Ring Frame -->
+      <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group shrink-0 transition-opacity hover:opacity-90 relative z-50 py-0.5" title="ACHYUTAM BUILDER — Home">
+        <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-0.5 border-2 border-primary/80 ring-2 ring-primary/25 shadow-[0_0_15px_rgba(255,184,0,0.35)] flex items-center justify-center overflow-hidden bg-surface-container/60 shrink-0">
+          <img src="photos and videos/logo.png" alt="ACHYUTAM BUILDER Logo" class="w-full h-full rounded-full object-cover transition-transform group-hover:scale-105 shrink-0" onerror="this.src='logo.png'"/>
+        </div>
+        <div class="hidden sm:flex flex-col text-left">
+          <span class="font-display-lg text-sm sm:text-base md:text-lg text-on-surface font-semibold tracking-wider uppercase leading-none group-hover:text-primary transition-colors">
+            ACHYUTAM BUILDER
+          </span>
+          <span class="font-label-caps text-[9px] tracking-[0.2em] text-primary/80 font-medium leading-none mt-1">
+            ENGINEERING &amp; ARCHITECTURE
+          </span>
+        </div>
+      </a>
+
+      <!-- Right Side: Export Actions, Theme Toggle, External Page Links -->
+      <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
+        
+        <!-- Day / Night Theme Toggle Switch -->
+        <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
+
+        <!-- Export JSON Download Quick Button -->
+        <button onclick="window.AchyutamAdmin.downloadProjectsJSON()" title="Download updated projects.json file" class="flex items-center gap-1.5 bg-primary text-black hover:bg-primary-hover font-bold px-3.5 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all shadow-md cursor-pointer">
+          <span class="material-symbols-outlined text-sm">download</span>
+          <span class="hidden md:inline">DOWNLOAD JSON</span>
+        </button>
+
+        <!-- Copy JSON to Clipboard Quick Button -->
+        <button onclick="window.AchyutamAdmin.copyProjectsJSONToClipboard()" title="Copy projects.json to clipboard" class="flex items-center gap-1.5 border border-primary/60 bg-primary/10 hover:bg-primary/20 text-primary font-semibold px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-sm">content_copy</span>
+          <span class="hidden lg:inline">COPY JSON</span>
+        </button>
+
+        <!-- Return to Main Admin Dashboard & Enquiries Portal -->
+        <a href="admin-dashboard.html" class="flex items-center gap-1.5 border border-outline-variant/60 hover:border-primary bg-surface-container-low text-on-surface-variant hover:text-primary px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all" title="Return to Main Admin Dashboard & Enquiries Portal">
+          <span class="material-symbols-outlined text-sm">dashboard</span>
+          <span class="hidden sm:inline">ADMIN PORTAL</span>
+        </a>
+
+        <!-- Home Page Link -->
+        <a href="index.html" class="flex items-center gap-1 border border-outline-variant/60 hover:border-primary bg-surface-container-low text-on-surface-variant hover:text-primary px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all" title="Go to Main Website Home">
+          <span class="material-symbols-outlined text-sm">home</span>
+          <span class="hidden sm:inline">HOME</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Area -->
+  <main class="relative z-10 flex-grow max-w-7xl w-full mx-auto p-4 sm:p-8 flex flex-col gap-8">
+
+    <!-- Top Statistical Overview Cards -->
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
+      
+      <!-- Total Projects -->
+      <div class="glass-panel p-5 sm:p-6 rounded-xl flex items-center justify-between shadow-xl relative overflow-hidden group hover:border-primary/60 transition-all cursor-pointer" onclick="window.AchyutamAdmin.setStatusFilter('all')">
+        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/15 transition-all"></div>
+        <div>
+          <p class="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase tracking-widest font-semibold">TOTAL PROJECTS</p>
+          <h3 id="stat-total-projects" class="text-3xl sm:text-4xl font-display font-bold text-primary mt-1.5 gold-gradient-text">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shadow-inner">
+          <span class="material-symbols-outlined text-2xl sm:text-3xl">domain</span>
+        </div>
+      </div>
+
+      <!-- Upcoming Projects -->
+      <div class="glass-panel p-5 sm:p-6 rounded-xl flex items-center justify-between shadow-xl relative overflow-hidden group hover:border-blue-500/60 transition-all cursor-pointer" onclick="window.AchyutamAdmin.setStatusFilter('Upcoming')">
+        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-blue-500/5 rounded-full blur-xl group-hover:bg-blue-500/15 transition-all"></div>
+        <div>
+          <p class="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase tracking-widest font-semibold">UPCOMING</p>
+          <h3 id="stat-upcoming-count" class="text-3xl sm:text-4xl font-display font-bold text-blue-400 mt-1.5">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-inner">
+          <span class="material-symbols-outlined text-2xl sm:text-3xl">upcoming</span>
+        </div>
+      </div>
+
+      <!-- Ongoing Projects -->
+      <div class="glass-panel p-5 sm:p-6 rounded-xl flex items-center justify-between shadow-xl relative overflow-hidden group hover:border-amber-500/60 transition-all cursor-pointer" onclick="window.AchyutamAdmin.setStatusFilter('Ongoing')">
+        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-amber-500/5 rounded-full blur-xl group-hover:bg-amber-500/15 transition-all"></div>
+        <div>
+          <p class="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase tracking-widest font-semibold">ONGOING</p>
+          <h3 id="stat-ongoing-count" class="text-3xl sm:text-4xl font-display font-bold text-amber-400 mt-1.5">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 shadow-inner">
+          <span class="material-symbols-outlined text-2xl sm:text-3xl">construction</span>
+        </div>
+      </div>
+
+      <!-- Completed Projects -->
+      <div class="glass-panel p-5 sm:p-6 rounded-xl flex items-center justify-between shadow-xl relative overflow-hidden group hover:border-emerald-500/60 transition-all cursor-pointer" onclick="window.AchyutamAdmin.setStatusFilter('Completed')">
+        <div class="absolute -right-4 -bottom-4 w-20 h-20 bg-emerald-500/5 rounded-full blur-xl group-hover:bg-emerald-500/15 transition-all"></div>
+        <div>
+          <p class="font-mono text-[11px] sm:text-xs text-on-surface-variant uppercase tracking-widest font-semibold">COMPLETED</p>
+          <h3 id="stat-completed-count" class="text-3xl sm:text-4xl font-display font-bold text-emerald-400 mt-1.5">0</h3>
+        </div>
+        <div class="w-12 h-12 rounded-xl bg-emerald-500/10 border border-emerald-500/30 flex items-center justify-center text-emerald-400 shadow-inner">
+          <span class="material-symbols-outlined text-2xl sm:text-3xl">verified</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- GITHUB PAGES WORKFLOW BANNER (Clean Instruction & Export Bar) -->
+    <div class="glass-panel rounded-2xl p-5 sm:p-6 border border-primary/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-gradient-to-r from-primary/10 via-surface to-surface-container">
+      <div class="flex items-start gap-3.5">
+        <div class="w-10 h-10 rounded-xl bg-primary/20 border border-primary/40 flex items-center justify-center text-primary shrink-0 mt-0.5">
+          <span class="material-symbols-outlined text-2xl">sync_saved_locally</span>
+        </div>
+        <div>
+          <h3 class="font-display font-bold text-sm sm:text-base text-primary gold-gradient-text flex items-center gap-2">
+            <span>STATIC GITHUB PAGES WORKFLOW</span>
+          </h3>
+          <p class="text-xs text-on-surface-variant mt-1 leading-relaxed max-w-2xl font-sans">
+            Make edits or add new architectural projects below. When finished, click <strong>"Download JSON"</strong> or <strong>"Copy JSON"</strong>, replace <code class="text-primary font-mono font-bold">projects.json</code> in your local folder, and push to GitHub. All website pages instantly render the updated portfolio without any backend server.
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap w-full md:w-auto shrink-0 font-mono text-xs">
+        <!-- Download Button -->
+        <button onclick="window.AchyutamAdmin.downloadProjectsJSON()" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-black font-bold tracking-wider uppercase rounded-lg hover:bg-primary-hover shadow-lg transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-base">download</span>
+          <span>Download projects.json</span>
+        </button>
+
+        <!-- Copy JSON Button -->
+        <button onclick="window.AchyutamAdmin.copyProjectsJSONToClipboard()" class="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-surface-container border border-primary/40 text-primary font-semibold tracking-wider uppercase rounded-lg hover:bg-primary/20 transition-all cursor-pointer">
+          <span class="material-symbols-outlined text-base">content_copy</span>
+          <span>Copy JSON</span>
+        </button>
+
+        <!-- Hidden File Input for Import -->
+        <input type="file" id="import-json-file-input" accept=".json" class="hidden" onchange="window.AchyutamAdmin.importProjectsJSON(this.files[0])"/>
+        <button onclick="document.getElementById('import-json-file-input').click()" title="Import projects.json from disk" class="p-2.5 border border-outline-variant/40 hover:border-primary bg-surface-container rounded-lg text-on-surface-variant hover:text-primary transition-all cursor-pointer shrink-0">
+          <span class="material-symbols-outlined text-base">upload_file</span>
+        </button>
+
+        <!-- Reset Button -->
+        <button onclick="window.AchyutamAdmin.resetToDefaultProjects()" title="Reset to default seed portfolio" class="p-2.5 border border-outline-variant/40 hover:border-red-400 bg-surface-container rounded-lg text-on-surface-variant hover:text-red-400 transition-all cursor-pointer shrink-0">
+          <span class="material-symbols-outlined text-base">restart_alt</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- SECTION 1: PROJECT ADD / EDIT FORM -->
+    <section id="project-form-container" class="glass-panel rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden border border-outline-variant/40">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-outline-variant/30 pb-5 mb-6">
+        <div>
+          <h2 id="form-heading" class="font-display text-xl sm:text-2xl font-bold text-primary flex items-center gap-2.5 gold-gradient-text">
+            <span class="material-symbols-outlined text-primary text-2xl">add_circle</span>
+            <span>ADD NEW ARCHITECTURAL PROJECT</span>
+          </h2>
+          <p id="form-subheading" class="text-xs text-on-surface-variant font-mono mt-1">
+            Fill in the details below to add a new project to your static portfolio.
+          </p>
+        </div>
+
+        <button type="button" id="btn-cancel-edit" onclick="window.AchyutamAdmin.resetProjectForm()" class="hidden px-4 py-2 border border-outline-variant/60 hover:bg-surface-container text-on-surface rounded-lg text-xs font-mono tracking-widest uppercase transition-all">
+          CANCEL EDIT
+        </button>
+      </div>
+
+      <form id="project-form" onsubmit="window.AchyutamAdmin.handleProjectFormSubmit(event)" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 text-xs font-mono">
+        
+        <!-- 1. Project Title (Text) -->
+        <div class="lg:col-span-2">
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Project Title <span class="text-red-400">*</span>
+          </label>
+          <input type="text" id="project-title" required placeholder="e.g., The Copper Villa &amp; Courtyard Haveli" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+        </div>
+
+        <!-- 2. Category (Dropdown: Residential, Industrial, Commercial, Temples & Cultural) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Category <span class="text-red-400">*</span>
+          </label>
+          <select id="project-category" required class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none cursor-pointer">
+            <option value="Residential">Residential</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Temples &amp; Cultural">Temples &amp; Cultural</option>
+          </select>
+        </div>
+
+        <!-- 3. Client Name (Text) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Client Name
+          </label>
+          <input type="text" id="project-client" placeholder="e.g., Mr. Rajesh Singhania" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+        </div>
+
+        <!-- 4. Location (Text) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Location
+          </label>
+          <input type="text" id="project-location" placeholder="e.g., Vaishali Nagar, Jaipur" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+        </div>
+
+        <!-- 5. Area / Scale (Text) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Built-Up Area / Scale
+          </label>
+          <input type="text" id="project-area" placeholder="e.g., 2,500 sq. ft. or 6,500 sq ft" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+        </div>
+
+        <!-- 6. Paste Image 1 URL (Text Input with live thumbnail) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5 flex items-center justify-between">
+            <span>Paste Image 1 URL (Main / Elevation)</span>
+            <span class="text-[10px] text-on-surface-variant/60 font-normal">Direct Link</span>
+          </label>
+          <input type="url" id="project-image1" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="https://images.unsplash.com/..." class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+          <div class="mt-2 h-20 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px]">
+            <img id="preview-image-1" src="" alt="Preview 1" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')"/>
+            <span class="preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview (Image 1)</span>
+          </div>
+        </div>
+
+        <!-- 7. Paste Image 2 URL (Text Input with live thumbnail) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5 flex items-center justify-between">
+            <span>Paste Image 2 URL (Interior / Perspective)</span>
+            <span class="text-[10px] text-on-surface-variant/60 font-normal">Direct Link</span>
+          </label>
+          <input type="url" id="project-image2" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="https://images.unsplash.com/..." class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+          <div class="mt-2 h-20 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px]">
+            <img id="preview-image-2" src="" alt="Preview 2" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')"/>
+            <span class="preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview (Image 2)</span>
+          </div>
+        </div>
+
+        <!-- 8. Project Status (Dropdown: Upcoming, Ongoing, Completed) -->
+        <div>
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Project Status <span class="text-red-400">*</span>
+          </label>
+          <select id="project-status" required class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none cursor-pointer">
+            <option value="Upcoming">Upcoming (Design / Approvals Phase)</option>
+            <option value="Ongoing" selected>Ongoing (Under Construction / Execution)</option>
+            <option value="Completed">Completed (Delivered &amp; Handed Over)</option>
+          </select>
+          <p class="text-[10px] text-on-surface-variant/70 mt-1.5 leading-tight">
+            Controls visibility on <code class="text-blue-400">upcoming</code>, <code class="text-amber-400">ongoing.html</code>, or <code class="text-emerald-400">completed.html</code>.
+          </p>
+        </div>
+
+        <!-- 9. Description (Textarea) -->
+        <div class="lg:col-span-3">
+          <label class="block font-bold uppercase tracking-wider text-primary mb-1.5">
+            Project Description &amp; Architectural Concept
+          </label>
+          <textarea id="project-description" rows="3" placeholder="Describe the architectural design concept, materials, passive cooling, structural highlights, and layout..." class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none custom-scrollbar placeholder:text-on-surface-variant/40 font-sans leading-relaxed"></textarea>
+        </div>
+
+        <!-- Submit Controls -->
+        <div class="lg:col-span-3 flex flex-col sm:flex-row items-center justify-end gap-3 pt-3 border-t border-outline-variant/30">
+          <button type="button" onclick="window.AchyutamAdmin.resetProjectForm()" class="w-full sm:w-auto px-6 py-3 border border-outline-variant/60 hover:bg-surface-container text-on-surface-variant hover:text-on-surface rounded-lg tracking-widest uppercase font-bold text-xs transition-all cursor-pointer">
+            RESET FORM
+          </button>
+          
+          <button type="submit" id="btn-submit-project" class="w-full sm:w-auto px-8 py-3 bg-primary text-black hover:bg-primary-hover font-bold tracking-widest uppercase rounded-lg shadow-xl hover:shadow-[0_0_25px_rgba(255,119,34,0.4)] transition-all flex items-center justify-center gap-2 cursor-pointer text-xs">
+            <span class="material-symbols-outlined text-base">add_circle</span>
+            <span>ADD TO PORTFOLIO</span>
+          </button>
+        </div>
+
+      </form>
+    </section>
+
+    <!-- SECTION 2: VIEW ALL PROJECTS (Data Table & Fast Search/Filter) -->
+    <section class="glass-panel rounded-2xl p-6 sm:p-8 shadow-2xl flex flex-col gap-6 border border-outline-variant/40">
+      
+      <!-- Top Table Controls: Filter by Status & Category + Live Search -->
+      <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4 border-b border-outline-variant/30 pb-5">
+        <div>
+          <div class="flex items-center gap-3">
+            <h2 class="font-display text-xl sm:text-2xl font-bold text-on-surface gold-gradient-text">
+              PORTFOLIO PROJECTS DIRECTORY
+            </h2>
+            <span id="filtered-projects-count" class="px-2.5 py-0.5 rounded-full bg-primary/10 border border-primary/30 text-primary text-[11px] font-mono font-bold">
+              0 Projects
+            </span>
+          </div>
+          <p class="text-xs text-on-surface-variant font-mono mt-1">
+            Manage, edit, delete, and quick-toggle status for all static portfolio projects.
+          </p>
+        </div>
+
+        <!-- Filter Chips for Status -->
+        <div class="flex items-center gap-2 flex-wrap">
+          <button onclick="window.AchyutamAdmin.setStatusFilter('all')" data-status="all" class="filter-status-chip px-3.5 py-1.5 rounded-lg text-xs font-mono font-bold tracking-wider bg-primary text-black transition-all cursor-pointer shadow-md">
+            ALL
+          </button>
+          <button onclick="window.AchyutamAdmin.setStatusFilter('Upcoming')" data-status="Upcoming" class="filter-status-chip px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium tracking-wider bg-surface-container-low text-blue-400 border border-outline-variant/30 hover:border-blue-400 transition-all cursor-pointer">
+            UPCOMING
+          </button>
+          <button onclick="window.AchyutamAdmin.setStatusFilter('Ongoing')" data-status="Ongoing" class="filter-status-chip px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium tracking-wider bg-surface-container-low text-amber-400 border border-outline-variant/30 hover:border-amber-400 transition-all cursor-pointer">
+            ONGOING
+          </button>
+          <button onclick="window.AchyutamAdmin.setStatusFilter('Completed')" data-status="Completed" class="filter-status-chip px-3.5 py-1.5 rounded-lg text-xs font-mono font-medium tracking-wider bg-surface-container-low text-emerald-400 border border-outline-variant/30 hover:border-emerald-400 transition-all cursor-pointer">
+            COMPLETED
+          </button>
+        </div>
+      </div>
+
+      <!-- Search & Category Filter Bar -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-3 font-mono text-xs">
+        
+        <!-- Live Search Input -->
+        <div class="relative w-full sm:w-80">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-base">search</span>
+          <input type="text" id="search-projects" oninput="window.AchyutamAdmin.handleSearchInput(this.value)" placeholder="Search Title, Client, Location..." class="w-full bg-surface border border-outline-variant/40 rounded-lg py-2.5 pl-9 pr-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40"/>
+        </div>
+
+        <!-- Filter by Category & Actions -->
+        <div class="flex items-center gap-2 w-full sm:w-auto flex-wrap sm:flex-nowrap">
+          <span class="text-on-surface-variant whitespace-nowrap text-[11px]">Category:</span>
+          <select id="filter-category-select" onchange="window.AchyutamAdmin.setCategoryFilter(this.value)" class="w-full sm:w-44 bg-surface border border-outline-variant/40 rounded-lg py-2 px-3 text-xs text-on-surface focus:border-primary focus:outline-none cursor-pointer">
+            <option value="all">All Typologies</option>
+            <option value="Residential">Residential</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Commercial">Commercial</option>
+            <option value="Temples &amp; Cultural">Temples &amp; Cultural</option>
+          </select>
+
+          <!-- Export Download Button -->
+          <button onclick="window.AchyutamAdmin.downloadProjectsJSON()" title="Download updated projects.json file" class="flex items-center gap-1.5 px-3 py-2 bg-primary hover:bg-primary-hover text-black font-semibold rounded-lg text-xs font-mono tracking-wider shadow-md hover:shadow-lg transition-all cursor-pointer shrink-0">
+            <span class="material-symbols-outlined text-base">download</span>
+            <span class="hidden md:inline">EXPORT JSON</span>
+          </button>
+
+          <!-- Copy JSON Button -->
+          <button onclick="window.AchyutamAdmin.copyProjectsJSONToClipboard()" title="Copy projects.json to clipboard" class="p-2 border border-outline-variant/40 hover:border-primary rounded-lg bg-surface hover:text-primary transition-colors cursor-pointer shrink-0">
+            <span class="material-symbols-outlined text-base">content_copy</span>
+          </button>
+
+          <!-- Reset Filter Button -->
+          <button onclick="window.AchyutamAdmin.resetFilters()" title="Reset Filters" class="p-2 border border-outline-variant/40 hover:border-primary rounded-lg bg-surface hover:text-primary transition-colors cursor-pointer shrink-0">
+            <span class="material-symbols-outlined text-base">refresh</span>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Projects Data Table with Dual Thumbnails & Quick Actions -->
+      <div class="overflow-x-auto rounded-xl border border-outline-variant/30 custom-scrollbar">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-outline-variant/30 bg-surface-container-low/90 text-primary font-mono uppercase tracking-widest text-[11px]">
+              <th class="py-4 px-4 font-bold">Project &amp; Client</th>
+              <th class="py-4 px-4 font-bold">Category</th>
+              <th class="py-4 px-4 font-bold">Scale / Area</th>
+              <th class="py-4 px-4 font-bold">Status &amp; Quick Switch</th>
+              <th class="py-4 px-4 font-bold">Date Added</th>
+              <th class="py-4 px-4 font-bold text-right">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="projects-table-body" class="divide-y divide-outline-variant/20 text-on-surface">
+            <tr>
+              <td colspan="6" class="py-16 text-center text-on-surface-variant">
+                <div class="flex flex-col items-center justify-center gap-3 font-mono">
+                  <span class="material-symbols-outlined text-3xl text-primary animate-pulse">hourglass_empty</span>
+                  <span>Loading projects from <code class="text-primary font-bold">projects.json</code>...</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-confirm-modal" class="fixed inset-0 z-[250] hidden items-center justify-center bg-black/90 backdrop-blur-md p-4 transition-all">
+    <div class="relative w-full max-w-md glass-panel rounded-2xl p-6 sm:p-8 shadow-[0_0_60px_rgba(239,68,68,0.2)] flex flex-col gap-4 text-on-surface border border-red-500/40">
+      
+      <div class="w-14 h-14 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center text-red-400 mx-auto">
+        <span class="material-symbols-outlined text-3xl">delete_forever</span>
+      </div>
+
+      <div class="text-center">
+        <h3 class="font-display text-xl font-bold text-red-400 tracking-wide">CONFIRM DELETION</h3>
+        <p class="text-xs text-on-surface-variant mt-2">
+          Are you sure you want to remove this project from your active portfolio?
+        </p>
+        <p id="delete-project-title-display" class="font-mono font-bold text-sm text-primary mt-2 break-words">
+          "Project Name"
+        </p>
+        <p class="text-[10px] text-red-400/80 mt-1 font-mono">You can re-download projects.json after deletion to save your changes.</p>
+      </div>
+
+      <div class="flex gap-3 pt-3 font-mono text-xs">
+        <button type="button" onclick="window.AchyutamAdmin.closeDeleteModal()" class="flex-1 py-3 border border-outline-variant/60 text-on-surface font-semibold tracking-widest uppercase rounded-lg hover:bg-surface-container transition-all cursor-pointer">
+          CANCEL
+        </button>
+        <button type="button" id="btn-confirm-delete-action" onclick="window.AchyutamAdmin.executeDeleteProject()" class="flex-1 py-3 bg-red-600 hover:bg-red-500 text-white font-bold tracking-widest uppercase rounded-lg transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+          <span>YES, DELETE</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Image Fullscreen Preview Modal -->
+  <div id="image-preview-modal" class="fixed inset-0 z-[250] hidden items-center justify-center bg-black/95 backdrop-blur-xl p-4 transition-all" onclick="if(event.target === this) window.closeImagePreviewModal()">
+    <div class="relative w-full max-w-4xl glass-panel rounded-2xl p-6 shadow-2xl flex flex-col gap-4 text-on-surface max-h-[90vh] overflow-y-auto custom-scrollbar">
+      <div class="flex items-center justify-between border-b border-outline-variant/30 pb-3">
+        <h3 id="modal-preview-title" class="font-display text-lg font-bold text-primary">Project Showcase</h3>
+        <button onclick="window.closeImagePreviewModal()" class="p-1 text-on-surface-variant hover:text-primary transition-colors cursor-pointer">
+          <span class="material-symbols-outlined text-2xl">close</span>
+        </button>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container">
+          <img id="modal-preview-img-1" src="" alt="Elevation View" class="w-full h-72 object-cover" onerror="this.src='photos and videos/logo.png'"/>
+          <p class="p-2 text-center text-[10px] font-mono text-on-surface-variant">Image 1 — Elevation / Front</p>
+        </div>
+        <div class="rounded-xl overflow-hidden border border-outline-variant/30 bg-surface-container">
+          <img id="modal-preview-img-2" src="" alt="Interior / Perspective View" class="w-full h-72 object-cover" onerror="this.src='photos and videos/logo.png'"/>
+          <p class="p-2 text-center text-[10px] font-mono text-on-surface-variant">Image 2 — Perspective / Interior</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="fixed bottom-6 right-6 z-[300] flex flex-col gap-2 font-mono pointer-events-none"></div>
+
+  <!-- Application Script Module -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="admin.js"></script>
+
+</body>
+</html>

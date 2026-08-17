@@ -1,0 +1,83 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper: Check if user is authenticated AND email is verified
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isAuthenticated() && request.auth.token.email_verified == true;
+    }
+
+    // Helper: Check if user is the verified Master Admin
+    function isAdmin() {
+      return isVerifiedUser() && 
+        request.auth.token.email != null && 
+        request.auth.token.email.lower() == 'ankitjangir529@gmail.com';
+    }
+
+    // Helper: Check if user is the document owner by path UID
+    function isOwner(userId) {
+      return isVerifiedUser() && request.auth.uid == userId;
+    }
+
+    // Helper: Check if user owns document by record content fields
+    function isDocOwner() {
+      return isVerifiedUser() && (
+        resource != null && (
+          resource.data.userId == request.auth.uid || 
+          (resource.data.userEmail != null && resource.data.userEmail.lower() == request.auth.token.email.lower()) ||
+          (resource.data.useremail != null && resource.data.useremail.lower() == request.auth.token.email.lower()) ||
+          (resource.data.email != null && resource.data.email.lower() == request.auth.token.email.lower()) ||
+          (resource.data["user email id"] != null && resource.data["user email id"].lower() == request.auth.token.email.lower())
+        )
+      );
+    }
+
+    // Helper: Validate enquiry creation fields to prevent spam and unsafe payloads
+    function isValidEnquirySubmission() {
+      return request.resource.data != null &&
+        (request.resource.data.email is string || request.resource.data.useremail is string || request.resource.data["user email id"] is string);
+    }
+
+    // Projects Collection: Publicly readable for architectural portfolio showcase
+    // Full write/update/delete rights strictly for Verified Admin
+    match /projects/{projectId} {
+      allow read: if true;
+      allow create, update, delete: if isAdmin();
+    }
+
+    // Main User Data Collection: /userdata/{docId}
+    // Blocked completely if email_verified == false
+    match /userdata/{docId} {
+      allow create, update: if isVerifiedUser() && (request.auth.uid == docId || isAdmin());
+      allow read, delete: if isAdmin() || isOwner(docId) || isDocOwner();
+    }
+
+    // Users Collection: /users/{userId}
+    match /users/{userId} {
+      allow read, write: if (isOwner(userId) || isAdmin()) && isVerifiedUser();
+    }
+
+    // Enquiries Collection: /enquiries/{enquiryId}
+    // Public creation requires valid enquiry schema, while read/update/delete strictly requires verified Admin or Document Owner
+    match /enquiries/{enquiryId} {
+      allow create: if isValidEnquirySubmission();
+      allow read, update, delete: if isAdmin() || isDocOwner();
+    }
+
+    // Enquire Collection: /Enquire/{enquiryId}
+    match /Enquire/{enquiryId} {
+      allow create: if isValidEnquirySubmission();
+      allow read, update, delete: if isAdmin() || isDocOwner();
+    }
+
+    // Default deny all unlisted paths
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
