@@ -293,15 +293,67 @@
     #preloader {
       position: fixed;
       inset: 0;
+      width: 100vw;
+      height: 100vh;
       z-index: 9999;
-      background: #050508;
+      background-image: url('preloader_background.webp') !important;
+      background-size: cover !important;
+      background-position: center !important;
+      background-repeat: no-repeat !important;
       transition: opacity 0.8s ease, visibility 0.8s;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden;
     }
 
     #preloader.hidden {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+    }
+
+    .preloader-video-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 90vw;
+      max-width: 1200px;
+      position: relative;
+      z-index: 20;
+    }
+
+    .preloader-video-element {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9 !important;
+      object-fit: contain !important;
+      border-radius: 8px;
+    }
+
+    @media (max-width: 768px) {
+      .preloader-video-wrapper {
+        width: 95vw;
+        max-width: 95vw;
+      }
+      .preloader-video-element {
+        width: 95vw;
+        aspect-ratio: 16 / 9 !important;
+        object-fit: contain !important;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .preloader-video-wrapper {
+        width: 100vw;
+        max-width: 100vw;
+      }
+      .preloader-video-element {
+        width: 100vw;
+        aspect-ratio: 16 / 9 !important;
+        object-fit: contain !important;
+      }
     }
 
     .slide-img {
@@ -356,22 +408,22 @@
 <body class="bg-background text-on-surface font-body-lg antialiased selection:bg-primary-container selection:text-on-primary-container">
 
   <!-- Preloader Screen (Desktop & Mobile Video Experience) -->
-  <div id="preloader" class="flex flex-col justify-between overflow-hidden">
-    <video id="preloader-video" autoplay muted playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 opacity-85">
-      <source src="preloader-video.webm" type="video/webm"/>
-      <source src="public/preloader-video.webm" type="video/webm"/>
-      <source src="photos and videos/upscaled-video preloader.webm" type="video/webm"/>
-      <source src="preloader-video.mp4" type="video/mp4"/>
-      <source src="public/preloader-video.mp4" type="video/mp4"/>
-      <source src="photos and videos/upscaled-video preloader.mp4" type="video/mp4"/>
-    </video>
-    <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20 z-10 pointer-events-none"></div>
-
-    <div class="relative z-20 p-6 sm:p-8 font-label-caps text-xs text-primary/80 tracking-widest uppercase flex items-center justify-between">
+  <div id="preloader" class="flex flex-col justify-between items-center overflow-hidden">
+    <div class="relative z-20 w-full p-6 sm:p-8 font-label-caps text-xs text-primary/80 tracking-widest uppercase flex items-center justify-between">
       <div class="flex items-center gap-2">
         <span class="w-2 h-2 rounded-full bg-primary animate-ping"></span>
         <span>ACHYUTAM BUILDER • ARCHITECTURAL PREVIEW</span>
       </div>
+    </div>
+
+    <!-- Centered 16:9 Video Container Overlaying Texture Background -->
+    <div class="preloader-video-wrapper relative z-20 my-auto flex items-center justify-center">
+      <video id="preloader-video" autoplay muted playsinline preload="auto" class="preloader-video-element">
+        <source src="preloader-video.webm" type="video/webm"/>
+        <source src="public/preloader-video.webm" type="video/webm"/>
+        <source src="preloader-video.mp4" type="video/mp4"/>
+        <source src="public/preloader-video.mp4" type="video/mp4"/>
+      </video>
     </div>
 
     <div class="relative z-20 p-6 sm:p-12 flex justify-end items-center">
