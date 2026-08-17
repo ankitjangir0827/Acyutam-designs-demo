@@ -27,13 +27,23 @@ async function runBiome() {
     fs.writeFileSync(tgzPath, buffer);
 
     console.log("📦 Extracting Biome binary...");
-    cp.execSync("tar -xzf biome.tgz", { cwd: scratchDir });
+    const systemPath = process.env.SystemRoot
+      ? `${process.env.SystemRoot}\\system32;${process.env.SystemRoot}`
+      : "C:\\Windows\\system32;C:\\Windows";
+    cp.execSync("tar -xzf biome.tgz", {
+      cwd: scratchDir,
+      env: { PATH: systemPath },
+    });
   }
 
   console.log("🚀 Running Biome check and auto-fix across project...");
   try {
+    const systemPath = process.env.SystemRoot
+      ? `${process.env.SystemRoot}\\system32;${process.env.SystemRoot}`
+      : "C:\\Windows\\system32;C:\\Windows";
     const output = cp.execSync(`"${biomeExe}" check --write "${__dirname}"`, {
       encoding: "utf8",
+      env: { PATH: systemPath },
     });
     console.log(output);
     console.log("✅ Biome check complete!");
@@ -43,4 +53,8 @@ async function runBiome() {
   }
 }
 
-runBiome().catch((err) => console.error("Error running Biome:", err.message));
+try {
+  await runBiome();
+} catch (err) {
+  console.error("Error running Biome:", err.message);
+}

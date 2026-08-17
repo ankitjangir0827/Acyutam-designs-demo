@@ -26,34 +26,150 @@ const MIME_TYPES = {
   ".ttf": "font/ttf",
 };
 
+function resolvePath(reqUrl) {
+  let cleanUrl = (reqUrl || "/").split("?")[0];
+  if (cleanUrl === "/") cleanUrl = "/index.html";
+
+  let decodedUrl = cleanUrl;
+  try {
+    decodedUrl = decodeURIComponent(cleanUrl);
+  } catch {
+    decodedUrl = cleanUrl;
+  }
+
+  const relPath = decodedUrl.replace(/^\/+/, "");
+  const lowerRel = relPath.toLowerCase();
+
+  // 1. CEO Picture Mapping
+  if (lowerRel.includes("ceo-admin-profile") || lowerRel.includes("ceo pic")) {
+    const ceoFile = path.join(
+      __dirname,
+      "public",
+      "photos_and_videos",
+      "ceo pic.jpeg",
+    );
+    if (fs.existsSync(ceoFile)) return ceoFile;
+  }
+
+  // 2. Preloader Video Mapping
+  if (lowerRel.includes("preloader") || lowerRel.includes("lotus-animation")) {
+    const videoFile = path.join(
+      __dirname,
+      "public",
+      "photos_and_videos",
+      "preloader video.webm",
+    );
+    if (fs.existsSync(videoFile)) return videoFile;
+    const rootVideo = path.join(__dirname, "preloader-video.webm");
+    if (fs.existsSync(rootVideo)) return rootVideo;
+  }
+
+  // 3. Logo & Favicon Mapping
+  if (lowerRel.includes("logo") || lowerRel.includes("favicon")) {
+    const logoWebp = path.join(
+      __dirname,
+      "public",
+      "photos_and_videos",
+      "logo.webp",
+    );
+    if (fs.existsSync(logoWebp)) return logoWebp;
+    const logoPng = path.join(__dirname, "public", "logo.png");
+    if (fs.existsSync(logoPng)) return logoPng;
+  }
+
+  // 4. Canvas Scroller Frame Animation Mapping
+  if (lowerRel.includes("ezgif-frame-")) {
+    const fileName = path.basename(relPath);
+    const frameFile = path.join(
+      __dirname,
+      "public",
+      "photos_and_videos",
+      "scroller",
+      fileName,
+    );
+    if (fs.existsSync(frameFile)) return frameFile;
+  }
+
+  const hasExt = path.extname(relPath) !== "";
+
+  // Standard lookup candidate paths
+  const candidates = [
+    path.join(__dirname, relPath),
+    path.join(__dirname, "public", relPath),
+    path.join(__dirname, "public", "photos_and_videos", relPath),
+    path.join(
+      __dirname,
+      "public",
+      relPath.replace(/^photos[ _]and[ _]videos\//i, ""),
+    ),
+    path.join(
+      __dirname,
+      "public",
+      "photos_and_videos",
+      relPath.replace(/^photos[ _]and[ _]videos\//i, ""),
+    ),
+  ];
+
+  if (!hasExt) {
+    candidates.unshift(
+      path.join(__dirname, `${relPath}.html`),
+      path.join(__dirname, "public", `${relPath}.html`),
+    );
+  }
+
+  for (const cand of candidates) {
+    try {
+      if (fs.existsSync(cand) && fs.statSync(cand).isFile()) {
+        return cand;
+      }
+    } catch {
+      // Ignore stat errors
+    }
+  }
+
+  return null;
+}
+
 function startServer(port) {
   const server = http.createServer((req, res) => {
-    let reqUrl = decodeURIComponent((req.url || "/").split("?")[0]);
-    if (reqUrl === "/") reqUrl = "/index.html";
+    try {
+      const targetFile = resolvePath(req.url);
 
-    let filePath = path.join(__dirname, reqUrl);
-
-    if (!fs.existsSync(filePath) || fs.statSync(filePath).isDirectory()) {
-      filePath = path.join(__dirname, "public", reqUrl);
-    }
-
-    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-      const ext = path.extname(filePath).toLowerCase();
-      const contentType = MIME_TYPES[ext] || "application/octet-stream";
-      res.writeHead(200, {
-        "Content-Type": contentType,
-        "Access-Control-Allow-Origin": "*",
-      });
-      fs.createReadStream(filePath).pipe(res);
-    } else {
-      const indexPath = path.join(__dirname, "index.html");
-      if (fs.existsSync(indexPath)) {
-        res.writeHead(200, { "Content-Type": "text/html" });
-        fs.createReadStream(indexPath).pipe(res);
+      if (targetFile) {
+        const ext = path.extname(targetFile).toLowerCase();
+        const contentType = MIME_TYPES[ext] || "application/octet-stream";
+        res.writeHead(200, {
+          "Content-Type": contentType,
+          "Access-Control-Allow-Origin": "*",
+        });
+        const stream = fs.createReadStream(targetFile);
+        stream.on("error", (err) => {
+          if (!res.headersSent) {
+            res.writeHead(500, { "Content-Type": "text/plain" });
+          }
+          res.end("Internal Server Error");
+        });
+        stream.pipe(res);
       } else {
+        if (req.headers.accept && req.headers.accept.includes("text/html")) {
+          const indexPath = path.join(__dirname, "index.html");
+          if (fs.existsSync(indexPath)) {
+            res.writeHead(200, { "Content-Type": "text/html" });
+            const stream = fs.createReadStream(indexPath);
+            stream.on("error", () => res.end());
+            stream.pipe(res);
+            return;
+          }
+        }
         res.writeHead(404, { "Content-Type": "text/plain" });
         res.end("404 Not Found");
       }
+    } catch (err) {
+      console.error("Request handling error:", err);
+      if (!res.headersSent) {
+        res.writeHead(500, { "Content-Type": "text/plain" });
+      }
+      res.end("Internal Server Error");
     }
   });
 
