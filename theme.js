@@ -22,6 +22,24 @@ window.removeAIFingerprint = function(codeText) {
 
 (() => {
   const themeStyles = `
+    @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
+
+    /* Open Source 'Alex Brush' Font Integration for Cards & Script Accents */
+    .font-alex-brush,
+    .alex-brush,
+    .card-script-font,
+    .card-accent-script,
+    .glass-panel .italic,
+    .glass-panel-hero .italic,
+    .project-card-item .italic,
+    .project-card-item span.italic,
+    .project-card-item h3 span,
+    [id^="carousel-wrapper-"] span.italic,
+    .project-card-subtitle {
+      font-family: 'Alex Brush', cursive !important;
+      font-weight: 400 !important;
+    }
+
     /* Hardware Acceleration & Smooth 60 FPS Rendering */
     .glass-panel,
     .glass-panel-hero,
