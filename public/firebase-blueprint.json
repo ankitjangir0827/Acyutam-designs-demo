@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "Project": {
+      "title": "Project",
+      "description": "Architecture and portfolio project entry for showcase across website",
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string",
+          "description": "Project Title",
+          "maxLength": 200
+        },
+        "clientName": {
+          "type": "string",
+          "description": "Client or Owner Name",
+          "maxLength": 150
+        },
+        "location": {
+          "type": "string",
+          "description": "City, State or Site Location",
+          "maxLength": 150
+        },
+        "area": {
+          "type": "string",
+          "description": "Built-up or plot area e.g. 2,500 sq ft",
+          "maxLength": 100
+        },
+        "description": {
+          "type": "string",
+          "description": "Architectural overview and design concept",
+          "maxLength": 3000
+        },
+        "category": {
+          "type": "string",
+          "description": "Typology Category",
+          "enum": [
+            "Residential",
+            "Industrial",
+            "Commercial",
+            "Temples & Cultural"
+          ]
+        },
+        "image1": {
+          "type": "string",
+          "description": "Primary high-resolution image URL",
+          "maxLength": 1000
+        },
+        "image2": {
+          "type": "string",
+          "description": "Secondary elevation or interior image URL",
+          "maxLength": 1000
+        },
+        "status": {
+          "type": "string",
+          "description": "Lifecycle Status",
+          "enum": ["Upcoming", "Ongoing", "Completed"]
+        },
+        "createdAt": {
+          "type": "string",
+          "description": "Creation timestamp ISO"
+        },
+        "updatedAt": {
+          "type": "string",
+          "description": "Last update timestamp ISO"
+        }
+      },
+      "required": ["title", "category", "status"]
+    },
+    "Enquiry": {
+      "title": "Enquiry",
+      "description": "Client architectural proposal enquiry",
+      "type": "object",
+      "properties": {
+        "userName": { "type": "string", "maxLength": 150 },
+        "userEmail": { "type": "string", "maxLength": 150 },
+        "userPhone": { "type": "string", "maxLength": 50 },
+        "typology": { "type": "string", "maxLength": 100 },
+        "message": { "type": "string", "maxLength": 3000 },
+        "status": { "type": "string", "maxLength": 50 }
+      },
+      "required": ["userEmail"]
+    }
+  },
+  "firestore": {
+    "/projects/{projectId}": {
+      "schema": "Project",
+      "description": "Public architecture portfolio projects curated by admin"
+    },
+    "/enquiries/{enquiryId}": {
+      "schema": "Enquiry",
+      "description": "Client project enquiries"
+    }
+  }
+}
