@@ -14,7 +14,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PORTFOLIO ADMIN PORTAL — ACHYUTAM BUILDER®</title>
-  <link rel="icon" type="image/png" href="photos and videos/logo.png" />
+  <!-- Favicon Icons (Priority 1: WebP, Priority 2: PNG, Priority 3: JPEG) -->
+  <link rel="icon" type="image/webp" href="/favicon.webp" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+  <link rel="icon" type="image/jpeg" href="/favicon.jpg" />
+  <link rel="shortcut icon" href="/favicon.webp" />
+  <link rel="apple-touch-icon" href="/logo.webp" />
   
   <!-- Google Fonts & Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -43,15 +50,15 @@
             primary: '#ff7722',
             'primary-hover': '#e65c00',
             'primary-container': '#ffdca1',
-            'outline': '#9e8f78',
-            'outline-variant': '#514532'
+            'on-primary': '#412d00',
+            outline: '#514532'
           },
           fontFamily: {
             display: ['Cinzel', 'serif'],
             'display-lg': ['Playfair Display', 'serif'],
             sans: ['Inter', 'sans-serif'],
             mono: ['Space Mono', 'monospace'],
-            'label-caps': ['Space Mono', 'monospace']
+            body: ['Outfit', 'sans-serif']
           }
         }
       }
@@ -59,13 +66,8 @@
   </script>
 
   <style>
-    body {
-      background-color: #0a0a0e;
-      color: #e5e2e1;
-      font-family: 'Inter', sans-serif;
-    }
     .header-glass {
-      background: rgba(14, 14, 18, 0.88);
+      background: rgba(19, 19, 24, 0.85);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255, 255, 255, 0.1);
@@ -79,6 +81,7 @@
     }
     .gold-gradient-text {
       background: linear-gradient(135deg, #fff2cc 0%, #ffdca1 50%, #d4af37 100%);
+      background-clip: text;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
