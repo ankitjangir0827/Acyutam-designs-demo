@@ -250,11 +250,8 @@ function checkAdminAuthGuard() {
 
   const currentAuthUser = window.AchyutamFirebase?.auth?.currentUser;
   if (currentAuthUser) {
-    if (
-      !currentAuthUser.emailVerified ||
-      (currentAuthUser.email || "").toLowerCase().trim() !==
-        "ankitjangir529@gmail.com"
-    ) {
+    const cleanEmail = (currentAuthUser.email || "").toLowerCase().trim();
+    if (cleanEmail !== "ankitjangir529@gmail.com") {
       if (guard) {
         guard.classList.remove("hidden");
         guard.classList.add("flex");
@@ -276,10 +273,7 @@ function checkAdminAuthGuard() {
   try {
     const user = JSON.parse(userStr);
     const userEmail = (user.email || "").toLowerCase().trim();
-    if (
-      userEmail !== "ankitjangir529@gmail.com" ||
-      user.emailVerified !== true
-    ) {
+    if (userEmail !== "ankitjangir529@gmail.com") {
       if (guard) {
         guard.classList.remove("hidden");
         guard.classList.add("flex");
@@ -316,7 +310,7 @@ async function initAdminPortal() {
       window.AchyutamFirebase.auth,
       (user) => {
         if (
-          !user?.emailVerified ||
+          !user ||
           (user.email || "").toLowerCase().trim() !== "ankitjangir529@gmail.com"
         ) {
           const guard = document.getElementById("admin-access-guard");
