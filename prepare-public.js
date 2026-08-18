@@ -23,6 +23,8 @@ const filesToCopy = fs.readdirSync(rootDir).filter(file => {
     ext === '.webm' ||
     ext === '.mp4' ||
     ext === '.png' ||
+    ext === '.jpg' ||
+    ext === '.jpeg' ||
     ext === '.webp'
   ) && file !== 'package.json' && file !== 'package-lock.json' && file !== 'tsconfig.json';
 });

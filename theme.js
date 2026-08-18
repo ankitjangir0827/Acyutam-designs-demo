@@ -1129,13 +1129,22 @@ document.addEventListener("DOMContentLoaded", () => {
   allImgs.forEach((img) => img.setAttribute("loading", "lazy"));
 });
 
-// Global Image Loading Error Fallback to logo.png
+// Global Image Loading Error Fallback Chain (Priority: webp -> png -> jpeg -> jpg)
 document.addEventListener("error", (e) => {
   if (e.target && e.target.tagName === "IMG") {
     const img = e.target;
-    if (!img.dataset.fallbackTried) {
-      img.dataset.fallbackTried = "true";
-      img.src = "logo.png";
+    const currentSrc = (img.src || "").toLowerCase();
+    if (currentSrc.includes("logo")) {
+      if (!img.dataset.fallbackLevel) {
+        img.dataset.fallbackLevel = "png";
+        img.src = "logo.png";
+      } else if (img.dataset.fallbackLevel === "png") {
+        img.dataset.fallbackLevel = "jpeg";
+        img.src = "logo.jpeg";
+      } else if (img.dataset.fallbackLevel === "jpeg") {
+        img.dataset.fallbackLevel = "jpg";
+        img.src = "logo.jpg";
+      }
     }
   }
 }, true);
