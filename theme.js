@@ -59,14 +59,14 @@ window.removeAIFingerprint = function(codeText) {
       color: #e5e2e1 !important;
     }
 
-    /* Mandatory 180 Degree Clockwise Rotation for Logo Images */
+    /* Standard 0 Degree Normal Orientation for Logo Images */
     .logo-mark-flipped,
     img.logo-mark-flipped,
     img[src*="logo"],
     img[alt*="Logo"],
     img[alt*="logo"],
     a[title*="ACHYUTAM BUILDER"] img {
-      transform: rotate(180deg) !important;
+      transform: rotate(0deg) !important;
     }
 
     /* === 16:9 Image Responsiveness & Zero Distortion === */
