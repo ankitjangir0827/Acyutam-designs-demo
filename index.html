@@ -361,11 +361,8 @@
   <!-- Preloader Screen (Desktop & Mobile Video Experience) -->
   <div id="preloader" class="flex flex-col justify-between overflow-hidden">
     <video id="preloader-video" autoplay muted playsinline loop preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 opacity-85">
-      <source src="/preloader-video.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2"/>
-      <source src="preloader-video.mp4" type="video/mp4; codecs=avc1.42E01E,mp4a.40.2"/>
-      <source src="/preloader-video.webm" type="video/webm; codecs=vp9,vorbis"/>
-      <source src="preloader-video.webm" type="video/webm; codecs=vp9,vorbis"/>
-      <source src="public/preloader-video.webm" type="video/webm"/>
+      <source src="preloader-video.webm" type="video/webm"/>
+      <source src="/preloader-video.webm" type="video/webm"/>
     </video>
     <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20 z-10 pointer-events-none"></div>
 
@@ -3422,7 +3419,15 @@
 
       if (preloaderVideo) {
         preloaderVideo.muted = true;
-        preloaderVideo.play().catch((err) => console.warn("Autoplay error/warning:", err));
+        preloaderVideo.playsInline = true;
+        const playPromise = preloaderVideo.play();
+        if (playPromise !== undefined) {
+          playPromise.catch(() => {
+            const startPlay = () => { preloaderVideo.play(); };
+            window.addEventListener('click', startPlay, { once: true });
+            window.addEventListener('touchstart', startPlay, { once: true });
+          });
+        }
 
         const applyPlaybackRate = () => {
           try {
@@ -3455,7 +3460,7 @@
             videoEnded = true; 
             checkPreloaderCompletion(); 
           } 
-        }, 3000);
+        }, 4500);
       } else { 
         videoEnded = true; 
         setTimeout(checkPreloaderCompletion, 500); 
