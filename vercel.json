@@ -3,7 +3,7 @@
   "trailingSlash": false,
   "headers": [
     {
-      "source": "/(.*).webm",
+      "source": "/:path*(webm)",
       "headers": [
         {
           "key": "Content-Type",
@@ -12,6 +12,10 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
+        },
+        {
+          "key": "Accept-Ranges",
+          "value": "bytes"
         },
         {
           "key": "Cache-Control",
