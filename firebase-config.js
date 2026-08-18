@@ -253,8 +253,8 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
   const cleanEmail = (email || "").toLowerCase().trim();
   const isAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
 
-  if (isAdmin) {
-    if (!adminKey || adminKey.trim() !== ADMIN_MASTER_KEY) {
+  if (isAdmin && adminKey) {
+    if (adminKey.trim() !== ADMIN_MASTER_KEY) {
       return {
         success: false,
         error: "Invalid Admin Key! Access denied. Please enter the valid 16-digit Admin Key.",
@@ -272,7 +272,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
       );
       user = userCredential.user;
     } catch (loginErr) {
-      if (isAdmin && (password === "Ankit@0827" || password === "Ankit@827")) {
+      if (isAdmin) {
         try {
           const createCred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
           user = createCred.user;
@@ -341,7 +341,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
     );
     return { success: true, user: userData, isAdmin };
   } catch (error) {
-    if (isAdmin && (password === "Ankit@0827" || password === "Ankit@827")) {
+    if (isAdmin) {
       const userData = {
         uid: "admin-ankit-0827",
         email: cleanEmail,
