@@ -120,6 +120,10 @@
           <label class="block text-on-surface-variant mb-1 font-bold">Password</label>
           <input type="password" id="admin-input-password" value="Ankit@0827" required placeholder="Enter admin password" class="w-full bg-surface-container border border-outline-variant/40 rounded-lg p-3 text-on-surface focus:border-primary focus:outline-none"/>
         </div>
+        <div>
+          <label class="block text-primary mb-1 font-bold">Admin Key (16-Digit Master Key)</label>
+          <input type="text" id="admin-input-key" value="Ak#0827!Achyutam" maxlength="16" required placeholder="16-character Admin Key" class="w-full bg-surface-container border border-primary/60 rounded-lg p-3 text-on-surface font-mono font-bold tracking-wider focus:border-primary focus:outline-none"/>
+        </div>
         <p id="admin-login-error" class="text-red-400 text-[11px] hidden font-mono leading-tight text-center"></p>
         <button type="submit" id="btn-admin-login" class="w-full py-3 bg-primary text-black font-bold tracking-widest uppercase rounded-lg hover:bg-primary-hover transition-all text-center cursor-pointer shadow-lg">
           LOG IN AS ADMIN
@@ -704,22 +708,33 @@
       if (btn) { btn.disabled = false; btn.innerHTML = `<span>SEND &amp; MARK ANSWERED</span> <span class="material-symbols-outlined text-sm">send</span>`; }
     }
 
-    // Direct Email/Password Admin Login Handler
+    // Direct Email/Password Admin Login Handler with 16-digit Admin Key Verification
     async function handleDirectAdminLogin(e) {
       if (e) e.preventDefault();
       const emailInput = document.getElementById('admin-input-email');
       const passInput = document.getElementById('admin-input-password');
+      const keyInput = document.getElementById('admin-input-key');
       const errEl = document.getElementById('admin-login-error');
       const btn = document.getElementById('btn-admin-login');
 
       const email = (emailInput?.value || '').toLowerCase().trim();
       const pass = passInput?.value || '';
+      const key = (keyInput?.value || '').trim();
 
       if (errEl) errEl.classList.add('hidden');
+
+      if (key !== "Ak#0827!Achyutam") {
+        if (errEl) {
+          errEl.innerText = "Invalid Admin Key! Please enter valid 16-digit Admin Key.";
+          errEl.classList.remove('hidden');
+        }
+        return;
+      }
+
       if (btn) btn.innerText = 'LOGGING IN...';
 
       if (window.AchyutamFirebase && window.AchyutamFirebase.signInWithEmailPassword) {
-        const res = await window.AchyutamFirebase.signInWithEmailPassword(email, pass);
+        const res = await window.AchyutamFirebase.signInWithEmailPassword(email, pass, key);
         if (res.success && (res.isAdmin || email === 'ankitjangir529@gmail.com')) {
           const guard = document.getElementById('admin-access-guard');
           if (guard) guard.classList.add('hidden');
@@ -727,7 +742,7 @@
           showToast('Welcome Admin, Login Successful!');
         } else {
           if (errEl) {
-            errEl.innerText = res.error || 'Access Denied: Invalid Admin Credentials.';
+            errEl.innerText = res.error || 'Access Denied: Invalid Admin Credentials or Admin Key.';
             errEl.classList.remove('hidden');
           }
         }
@@ -735,13 +750,24 @@
       if (btn) btn.innerText = 'LOG IN AS ADMIN';
     }
 
-    // Google Admin Login Handler
+    // Google Admin Login Handler with 16-digit Admin Key Verification
     async function handleGoogleAdminLogin() {
+      const keyInput = document.getElementById('admin-input-key');
       const errEl = document.getElementById('admin-login-error');
+      const key = (keyInput?.value || '').trim();
+
       if (errEl) errEl.classList.add('hidden');
 
+      if (key !== "Ak#0827!Achyutam") {
+        if (errEl) {
+          errEl.innerText = "Invalid Admin Key! Please enter valid 16-digit Admin Key.";
+          errEl.classList.remove('hidden');
+        }
+        return;
+      }
+
       if (window.AchyutamFirebase && window.AchyutamFirebase.signInWithGoogleFirebase) {
-        const res = await window.AchyutamFirebase.signInWithGoogleFirebase();
+        const res = await window.AchyutamFirebase.signInWithGoogleFirebase(key);
         if (res.success && (res.isAdmin || (res.user?.email || '').toLowerCase().trim() === 'ankitjangir529@gmail.com')) {
           const guard = document.getElementById('admin-access-guard');
           if (guard) guard.classList.add('hidden');
@@ -749,7 +775,7 @@
           showToast('Welcome Admin, Google Login Successful!');
         } else {
           if (errEl) {
-            errEl.innerText = res.error || 'Access Denied: Only ankitjangir529@gmail.com has admin access.';
+            errEl.innerText = res.error || 'Access Denied: Invalid Admin Key or Non-Admin Account.';
             errEl.classList.remove('hidden');
           }
         }

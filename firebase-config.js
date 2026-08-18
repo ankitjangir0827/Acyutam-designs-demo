@@ -34,6 +34,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 export const ADMIN_EMAIL = "ankitjangir529@gmail.com";
+export const ADMIN_MASTER_KEY = "Ak#0827!Achyutam";
+
+export function verifyAdminMasterKey(key) {
+  return (key || "").trim() === ADMIN_MASTER_KEY;
+}
 
 // Firebase web app configuration
 export const firebaseConfig = {
@@ -244,9 +249,18 @@ export async function signUpWithEmailPassword(
  * - If false: displays error, triggers sendEmailVerification() (or provides resend), signs out, and blocks login.
  * - If true: grants access and checks verified admin role.
  */
-export async function signInWithEmailPassword(email, password) {
+export async function signInWithEmailPassword(email, password, adminKey = "") {
   const cleanEmail = (email || "").toLowerCase().trim();
   const isAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
+
+  if (isAdmin) {
+    if (!adminKey || adminKey.trim() !== ADMIN_MASTER_KEY) {
+      return {
+        success: false,
+        error: "Invalid Admin Key! Access denied. Please enter the valid 16-digit Admin Key.",
+      };
+    }
+  }
 
   try {
     let user;
@@ -402,7 +416,7 @@ export async function resendVerificationEmail(email, password) {
 /**
  * 4. Google Popup Sign In (Google verifies email ownership by default)
  */
-export async function signInWithGoogleFirebase() {
+export async function signInWithGoogleFirebase(adminKey = "") {
   const provider = new GoogleAuthProvider();
   provider.setCustomParameters({ prompt: "select_account" });
 
@@ -410,6 +424,19 @@ export async function signInWithGoogleFirebase() {
     const result = await signInWithPopup(auth, provider);
     const user = result.user;
     const cleanEmail = (user.email || "").toLowerCase().trim();
+    const isAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
+
+    if (isAdmin) {
+      if (!adminKey || adminKey.trim() !== ADMIN_MASTER_KEY) {
+        await signOut(auth);
+        localStorage.removeItem("achyutam_user");
+        return {
+          success: false,
+          adminKeyRequired: true,
+          error: "Invalid Admin Key! Access denied. Please enter the valid 16-digit Admin Key.",
+        };
+      }
+    }
 
     // Verification check (Google accounts are emailVerified=true)
     if (!user.emailVerified) {
@@ -804,6 +831,8 @@ window.AchyutamFirebase = {
   db,
   auth,
   ADMIN_EMAIL,
+  ADMIN_MASTER_KEY,
+  verifyAdminMasterKey,
   signUpWithEmailPassword,
   signInWithEmailPassword,
   resendVerificationEmail,
