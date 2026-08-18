@@ -361,10 +361,18 @@
   <!-- Preloader Screen (Desktop & Mobile Video Experience) -->
   <div id="preloader" class="flex flex-col justify-between overflow-hidden">
     <video id="preloader-video" autoplay muted playsinline loop preload="auto" class="absolute inset-0 w-full h-full object-cover z-0 opacity-85">
+      <!-- Priority 1: WebM format -->
       <source src="preloader-video.webm" type="video/webm"/>
       <source src="/preloader-video.webm" type="video/webm"/>
       <source src="photos_and_videos/preloader video.webm" type="video/webm"/>
       <source src="/photos_and_videos/preloader%20video.webm" type="video/webm"/>
+
+      <!-- Priority 2: MP4 format fallback for browsers/OS lacking WebM support -->
+      <source src="preloader-video.mp4" type="video/mp4"/>
+      <source src="/preloader-video.mp4" type="video/mp4"/>
+      <source src="preloader video.mp4" type="video/mp4"/>
+      <source src="photos_and_videos/preloader video.mp4" type="video/mp4"/>
+      <source src="/photos_and_videos/preloader%20video.mp4" type="video/mp4"/>
     </video>
     <div class="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-background/20 z-10 pointer-events-none"></div>
 
