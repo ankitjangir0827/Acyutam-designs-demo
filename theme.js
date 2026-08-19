@@ -22,9 +22,37 @@ window.removeAIFingerprint = function(codeText) {
 
 (() => {
   const themeStyles = `
+    @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
     @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&display=swap');
 
+    /* Embedded Material Symbols Outlined Font Face Fallback */
+    @font-face {
+      font-family: 'Material Symbols Outlined';
+      font-style: normal;
+      font-weight: 100 700;
+      font-display: block;
+      src: url('https://fonts.gstatic.com/s/materialsymbolsoutlined/v367/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOem.ttf') format('truetype');
+    }
+
+    /* Material Symbols Outlined Font Family Rules */
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+      text-rendering: optimizeLegibility;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+
     /* Open Source 'Alex Brush' Font Integration for Cards & Script Accents */
+
     .font-alex-brush,
     .alex-brush,
     .card-script-font,

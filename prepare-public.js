@@ -8,15 +8,33 @@ const __dirname = path.dirname(__filename);
 const rootDir = __dirname;
 const publicDir = path.join(rootDir, 'public');
 
-if (!fs.existsSync(publicDir)) {
-  fs.mkdirSync(publicDir, { recursive: true });
+if (fs.existsSync(publicDir)) {
+  fs.rmSync(publicDir, { recursive: true, force: true });
+}
+fs.mkdirSync(publicDir, { recursive: true });
+
+function copyRecursiveSync(src, dest) {
+  const exists = fs.existsSync(src);
+  const stats = exists && fs.statSync(src);
+  const isDirectory = exists && stats.isDirectory();
+  if (isDirectory) {
+    if (!fs.existsSync(dest)) {
+      fs.mkdirSync(dest, { recursive: true });
+    }
+    fs.readdirSync(src).forEach((childItemName) => {
+      copyRecursiveSync(path.join(src, childItemName), path.join(dest, childItemName));
+    });
+  } else {
+    fs.copyFileSync(src, dest);
+  }
 }
 
-// Copy HTML, JS, JSON, WEBM, CSS files from root to public
+// Copy HTML, JS, JSON, WEBM, CSS, images, etc. from root to public
 const filesToCopy = fs.readdirSync(rootDir).filter(file => {
   const ext = path.extname(file).toLowerCase();
   return (
     ext === '.html' ||
+    ext === '.css' ||
     ext === '.js' ||
     ext === '.cjs' ||
     ext === '.json' ||
@@ -42,4 +60,13 @@ for (const file of filesToCopy) {
   }
 }
 
+// Copy photos_and_videos directory to public/
+const mediaSrc = path.join(rootDir, 'photos_and_videos');
+if (fs.existsSync(mediaSrc)) {
+  const mediaDest = path.join(publicDir, 'photos_and_videos');
+  copyRecursiveSync(mediaSrc, mediaDest);
+  console.log('  ✓ Copied photos_and_videos -> public/photos_and_videos');
+}
+
 console.log('Static assets synced to public/ folder successfully!');
+

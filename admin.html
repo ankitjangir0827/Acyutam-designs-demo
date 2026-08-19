@@ -145,55 +145,6 @@
   <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
   <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
-  <!-- Access Guard Overlay (For Admin Portal Login) -->
-  <div id="admin-access-guard" class="fixed inset-0 z-[200] hidden items-center justify-center bg-black/95 backdrop-blur-xl p-6">
-    <div class="max-w-md w-full bg-surface border border-primary/40 rounded-2xl p-8 text-center shadow-[0_0_50px_rgba(255,119,34,0.25)] flex flex-col items-center gap-4">
-      <div class="w-16 h-16 rounded-full bg-primary/10 border border-primary/30 flex items-center justify-center text-primary">
-        <span class="material-symbols-outlined text-4xl">admin_panel_settings</span>
-      </div>
-      <h2 class="font-display text-2xl text-primary font-bold tracking-wider">ADMIN PORTAL LOGIN</h2>
-      <p class="text-xs text-on-surface-variant leading-relaxed">
-        Log in with <span class="text-primary font-bold">ankitjangir529@gmail.com</span> using Google Sign-In or Direct Admin Password.
-      </p>
-
-      <!-- Direct Email/Password Form -->
-      <form id="admin-login-form" onsubmit="window.handleDirectAdminLogin(event)" class="w-full flex flex-col gap-3 text-left font-mono text-xs">
-        <div>
-          <label class="block text-on-surface-variant mb-1 font-bold">Admin Email</label>
-          <input type="email" id="admin-input-email" value="ankitjangir529@gmail.com" required class="w-full bg-surface-container border border-outline-variant/40 rounded-lg p-3 text-on-surface focus:border-primary focus:outline-none"/>
-        </div>
-        <div>
-          <label class="block text-on-surface-variant mb-1 font-bold">Password</label>
-          <input type="password" id="admin-input-password" value="Ankit@0827" required placeholder="Enter admin password" class="w-full bg-surface-container border border-outline-variant/40 rounded-lg p-3 text-on-surface focus:border-primary focus:outline-none"/>
-        </div>
-        <div>
-          <label class="block text-primary mb-1 font-bold">Admin Key (16-Digit Master Key)</label>
-          <input type="text" id="admin-input-key" value="Ak#0827!Achyutam" maxlength="16" required placeholder="16-character Admin Key" class="w-full bg-surface-container border border-primary/60 rounded-lg p-3 text-on-surface font-mono font-bold tracking-wider focus:border-primary focus:outline-none"/>
-        </div>
-        <p id="admin-login-error" class="text-red-400 text-[11px] hidden font-mono leading-tight text-center"></p>
-        <button type="submit" id="btn-admin-login" class="w-full py-3 bg-primary text-black font-bold tracking-widest uppercase rounded-lg hover:bg-primary-hover transition-all text-center cursor-pointer shadow-lg">
-          LOG IN AS ADMIN
-        </button>
-      </form>
-
-      <div class="flex items-center gap-2 w-full my-1">
-        <div class="h-px bg-outline-variant/30 flex-1"></div>
-        <span class="text-[10px] font-mono text-on-surface-variant/60 uppercase">OR</span>
-        <div class="h-px bg-outline-variant/30 flex-1"></div>
-      </div>
-
-      <!-- Google Sign In Button -->
-      <button type="button" onclick="window.handleGoogleAdminLogin()" class="w-full py-3 border border-outline-variant/60 hover:border-primary bg-surface-container text-on-surface font-semibold tracking-wider uppercase rounded-lg transition-all flex items-center justify-center gap-2 cursor-pointer text-xs font-mono">
-        <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-        <span>Sign in with Google</span>
-      </button>
-
-      <a href="index.html" class="text-xs text-on-surface-variant/70 hover:text-primary transition-colors font-mono mt-1">
-        Return to Home Page
-      </a>
-    </div>
-  </div>
-
   <!-- Header Component (Matching Site Architecture & Responsive Layout) -->
   <header class="sticky top-0 z-50 header-glass py-3 px-4 sm:px-8 border-b border-outline-variant/30">
     <div class="max-w-7xl mx-auto flex items-center justify-between gap-3 sm:gap-4 font-mono text-xs tracking-widest uppercase">
@@ -214,23 +165,15 @@
         </div>
       </a>
 
-      <!-- Right Side: Export Actions, Theme Toggle, External Page Links -->
+      <!-- Right Side: Theme Toggle & External Page Links -->
       <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
         
         <!-- Day / Night Theme Toggle Switch -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
 
-        <!-- Export JSON Download Quick Button -->
-        <button onclick="window.AchyutamAdmin.downloadProjectsJSON()" title="Download updated projects.json file" class="flex items-center gap-1.5 bg-primary text-black hover:bg-primary-hover font-bold px-3.5 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all shadow-md cursor-pointer">
-          <span class="material-symbols-outlined text-sm">download</span>
-          <span class="hidden md:inline">DOWNLOAD JSON</span>
-        </button>
+        
 
-        <!-- Copy JSON to Clipboard Quick Button -->
-        <button onclick="window.AchyutamAdmin.copyProjectsJSONToClipboard()" title="Copy projects.json to clipboard" class="flex items-center gap-1.5 border border-primary/60 bg-primary/10 hover:bg-primary/20 text-primary font-semibold px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all cursor-pointer">
-          <span class="material-symbols-outlined text-sm">content_copy</span>
-          <span class="hidden lg:inline">COPY JSON</span>
-        </button>
+        
 
         <!-- Return to Main Admin Dashboard & Enquiries Portal -->
         <a href="admin-dashboard.html" class="flex items-center gap-1.5 border border-outline-variant/60 hover:border-primary bg-surface-container-low text-on-surface-variant hover:text-primary px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all" title="Return to Main Admin Dashboard & Enquiries Portal">
@@ -303,34 +246,14 @@
 
     </div>
 
-    <!-- GITHUB PAGES WORKFLOW BANNER (Clean Instruction & Export Bar) -->
-    <div class="glass-panel rounded-2xl p-5 sm:p-6 border border-primary/30 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 bg-gradient-to-r from-primary/10 via-surface to-surface-container">
-      <div class="flex items-start gap-3.5">
-        <div class="w-10 h-10 rounded-xl bg-primary/20 border border-primary/40 flex items-center justify-center text-primary shrink-0 mt-0.5">
-          <span class="material-symbols-outlined text-2xl">sync_saved_locally</span>
-        </div>
-        <div>
-          <h3 class="font-display font-bold text-sm sm:text-base text-primary gold-gradient-text flex items-center gap-2">
-            <span>STATIC GITHUB PAGES WORKFLOW</span>
-          </h3>
-          <p class="text-xs text-on-surface-variant mt-1 leading-relaxed max-w-2xl font-sans">
-            Make edits or add new architectural projects below. When finished, click <strong>"Download JSON"</strong> or <strong>"Copy JSON"</strong>, replace <code class="text-primary font-mono font-bold">projects.json</code> in your local folder, and push to GitHub. All website pages instantly render the updated portfolio without any backend server.
-          </p>
-        </div>
-      </div>
+    
 
       <div class="flex items-center gap-2.5 flex-wrap sm:flex-nowrap w-full md:w-auto shrink-0 font-mono text-xs">
         <!-- Download Button -->
-        <button onclick="window.AchyutamAdmin.downloadProjectsJSON()" class="flex-1 md:flex-none flex items-center justify-center gap-2 px-4 py-2.5 bg-primary text-black font-bold tracking-wider uppercase rounded-lg hover:bg-primary-hover shadow-lg transition-all cursor-pointer">
-          <span class="material-symbols-outlined text-base">download</span>
-          <span>Download projects.json</span>
-        </button>
+        
 
         <!-- Copy JSON Button -->
-        <button onclick="window.AchyutamAdmin.copyProjectsJSONToClipboard()" class="flex-1 md:flex-none flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-surface-container border border-primary/40 text-primary font-semibold tracking-wider uppercase rounded-lg hover:bg-primary/20 transition-all cursor-pointer">
-          <span class="material-symbols-outlined text-base">content_copy</span>
-          <span>Copy JSON</span>
-        </button>
+        
 
         <!-- Hidden File Input for Import -->
         <input type="file" id="import-json-file-input" accept=".json" class="hidden" onchange="window.AchyutamAdmin.importProjectsJSON(this.files[0])"/>
@@ -380,9 +303,9 @@
           </label>
           <select id="project-category" required class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none cursor-pointer">
             <option value="Residential">Residential</option>
-            <option value="Industrial">Industrial</option>
             <option value="Commercial">Commercial</option>
-            <option value="Temples &amp; Cultural">Temples &amp; Cultural</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Cultural">Cultural</option>
           </select>
         </div>
 
@@ -410,29 +333,43 @@
           <input type="text" id="project-area" placeholder="e.g., 2,500 sq. ft. or 6,500 sq ft" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
         </div>
 
-        <!-- 6. Paste Image 1 URL (Text Input with live thumbnail) -->
+        <!-- 6. Image 1: Dual Input (Choose Local Photo OR Paste URL) -->
         <div>
           <label class="block font-bold uppercase tracking-wider text-primary mb-1.5 flex items-center justify-between">
-            <span>Paste Image 1 URL (Main / Elevation)</span>
-            <span class="text-[10px] text-on-surface-variant/60 font-normal">Direct Link</span>
+            <span>Image 1 (Main / Elevation)</span>
+            <span class="text-[10px] text-on-surface-variant/60 font-normal">Local File or URL</span>
           </label>
-          <input type="url" id="project-image1" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="https://images.unsplash.com/..." class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
-          <div class="mt-2 h-20 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px]">
+          <div class="flex items-center gap-2 mb-2">
+            <input type="file" id="file-input-image1" accept="image/*" class="hidden" onchange="window.AchyutamAdmin.handleLocalImageSelect(event, 1)"/>
+            <button type="button" onclick="document.getElementById('file-input-image1').click()" class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-surface-container hover:bg-surface-container-high border border-primary/50 rounded-lg text-primary text-xs font-mono font-bold tracking-wider transition-all cursor-pointer shadow-sm">
+              <span class="material-symbols-outlined text-base">upload_file</span>
+              <span id="file-label-image1">CHOOSE LOCAL PHOTO 1</span>
+            </button>
+          </div>
+          <input type="url" id="project-image1" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="Or paste image URL (https://...)" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-2.5 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+          <div class="mt-2 h-24 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px] relative">
             <img id="preview-image-1" src="" alt="Preview 1" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')"/>
-            <span class="preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview (Image 1)</span>
+            <span id="placeholder-image-1" class="preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview (Image 1)</span>
           </div>
         </div>
 
-        <!-- 7. Paste Image 2 URL (Text Input with live thumbnail) -->
+        <!-- 7. Image 2: Dual Input (Choose Local Photo OR Paste URL) -->
         <div>
           <label class="block font-bold uppercase tracking-wider text-primary mb-1.5 flex items-center justify-between">
-            <span>Paste Image 2 URL (Interior / Perspective)</span>
-            <span class="text-[10px] text-on-surface-variant/60 font-normal">Direct Link</span>
+            <span>Image 2 (Interior / Perspective)</span>
+            <span class="text-[10px] text-on-surface-variant/60 font-normal">Local File or URL</span>
           </label>
-          <input type="url" id="project-image2" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="https://images.unsplash.com/..." class="w-full bg-surface border border-outline-variant/40 rounded-lg p-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
-          <div class="mt-2 h-20 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px]">
+          <div class="flex items-center gap-2 mb-2">
+            <input type="file" id="file-input-image2" accept="image/*" class="hidden" onchange="window.AchyutamAdmin.handleLocalImageSelect(event, 2)"/>
+            <button type="button" onclick="document.getElementById('file-input-image2').click()" class="flex-1 flex items-center justify-center gap-1.5 py-2 px-3 bg-surface-container hover:bg-surface-container-high border border-primary/50 rounded-lg text-primary text-xs font-mono font-bold tracking-wider transition-all cursor-pointer shadow-sm">
+              <span class="material-symbols-outlined text-base">upload_file</span>
+              <span id="file-label-image2">CHOOSE LOCAL PHOTO 2</span>
+            </button>
+          </div>
+          <input type="url" id="project-image2" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="Or paste image URL (https://...)" class="w-full bg-surface border border-outline-variant/40 rounded-lg p-2.5 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40 font-sans"/>
+          <div class="mt-2 h-24 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px] relative">
             <img id="preview-image-2" src="" alt="Preview 2" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')"/>
-            <span class="preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview (Image 2)</span>
+            <span id="placeholder-image-2" class="preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview (Image 2)</span>
           </div>
         </div>
 
@@ -525,21 +462,16 @@
           <select id="filter-category-select" onchange="window.AchyutamAdmin.setCategoryFilter(this.value)" class="w-full sm:w-44 bg-surface border border-outline-variant/40 rounded-lg py-2 px-3 text-xs text-on-surface focus:border-primary focus:outline-none cursor-pointer">
             <option value="all">All Typologies</option>
             <option value="Residential">Residential</option>
-            <option value="Industrial">Industrial</option>
             <option value="Commercial">Commercial</option>
-            <option value="Temples &amp; Cultural">Temples &amp; Cultural</option>
+            <option value="Industrial">Industrial</option>
+            <option value="Cultural">Cultural</option>
           </select>
 
           <!-- Export Download Button -->
-          <button onclick="window.AchyutamAdmin.downloadProjectsJSON()" title="Download updated projects.json file" class="flex items-center gap-1.5 px-3 py-2 bg-primary hover:bg-primary-hover text-black font-semibold rounded-lg text-xs font-mono tracking-wider shadow-md hover:shadow-lg transition-all cursor-pointer shrink-0">
-            <span class="material-symbols-outlined text-base">download</span>
-            <span class="hidden md:inline">EXPORT JSON</span>
-          </button>
+          
 
           <!-- Copy JSON Button -->
-          <button onclick="window.AchyutamAdmin.copyProjectsJSONToClipboard()" title="Copy projects.json to clipboard" class="p-2 border border-outline-variant/40 hover:border-primary rounded-lg bg-surface hover:text-primary transition-colors cursor-pointer shrink-0">
-            <span class="material-symbols-outlined text-base">content_copy</span>
-          </button>
+          
 
           <!-- Reset Filter Button -->
           <button onclick="window.AchyutamAdmin.resetFilters()" title="Reset Filters" class="p-2 border border-outline-variant/40 hover:border-primary rounded-lg bg-surface hover:text-primary transition-colors cursor-pointer shrink-0">
@@ -553,21 +485,21 @@
       <div class="overflow-x-auto rounded-xl border border-outline-variant/30 custom-scrollbar">
         <table class="w-full text-left text-xs border-collapse">
           <thead>
-            <tr class="border-b border-outline-variant/30 bg-surface-container-low/90 text-primary font-mono uppercase tracking-widest text-[11px]">
-              <th class="py-4 px-4 font-bold">Project &amp; Client</th>
-              <th class="py-4 px-4 font-bold">Category</th>
-              <th class="py-4 px-4 font-bold">Scale / Area</th>
-              <th class="py-4 px-4 font-bold">Status &amp; Quick Switch</th>
-              <th class="py-4 px-4 font-bold">Date Added</th>
-              <th class="py-4 px-4 font-bold text-right">Actions</th>
+            <tr class="border-b border-outline-variant/30 bg-surface-container-low/90 text-primary font-mono uppercase tracking-widest text-[10px]">
+              <th class="py-3 px-3 font-bold">Project &amp; Client</th>
+              <th class="py-3 px-2 font-bold">Category</th>
+              <th class="py-3 px-2 font-bold">Scale / Area</th>
+              <th class="py-3 px-2 font-bold">Status</th>
+              <th class="py-3 px-2 font-bold hidden lg:table-cell">Date</th>
+              <th class="py-3 px-3 font-bold text-right">Actions</th>
             </tr>
           </thead>
           <tbody id="projects-table-body" class="divide-y divide-outline-variant/20 text-on-surface">
             <tr>
               <td colspan="6" class="py-16 text-center text-on-surface-variant">
                 <div class="flex flex-col items-center justify-center gap-3 font-mono">
-                  <span class="material-symbols-outlined text-3xl text-primary animate-pulse">hourglass_empty</span>
-                  <span>Loading projects from <code class="text-primary font-bold">projects.json</code>...</span>
+                  <span class="material-symbols-outlined text-3xl text-primary animate-pulse">cloud_sync</span>
+                  <span>Fetching live architectural projects directly from <code class="text-primary font-bold">Cloudinary</code>...</span>
                 </div>
               </td>
             </tr>

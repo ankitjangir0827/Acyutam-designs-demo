@@ -48,39 +48,30 @@ function resolvePath(reqUrl) {
 
   // 1. CEO Picture Mapping
   if (lowerRel.includes("ceo-admin-profile") || lowerRel.includes("ceo pic")) {
-    const ceoFile = path.join(
-      rootDir,
-      "public",
-      "photos_and_videos",
-      "ceo pic.jpeg",
-    );
+    const ceoFile = path.join(rootDir, "photos_and_videos", "ceo pic.jpeg");
     if (fs.existsSync(ceoFile)) return ceoFile;
   }
 
   // 2. Preloader Video Mapping
   if (lowerRel.includes("preloader") || lowerRel.includes("lotus-animation")) {
-    const videoFile = path.join(
-      rootDir,
-      "public",
-      "photos_and_videos",
-      "preloader video.webm",
-    );
-    if (fs.existsSync(videoFile)) return videoFile;
-    const rootVideo = path.join(rootDir, "preloader-video.webm");
-    if (fs.existsSync(rootVideo)) return rootVideo;
+    if (lowerRel.endsWith(".mp4")) {
+      const mp4File = path.join(rootDir, "preloader-video.mp4");
+      if (fs.existsSync(mp4File)) return mp4File;
+    }
+    const webmFile = path.join(rootDir, "preloader-video.webm");
+    if (fs.existsSync(webmFile)) return webmFile;
+    const mp4File = path.join(rootDir, "preloader-video.mp4");
+    if (fs.existsSync(mp4File)) return mp4File;
   }
 
   // 3. Logo & Favicon Mapping
   if (lowerRel.includes("logo") || lowerRel.includes("favicon")) {
-    const logoWebp = path.join(
-      rootDir,
-      "public",
-      "photos_and_videos",
-      "logo.webp",
-    );
+    const logoWebp = path.join(rootDir, "photos_and_videos", "logo.webp");
     if (fs.existsSync(logoWebp)) return logoWebp;
-    const logoPng = path.join(rootDir, "public", "logo.png");
+    const logoPng = path.join(rootDir, "photos_and_videos", "logo.png");
     if (fs.existsSync(logoPng)) return logoPng;
+    const rootLogo = path.join(rootDir, "logo.png");
+    if (fs.existsSync(rootLogo)) return rootLogo;
   }
 
   // 4. Canvas Scroller Frame Animation Mapping
@@ -88,7 +79,6 @@ function resolvePath(reqUrl) {
     const fileName = path.basename(relPath);
     const frameFile = path.join(
       rootDir,
-      "public",
       "photos_and_videos",
       "scroller",
       fileName,
@@ -101,20 +91,19 @@ function resolvePath(reqUrl) {
   // Standard lookup candidate paths
   const candidates = [
     path.join(rootDir, relPath),
+    path.join(rootDir, "photos_and_videos", relPath),
     path.join(rootDir, "public", relPath),
-    path.join(rootDir, "public", "photos_and_videos", relPath),
     path.join(
       rootDir,
-      "public",
       relPath.replace(/^photos[ _]and[ _]videos\//i, ""),
     ),
     path.join(
       rootDir,
-      "public",
       "photos_and_videos",
       relPath.replace(/^photos[ _]and[ _]videos\//i, ""),
     ),
   ];
+
 
   if (!hasExt) {
     candidates.unshift(
@@ -139,9 +128,8 @@ function resolvePath(reqUrl) {
 }
 
 function startServer(port) {
-  const server = http.createServer((req, res) => {
+  const server = http.createServer(async (req, res) => {
     try {
-      const targetFile = resolvePath(req.url);
       const securityHeaders = {
         "Access-Control-Allow-Origin": "*",
         "X-Content-Type-Options": "nosniff",
@@ -151,7 +139,71 @@ function startServer(port) {
         "Cross-Origin-Opener-Policy": "same-origin-allow-popups",
       };
 
-      if (targetFile) {
+      const reqUrl = (req.url || "/").split("?")[0];
+
+      // 1. GET /api/projects
+      if (reqUrl === "/api/projects" && req.method === "GET") {
+        try {
+          const { getCloudinaryProjects } = await import("./api/projects.js");
+          const projects = await getCloudinaryProjects();
+          res.writeHead(200, {
+            "Content-Type": "application/json",
+            ...securityHeaders
+          });
+          res.end(JSON.stringify(projects, null, 2));
+          return;
+        } catch (apiErr) {
+          console.error("Cloudinary /api/projects Route Error:", apiErr);
+          res.writeHead(500, { "Content-Type": "application/json", ...securityHeaders });
+          res.end(JSON.stringify({ error: apiErr.message }));
+          return;
+        }
+      }
+
+      // 2. GET /api/admin/projects (Grouped Tree)
+      if (reqUrl === "/api/admin/projects" && req.method === "GET") {
+        try {
+          const { getAdminGroupedProjects } = await import("./api/admin/projects/index.js");
+          const groupedData = await getAdminGroupedProjects();
+          res.writeHead(200, {
+            "Content-Type": "application/json",
+            ...securityHeaders
+          });
+          res.end(JSON.stringify(groupedData, null, 2));
+          return;
+        } catch (apiErr) {
+          console.error("Cloudinary /api/admin/projects Route Error:", apiErr);
+          res.writeHead(500, { "Content-Type": "application/json", ...securityHeaders });
+          res.end(JSON.stringify({ error: apiErr.message }));
+          return;
+        }
+      }
+
+      // 3. POST /api/admin/projects/upload
+      if (reqUrl === "/api/admin/projects/upload" && req.method === "POST") {
+        let bodyRaw = "";
+        req.on("data", (chunk) => { bodyRaw += chunk; });
+        req.on("end", async () => {
+          try {
+            const handler = (await import("./api/admin/projects/upload.js")).default;
+            req.body = bodyRaw ? JSON.parse(bodyRaw) : {};
+            const result = await handler(req, res);
+            if (!res.headersSent) {
+              res.writeHead(200, { "Content-Type": "application/json", ...securityHeaders });
+              res.end(JSON.stringify(result));
+            }
+          } catch (uploadErr) {
+            console.error("Cloudinary /api/admin/projects/upload Route Error:", uploadErr);
+            if (!res.headersSent) {
+              res.writeHead(500, { "Content-Type": "application/json", ...securityHeaders });
+              res.end(JSON.stringify({ error: uploadErr.message }));
+            }
+          }
+        });
+        return;
+      }
+
+      const targetFile = resolvePath(req.url);
         const ext = path.extname(targetFile).toLowerCase();
         const contentType = MIME_TYPES[ext] || "application/octet-stream";
         res.writeHead(200, {

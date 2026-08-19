@@ -688,19 +688,21 @@
         }
       }
 
-      // 2. Fallback / Fetch from projects.json if no cache or empty
+      // 2. Fallback / Fetch from Cloudinary API route /api/projects if no cache or empty
       if (!allProjects || allProjects.length === 0) {
         try {
-          const res = await fetch('./projects.json');
-          if (res.ok) {
-            allProjects = await res.json();
-            // Cache for subsequent visits
+          const cldProjects = window.AchyutamCloudinary
+            ? await window.AchyutamCloudinary.fetchCloudinaryProjects()
+            : await fetch('/api/projects').then((r) => r.json()).catch(() => []);
+
+          if (Array.isArray(cldProjects) && cldProjects.length > 0) {
+            allProjects = cldProjects;
             try {
               localStorage.setItem('achyutam_static_projects', JSON.stringify(allProjects));
             } catch(e) {}
           }
         } catch(e) {
-          console.warn("Fetch projects.json error:", e);
+          console.warn("Fetch /api/projects notice:", e);
         }
       }
 

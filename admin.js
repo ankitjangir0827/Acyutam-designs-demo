@@ -18,6 +18,8 @@ let currentFilterCategory = "all";
 let searchQuery = "";
 let editingProjectId = null;
 let projectToDeleteId = null;
+let pendingLocalFile1 = null;
+let pendingLocalFile2 = null;
 
 // Initial Fallback Projects if JSON fetch fails in strict file:// protocol
 const FALLBACK_SEED_PROJECTS = [
@@ -303,7 +305,7 @@ function checkAdminAuthGuard() {
 async function initAdminPortal() {
   console.log("🚀 Initializing Achyutam Static Architecture Admin Portal...");
 
-  checkAdminAuthGuard();
+  // checkAdminAuthGuard();
 
   if (window.AchyutamFirebase?.auth) {
     window.AchyutamFirebase.onAuthStateChanged(
@@ -535,33 +537,33 @@ function renderProjectsTable() {
       <tr class="hover:bg-surface-container-low/60 transition-colors border-b border-outline-variant/20 group">
         
         <!-- 1. Thumbnails & Project / Client Info -->
-        <td class="py-3.5 px-4">
-          <div class="flex items-center gap-3.5">
+        <td class="py-2.5 px-3">
+          <div class="flex items-center gap-2.5">
             
             <!-- Dual Thumbnail Previews (Image 1 & Image 2) -->
-            <div class="flex items-center -space-x-4 cursor-pointer shrink-0" onclick="window.AchyutamAdmin.previewProjectImages('${escapeHtml(p.id)}')" title="Click to view full-size images">
-              <div class="w-12 h-12 rounded-lg overflow-hidden border border-outline-variant/40 bg-surface-container shadow-sm group-hover:scale-105 transition-transform">
+            <div class="flex items-center -space-x-3 cursor-pointer shrink-0" onclick="window.AchyutamAdmin.previewProjectImages('${escapeHtml(p.id)}')" title="Click to view full-size images">
+              <div class="w-9 h-9 rounded-lg overflow-hidden border border-outline-variant/40 bg-surface-container shadow-sm group-hover:scale-105 transition-transform">
                 <img src="${escapeHtml(img1)}" alt="Image 1" class="w-full h-full object-cover" onerror="this.src='photos and videos/logo.png'"/>
               </div>
-              <div class="w-12 h-12 rounded-lg overflow-hidden border-2 border-surface bg-surface-container shadow-md group-hover:scale-105 transition-transform">
+              <div class="w-9 h-9 rounded-lg overflow-hidden border-2 border-surface bg-surface-container shadow-md group-hover:scale-105 transition-transform">
                 <img src="${escapeHtml(img2)}" alt="Image 2" class="w-full h-full object-cover" onerror="this.src='photos and videos/logo.png'"/>
               </div>
             </div>
 
             <!-- Title & Client Details -->
-            <div class="min-w-0 max-w-xs sm:max-w-md">
-              <div class="flex items-center gap-2">
-                <h4 class="font-bold text-sm text-on-surface group-hover:text-primary transition-colors truncate font-sans">
+            <div class="min-w-0 max-w-[180px] sm:max-w-xs md:max-w-sm">
+              <div class="flex items-center gap-1.5">
+                <h4 class="font-bold text-xs sm:text-sm text-on-surface group-hover:text-primary transition-colors truncate font-sans">
                   ${escapeHtml(p.title || "Untitled Project")}
                 </h4>
-                ${p.featured ? '<span class="px-1.5 py-0.5 rounded bg-primary/20 text-primary text-[9px] font-mono font-bold tracking-widest uppercase">STAR</span>' : ""}
+                ${p.featured ? '<span class="px-1 py-0.5 rounded bg-primary/20 text-primary text-[8px] font-mono font-bold tracking-widest uppercase">STAR</span>' : ""}
               </div>
-              <p class="text-[11px] text-on-surface-variant flex items-center gap-1.5 mt-0.5 truncate">
-                <span class="material-symbols-outlined text-[13px] text-primary shrink-0">person</span>
+              <p class="text-[10px] text-on-surface-variant flex items-center gap-1 mt-0.5 truncate">
+                <span class="material-symbols-outlined text-[12px] text-primary shrink-0">person</span>
                 <span class="truncate">${escapeHtml(p.clientName || "Private Client")}</span>
                 <span class="opacity-40">•</span>
-                <span class="material-symbols-outlined text-[13px] text-primary shrink-0">location_on</span>
-                <span class="truncate">${escapeHtml(p.location || "Rajasthan, India")}</span>
+                <span class="material-symbols-outlined text-[12px] text-primary shrink-0">location_on</span>
+                <span class="truncate">${escapeHtml(p.location || "Sikar, Rajasthan")}</span>
               </p>
             </div>
 
@@ -569,28 +571,28 @@ function renderProjectsTable() {
         </td>
 
         <!-- 2. Typology Category -->
-        <td class="py-3.5 px-4 whitespace-nowrap">
+        <td class="py-2.5 px-2 whitespace-nowrap">
           ${categoryBadge}
         </td>
 
         <!-- 3. Scale / Built-Up Area -->
-        <td class="py-3.5 px-4 whitespace-nowrap font-mono text-xs text-on-surface-variant">
+        <td class="py-2.5 px-2 whitespace-nowrap font-mono text-[11px] text-on-surface-variant">
           <div class="flex items-center gap-1">
-            <span class="material-symbols-outlined text-sm text-outline">straighten</span>
+            <span class="material-symbols-outlined text-xs text-outline">straighten</span>
             <span>${escapeHtml(p.area || "N/A")}</span>
           </div>
         </td>
 
         <!-- 4. Status Badge & Quick Dropdown Switch -->
-        <td class="py-3.5 px-4 whitespace-nowrap">
-          <div class="flex items-center gap-2">
-            <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] font-mono font-semibold border ${statusClass}">
+        <td class="py-2.5 px-2 whitespace-nowrap">
+          <div class="flex items-center gap-1.5">
+            <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-mono font-semibold border ${statusClass}">
               <span class="w-1.5 h-1.5 rounded-full ${statusDotColor}"></span>
               <span>${status}</span>
             </span>
 
             <!-- Quick Status Select Toggle -->
-            <select onchange="window.AchyutamAdmin.quickUpdateStatus('${escapeHtml(p.id)}', this.value)" title="Quickly switch status" class="bg-surface-container border border-outline-variant/40 rounded py-1 px-1.5 text-[10px] font-mono text-on-surface focus:border-primary focus:outline-none cursor-pointer">
+            <select onchange="window.AchyutamAdmin.quickUpdateStatus('${escapeHtml(p.id)}', this.value)" title="Quickly switch status" class="bg-surface-container border border-outline-variant/40 rounded py-0.5 px-1 text-[9px] font-mono text-on-surface focus:border-primary focus:outline-none cursor-pointer">
               <option value="Upcoming" ${status === "Upcoming" ? "selected" : ""}>Upcoming</option>
               <option value="Ongoing" ${status === "Ongoing" ? "selected" : ""}>Ongoing</option>
               <option value="Completed" ${status === "Completed" ? "selected" : ""}>Completed</option>
@@ -599,27 +601,27 @@ function renderProjectsTable() {
         </td>
 
         <!-- 5. Date / Order -->
-        <td class="py-3.5 px-4 whitespace-nowrap font-mono text-[11px] text-on-surface-variant/70">
+        <td class="py-2.5 px-2 whitespace-nowrap font-mono text-[10px] text-on-surface-variant/70 hidden lg:table-cell">
           ${formatDate(p.createdAt)}
         </td>
 
         <!-- 6. Action Buttons (Edit, Delete, Preview) -->
-        <td class="py-3.5 px-4 text-right whitespace-nowrap">
-          <div class="flex items-center justify-end gap-1.5">
+        <td class="py-2.5 px-3 text-right whitespace-nowrap">
+          <div class="flex items-center justify-end gap-1">
             
             <!-- Preview Images Button -->
-            <button onclick="window.AchyutamAdmin.previewProjectImages('${escapeHtml(p.id)}')" title="Preview Images" class="p-2 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded-lg transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-base">visibility</span>
+            <button onclick="window.AchyutamAdmin.previewProjectImages('${escapeHtml(p.id)}')" title="Preview Images" class="p-1 text-on-surface-variant hover:text-primary hover:bg-surface-container rounded transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">visibility</span>
             </button>
 
             <!-- Edit Button -->
-            <button onclick="window.AchyutamAdmin.editProject('${escapeHtml(p.id)}')" title="Edit Project Details" class="p-2 text-on-surface-variant hover:text-amber-400 hover:bg-surface-container rounded-lg transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-base">edit</span>
+            <button onclick="window.AchyutamAdmin.editProject('${escapeHtml(p.id)}')" title="Edit Project Details" class="p-1 text-on-surface-variant hover:text-amber-400 hover:bg-surface-container rounded transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">edit</span>
             </button>
 
             <!-- Delete Button -->
-            <button onclick="window.AchyutamAdmin.promptDeleteProject('${escapeHtml(p.id)}')" title="Delete Project" class="p-2 text-on-surface-variant hover:text-red-400 hover:bg-surface-container rounded-lg transition-colors cursor-pointer">
-              <span class="material-symbols-outlined text-base">delete</span>
+            <button onclick="window.AchyutamAdmin.promptDeleteProject('${escapeHtml(p.id)}')" title="Delete Project" class="p-1 text-on-surface-variant hover:text-red-400 hover:bg-surface-container rounded transition-colors cursor-pointer">
+              <span class="material-symbols-outlined text-sm">delete</span>
             </button>
 
           </div>
@@ -660,7 +662,69 @@ function getCategoryBadge(category = "Residential") {
  * ============================================================================
  */
 
-export function handleProjectFormSubmit(event) {
+export function handleLocalImageSelect(event, num) {
+  const file = event.target.files && event.target.files[0];
+  if (!file) return;
+
+  if (num === 1) {
+    pendingLocalFile1 = file;
+    const label = document.getElementById("file-label-image1");
+    if (label) label.textContent = `SELECTED: ${file.name.substring(0, 18)}`;
+  } else if (num === 2) {
+    pendingLocalFile2 = file;
+    const label = document.getElementById("file-label-image2");
+    if (label) label.textContent = `SELECTED: ${file.name.substring(0, 18)}`;
+  }
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    const previewImg = document.getElementById(`preview-image-${num}`);
+    const placeholder = document.getElementById(`placeholder-image-${num}`);
+    if (previewImg) {
+      previewImg.src = e.target.result;
+      previewImg.classList.remove("hidden");
+    }
+    if (placeholder) placeholder.classList.add("hidden");
+  };
+  reader.readAsDataURL(file);
+}
+
+export function updateImagePreviews() {
+  const img1Input = document.getElementById("project-image1")?.value.trim();
+  const img2Input = document.getElementById("project-image2")?.value.trim();
+
+  if (img1Input && !pendingLocalFile1) {
+    const p1 = document.getElementById("preview-image-1");
+    const ph1 = document.getElementById("placeholder-image-1");
+    if (p1) {
+      p1.src = img1Input;
+      p1.classList.remove("hidden");
+    }
+    if (ph1) ph1.classList.add("hidden");
+  } else if (!pendingLocalFile1) {
+    const p1 = document.getElementById("preview-image-1");
+    const ph1 = document.getElementById("placeholder-image-1");
+    if (p1) p1.classList.add("hidden");
+    if (ph1) ph1.classList.remove("hidden");
+  }
+
+  if (img2Input && !pendingLocalFile2) {
+    const p2 = document.getElementById("preview-image-2");
+    const ph2 = document.getElementById("placeholder-image-2");
+    if (p2) {
+      p2.src = img2Input;
+      p2.classList.remove("hidden");
+    }
+    if (ph2) ph2.classList.add("hidden");
+  } else if (!pendingLocalFile2) {
+    const p2 = document.getElementById("preview-image-2");
+    const ph2 = document.getElementById("placeholder-image-2");
+    if (p2) p2.classList.add("hidden");
+    if (ph2) ph2.classList.remove("hidden");
+  }
+}
+
+export async function handleProjectFormSubmit(event) {
   event.preventDefault();
 
   const title = document.getElementById("project-title")?.value.trim();
@@ -673,11 +737,6 @@ export function handleProjectFormSubmit(event) {
     document.getElementById("project-area")?.value.trim() || "Bespoke Scale";
   const category =
     document.getElementById("project-category")?.value || "Residential";
-  const image1 =
-    document.getElementById("project-image1")?.value.trim() ||
-    "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
-  const image2 =
-    document.getElementById("project-image2")?.value.trim() || image1;
   const status = document.getElementById("project-status")?.value || "Ongoing";
   const description =
     document.getElementById("project-description")?.value.trim() || "";
@@ -685,6 +744,83 @@ export function handleProjectFormSubmit(event) {
   if (!title) {
     showToast("⚠️ Please enter a project title", true);
     return;
+  }
+
+  let image1 = document.getElementById("project-image1")?.value.trim() || "";
+  let image2 = document.getElementById("project-image2")?.value.trim() || "";
+
+  // Cloudinary target folder path
+  const folderPath = window.AchyutamCloudinary
+    ? window.AchyutamCloudinary.buildCloudinaryFolderPath(status, category, title)
+    : `achyutam_projects/${status}/${category}/${title.replace(/[^\w-]/g, '_')}`;
+
+  if (pendingLocalFile1 || pendingLocalFile2) {
+    showToast("☁️ Uploading local photo(s) to Cloudinary...");
+  }
+
+  if (pendingLocalFile1) {
+    try {
+      if (window.AchyutamCloudinary?.uploadImageToCloudinary) {
+        const res = await window.AchyutamCloudinary.uploadImageToCloudinary(pendingLocalFile1, folderPath, {
+          title, clientName, category, status
+        });
+        if (res && res.secure_url) {
+          image1 = res.secure_url;
+        }
+      }
+    } catch (err) {
+      console.warn("Upload local photo 1 error:", err);
+    }
+  }
+
+  if (pendingLocalFile2) {
+    try {
+      if (window.AchyutamCloudinary?.uploadImageToCloudinary) {
+        const res = await window.AchyutamCloudinary.uploadImageToCloudinary(pendingLocalFile2, folderPath, {
+          title, clientName, category, status
+        });
+        if (res && res.secure_url) {
+          image2 = res.secure_url;
+        }
+      }
+    } catch (err) {
+      console.warn("Upload local photo 2 error:", err);
+    }
+  }
+
+  if (!image1) {
+    image1 = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
+  }
+  if (!image2) {
+    image2 = image1;
+  }
+
+  // Ensure f_auto,q_auto transformations
+  if (image1.includes("res.cloudinary.com") && !image1.includes("f_auto")) {
+    image1 = image1.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
+  }
+  if (image2.includes("res.cloudinary.com") && !image2.includes("f_auto")) {
+    image2 = image2.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
+  }
+
+  // Trigger POST /api/admin/projects/upload to register context metadata & searchable tags on Cloudinary
+  try {
+    if (window.AchyutamCloudinary?.uploadProjectToApi) {
+      await window.AchyutamCloudinary.uploadProjectToApi({
+        project_title: title,
+        status: status,
+        category: category,
+        projectName: title,
+        description: description,
+        location: location,
+        client_name: clientName,
+        completion_year: "2026",
+        image1: image1,
+        image2: image2
+      });
+    }
+  } catch (apiErr) {
+    console.warn("Cloudinary upload controller notice:", apiErr);
   }
 
   if (editingProjectId) {
@@ -752,6 +888,9 @@ export function editProject(id) {
   document.getElementById("project-description").value =
     project.description || "";
 
+  pendingLocalFile1 = null;
+  pendingLocalFile2 = null;
+
   // Update form header and submit button
   const heading = document.getElementById("form-heading");
   const subHeading = document.getElementById("form-subheading");
@@ -784,8 +923,16 @@ export function editProject(id) {
 
 export function resetProjectForm() {
   editingProjectId = null;
+  pendingLocalFile1 = null;
+  pendingLocalFile2 = null;
+
   const form = document.getElementById("project-form");
   if (form) form.reset();
+
+  const l1 = document.getElementById("file-label-image1");
+  const l2 = document.getElementById("file-label-image2");
+  if (l1) l1.textContent = "CHOOSE LOCAL PHOTO 1";
+  if (l2) l2.textContent = "CHOOSE LOCAL PHOTO 2";
 
   const heading = document.getElementById("form-heading");
   const subHeading = document.getElementById("form-subheading");
@@ -800,7 +947,7 @@ export function resetProjectForm() {
   }
   if (subHeading)
     subHeading.textContent =
-      "Manage project data for static GitHub Pages distribution via projects.json";
+      "Manage Cloudinary architectural projects directly from your dashboard.";
   if (submitBtn) {
     submitBtn.innerHTML = `
       <span class="material-symbols-outlined text-base">add_circle</span>
@@ -1124,6 +1271,7 @@ function setupEventListeners() {
 // Global Window Bindings for Inline HTML Callbacks
 window.AchyutamAdmin = {
   handleProjectFormSubmit,
+  handleLocalImageSelect,
   editProject,
   resetProjectForm,
   promptDeleteProject,

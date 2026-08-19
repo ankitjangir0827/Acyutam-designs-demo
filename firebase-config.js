@@ -9,7 +9,7 @@ import {
   getAnalytics,
   isSupported as isAnalyticsSupported,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-analytics.js";
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   GoogleAuthProvider,
   browserLocalPersistence,
@@ -42,16 +42,16 @@ export function verifyAdminMasterKey(key) {
 
 // Firebase web app configuration
 export const firebaseConfig = {
-  apiKey: "AIzaSyAd9IsebRyeetMXYE0qUpBMUNTI5oTQ4Wg",
-  authDomain: "achyutam-designs-public.firebaseapp.com",
-  projectId: "achyutam-designs-public",
-  storageBucket: "achyutam-designs-public.firebasestorage.app",
-  messagingSenderId: "462360499893",
-  appId: "1:462360499893:web:8ec2b48adc73673f3f90fc",
+  apiKey: typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_FIREBASE_API_KEY ? process.env.NEXT_PUBLIC_FIREBASE_API_KEY : "AIzaSyAd9IsebRyeetMXYE0qUpBMUNTI5oTQ4Wg",
+  authDomain: typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN ? process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN : "achyutam-designs-public.firebaseapp.com",
+  projectId: typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_FIREBASE_PROJECT_ID ? process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID : "achyutam-designs-public",
+  storageBucket: typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ? process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET : "achyutam-designs-public.firebasestorage.app",
+  messagingSenderId: typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID ? process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID : "462360499893",
+  appId: typeof process !== 'undefined' && process.env?.NEXT_PUBLIC_FIREBASE_APP_ID ? process.env.NEXT_PUBLIC_FIREBASE_APP_ID : "1:462360499893:web:8ec2b48adc73673f3f90fc",
 };
 
-// Initialize Core App & Services
-export const app = initializeApp(firebaseConfig);
+// Initialize Core App & Services with Singleton pattern
+export const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 export const db = getFirestore(app);
 export const auth = getAuth(app);
 
@@ -123,10 +123,24 @@ onAuthStateChanged(auth, async (user) => {
       window.updateAuthUI();
     }
   } else {
-    localStorage.removeItem("achyutam_user");
-    console.log("🔥 Firebase Auth: Signed Out State");
+    const existingUserStr = localStorage.getItem("achyutam_user");
+    let isLocalAdminSession = false;
+    if (existingUserStr) {
+      try {
+        const u = JSON.parse(existingUserStr);
+        if ((u.email || "").toLowerCase() === ADMIN_EMAIL.toLowerCase() || u.role === "admin") {
+          isLocalAdminSession = true;
+        }
+      } catch (e) {}
+    }
+    if (!isLocalAdminSession) {
+      localStorage.removeItem("achyutam_user");
+      console.log("🔥 Firebase Auth: Signed Out State");
+    } else {
+      console.log("🔥 Preserving Active Local Admin Session:", ADMIN_EMAIL);
+    }
     if (typeof window.updateAuthUIState === "function") {
-      window.updateAuthUIState(null);
+      window.updateAuthUIState(isLocalAdminSession ? JSON.parse(existingUserStr) : null);
     }
     if (typeof window.updateAuthUI === "function") {
       window.updateAuthUI();
@@ -253,6 +267,13 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
   const cleanEmail = (email || "").toLowerCase().trim();
   const isAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
 
+  if (!cleanEmail || !password) {
+    return {
+      success: false,
+      error: "Please enter a valid email address and password.",
+    };
+  }
+
   if (isAdmin && adminKey) {
     if (adminKey.trim() !== ADMIN_MASTER_KEY) {
       return {
@@ -271,22 +292,28 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
         password,
       );
       user = userCredential.user;
-    } catch (loginErr) {
-      if (isAdmin) {
+    } catch (authError) {
+      console.warn("Firebase Auth password attempt failed:", authError.code, authError.message);
+      
+      // If user does not exist in Firebase Auth yet, attempt initial setup ONLY if password is valid
+      if (isAdmin && (authError.code === "auth/user-not-found" || authError.code === "auth/invalid-credential")) {
         try {
           const createCred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
           user = createCred.user;
         } catch (createErr) {
-          // Fallback admin session
-          user = {
-            uid: "admin-ankit-0827",
-            email: cleanEmail,
-            emailVerified: true,
-            displayName: "Ankit Jangir (Admin)",
+          // Password check failed or user already exists with different password! Reject login!
+          return {
+            success: false,
+            error: "Incorrect Password or Invalid Credentials! Access Denied.",
+            code: authError.code
           };
         }
       } else {
-        throw loginErr;
+        return {
+          success: false,
+          error: "Incorrect Password or Invalid Credentials! Access Denied.",
+          code: authError.code
+        };
       }
     }
 
@@ -312,7 +339,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
       };
     }
 
-    if (user.uid && user.uid !== "admin-ankit-0827") {
+    if (user.uid) {
       await saveUserProfileData(
         user,
         user.displayName || (isAdmin ? "Ankit Jangir (Admin)" : ""),
@@ -323,7 +350,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
     }
 
     const userData = {
-      uid: user.uid || "admin-ankit-0827",
+      uid: user.uid,
       email: cleanEmail,
       identity: cleanEmail,
       emailVerified: true,
@@ -331,6 +358,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
         user.displayName ||
         (isAdmin ? "Ankit Jangir (Admin)" : cleanEmail.split("@")[0]),
       role: isAdmin ? "admin" : "client",
+      isAdmin,
     };
     localStorage.setItem("achyutam_user", JSON.stringify(userData));
 
@@ -339,47 +367,16 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
       cleanEmail,
       isAdmin ? "[ADMIN]" : "[CLIENT]",
     );
+
+    if (typeof window.updateAuthUI === "function") {
+      window.updateAuthUI();
+    }
+
     return { success: true, user: userData, isAdmin };
   } catch (error) {
-    if (isAdmin) {
-      const userData = {
-        uid: "admin-ankit-0827",
-        email: cleanEmail,
-        identity: cleanEmail,
-        emailVerified: true,
-        displayName: "Ankit Jangir (Admin)",
-        role: "admin",
-      };
-      localStorage.setItem("achyutam_user", JSON.stringify(userData));
-      if (typeof window.updateAuthUIState === "function") {
-        window.updateAuthUIState(userData);
-      }
-      if (typeof window.updateAuthUI === "function") {
-        window.updateAuthUI();
-      }
-      return { success: true, user: userData, isAdmin: true };
-    }
-
-    console.error("🔥 Sign In Error:", error.code, error.message);
-
+    console.error("🔥 Sign In Exception:", error);
     localStorage.removeItem("achyutam_user");
-
-    let friendlyError = "Invalid email or password.";
-    if (
-      error.code === "auth/user-not-found" ||
-      error.code === "auth/invalid-credential"
-    ) {
-      friendlyError =
-        "Account not found or password incorrect. Please check your credentials or Sign Up.";
-    } else if (error.code === "auth/wrong-password") {
-      friendlyError = "Incorrect password. Please try again.";
-    } else if (error.code === "auth/invalid-email") {
-      friendlyError = "Please enter a valid email address.";
-    } else if (error.code === "auth/too-many-requests") {
-      friendlyError =
-        "Too many failed login attempts. Please try again in a few minutes or reset your password.";
-    }
-    return { success: false, error: friendlyError, code: error.code };
+    return { success: false, error: "Authentication failed. Incorrect email or password." };
   }
 }
 
@@ -449,7 +446,6 @@ export async function signInWithGoogleFirebase(adminKey = "") {
       };
     }
 
-    const isAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
     const displayName =
       user.displayName ||
       (isAdmin ? "Ankit Jangir (Admin)" : cleanEmail.split("@")[0] || "Client");
@@ -502,12 +498,17 @@ export async function signInWithGoogleFirebase(adminKey = "") {
       friendlyError = "Google Sign-In popup was closed before completing.";
     } else if (error.code === "auth/popup-blocked") {
       friendlyError =
-        "Sign-In popup was blocked by browser. Please allow popups or use Email sign-in.";
+        "Sign-In popup was blocked by browser. Please allow popups or use Direct Password sign-in.";
     } else if (error.code === "auth/cancelled-popup-request") {
       friendlyError = "Google Sign-In request was cancelled.";
     } else if (error.code === "auth/network-request-failed") {
       friendlyError =
         "Network connection issue. Please check your internet connection.";
+    } else if (error.code === "auth/unauthorized-domain") {
+      friendlyError =
+        "Domain not authorized in Firebase Console for Google Sign-In. Please use Direct Admin Password login.";
+    } else if (error.message) {
+      friendlyError = error.message;
     }
     return { success: false, error: friendlyError, code: error.code };
   }
