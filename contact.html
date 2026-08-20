@@ -180,7 +180,7 @@
           <a class="text-on-surface hover:text-primary transition-all duration-300 flex items-center gap-1" href="index.html#portfolio">
             PROJECTS <span class="material-symbols-outlined text-xs">expand_more</span>
           </a>
-          <div class="absolute top-full left-0 w-60 bg-surface-container-low border border-outline-variant/40 p-2 shadow-2xl opacity-0 group-hover:opacity-100 transition-all rounded-sm flex flex-col gap-1 z-50">
+          <div class="absolute top-full left-0 w-60 bg-surface-container-low border border-outline-variant/40 p-2 shadow-2xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 rounded-sm flex flex-col gap-1 z-50">
             <a href="ongoing.html" class="p-2 hover:bg-primary/10 text-primary hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center justify-between">
               <span>Ongoing Projects</span>
               <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">12</span>
@@ -276,165 +276,180 @@
   </header>
 
   <!-- Main Content Area -->
-  <main class="w-full pt-28 pb-24 min-h-screen relative flex items-center">
+  <main class="w-full pt-28 pb-20 min-h-screen relative">
     <div class="absolute inset-0 z-0">
-      <img alt="Architectural villa night rendering" class="w-full h-full object-cover opacity-25" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" />
-      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/50"></div>
+      <img alt="Architectural villa night rendering" class="w-full h-full object-cover opacity-20" src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1600&q=80" />
+      <div class="absolute inset-0 bg-gradient-to-t from-background via-background/85 to-background/60"></div>
     </div>
 
-    <div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+    <div class="relative z-10 max-w-5xl mx-auto px-margin-mobile md:px-margin-desktop w-full">
+      <!-- Section Title Header -->
+      <div class="text-center max-w-3xl mx-auto mb-10">
+        <div class="font-label-caps text-xs text-primary tracking-widest uppercase mb-3 flex items-center justify-center gap-2">
+          <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Direct Inquiry &amp; Consultation
+        </div>
+        <h1 class="font-display-lg text-3xl sm:text-5xl text-on-surface font-light leading-tight mb-3">
+          Contact Us &amp; <span class="text-primary italic">Get In Touch.</span>
+        </h1>
+        <p class="font-body-md text-on-surface-variant text-sm leading-relaxed">
+          Connect directly with ACHYUTAM BUILDER® for turnkey project inquiries, structural engineering, and architectural consultations across Rajasthan &amp; U.P.
+        </p>
+      </div>
 
-        <!-- Left Column: Contact Details -->
-        <div class="lg:col-span-5">
-          <div class="font-label-caps text-xs text-primary tracking-widest uppercase mb-4 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> Direct Inquiry &amp; Consultation
+      <!-- 1. Prominent Clean Contact Form Card -->
+      <div class="glass-panel p-6 sm:p-10 border border-primary/40 rounded-xl shadow-2xl mb-12 relative" id="contact-card">
+        <div class="border-b border-outline-variant/30 pb-4 mb-6 flex items-center justify-between">
+          <div>
+            <h3 class="font-display-lg text-xl text-on-surface font-medium">Send Inquiry Message</h3>
+            <p class="font-label-caps text-[11px] text-primary tracking-wider uppercase mt-0.5">Quick Turnaround Guarantee within 24 Hours</p>
           </div>
-          <h1 class="font-display-lg text-4xl sm:text-5xl lg:text-6xl text-on-surface font-light leading-tight mb-6">
-            Contact Us &amp; <br />
-            <span class="text-primary italic">Get In Touch.</span>
-          </h1>
-          <p class="font-body-md text-on-surface-variant text-base leading-relaxed mb-8">
-            Connect directly with ACHYUTAM BUILDER® for project consultations, structural engineering services, and architectural design inquiries across Rajasthan.
-          </p>
+          <span class="material-symbols-outlined text-primary text-2xl">mark_email_read</span>
+        </div>
 
-          <div class="space-y-5 pt-6 border-t border-outline-variant/30 font-label-caps text-xs">
+        <form id="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully to ACHYUTAM BUILDER. Our team will contact you shortly.');">
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label for="user-name" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5 font-bold">
+                <span class="material-symbols-outlined text-primary text-sm">person</span> Full Name *
+              </label>
+              <input required id="user-name" type="text" placeholder="e.g. Ram Gopal Jangir" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3 px-4 font-body-md text-sm outline-none transition-all rounded-md" />
+            </div>
+            <div>
+              <label for="user-phone" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5 font-bold">
+                <span class="material-symbols-outlined text-primary text-sm">call</span> Phone Number / WhatsApp *
+              </label>
+              <input required id="user-phone" type="tel" placeholder="+91 9116400862" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3 px-4 font-body-md text-sm outline-none transition-all rounded-md" />
+            </div>
+          </div>
 
-            <!-- Hotline -->
-            <div class="flex items-center gap-4">
-              <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary shrink-0">
-                <span class="material-symbols-outlined text-lg">call</span>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <div>
+              <label for="user-email" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5 font-bold">
+                <span class="material-symbols-outlined text-primary text-sm">mail</span> Email Address *
+              </label>
+              <input required id="user-email" type="email" placeholder="client@domain.com" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3 px-4 font-body-md text-sm outline-none transition-all rounded-md" />
+            </div>
+            <div>
+              <label for="user-typology" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5 font-bold">
+                <span class="material-symbols-outlined text-primary text-sm">category</span> Service Required *
+              </label>
+              <select required id="user-typology" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3 px-4 font-body-md text-sm outline-none transition-all cursor-pointer rounded-md">
+                <option value="Architectural Services">Architectural Design &amp; Planning</option>
+                <option value="Structural Services">Structural Engineering</option>
+                <option value="Interior Services">Interior Architecture</option>
+                <option value="Full Building Construction">Full Building Construction</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mb-6">
+            <label for="user-message" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5 font-bold">
+              <span class="material-symbols-outlined text-primary text-sm">edit_note</span> Project Details / Message *
+            </label>
+            <textarea required id="user-message" rows="4" placeholder="Tell us about your plot size, location, estimated budget, or structural design requirements..." class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface p-4 font-body-md text-sm outline-none transition-all rounded-md"></textarea>
+          </div>
+
+          <button type="submit" class="w-full py-4 bg-primary text-background font-bold tracking-widest uppercase hover:bg-primary-container transition-all cursor-pointer shadow-xl text-xs flex items-center justify-center gap-2 rounded-md">
+            <span class="material-symbols-outlined text-base">send</span> SEND MESSAGE TO ACHYUTAM BUILDER®
+          </button>
+        </form>
+      </div>
+
+      <!-- 2. Clean Contact Details Grid directly below Form -->
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-6 font-label-caps text-xs">
+        
+        <!-- Voice & WhatsApp Card -->
+        <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all rounded-lg flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-base">call</span>
               </div>
               <div>
-                <div class="text-on-surface-variant text-[10px] uppercase tracking-wider">DIRECT HOTLINE / WHATSAPP</div>
-                <a href="tel:9116400862" class="text-primary font-bold text-base hover:underline">+91 9116400862</a>
+                <span class="text-primary font-bold uppercase tracking-wider block text-[10px]">HOTLINE &amp; CHAT</span>
+                <span class="text-on-surface font-bold text-xs">Voice &amp; WhatsApp</span>
               </div>
             </div>
-
-            <!-- Emails -->
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary shrink-0 mt-1">
-                <span class="material-symbols-outlined text-lg">mail</span>
-              </div>
-              <div>
-                <div class="text-on-surface-variant text-[10px] uppercase tracking-wider mb-0.5">OFFICIAL EMAILS</div>
-                <a href="mailto:info@achyutambuilder.com" class="text-primary font-bold text-xs hover:underline block">info@achyutambuilder.com</a>
-                <a href="mailto:a.designs121@gmail.com" class="text-on-surface text-[11px] hover:underline block">a.designs121@gmail.com</a>
-                <a href="mailto:ramgopaljangir21@gmail.com" class="text-on-surface text-[11px] hover:underline block">ramgopaljangir21@gmail.com</a>
-              </div>
-            </div>
-
-            <!-- Office Address -->
-            <div class="flex items-start gap-4">
-              <div class="w-10 h-10 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary shrink-0 mt-1">
-                <span class="material-symbols-outlined text-lg">location_on</span>
-              </div>
-              <div>
-                <div class="text-primary font-bold text-xs uppercase tracking-wider">HEADQUARTERS ADDRESS</div>
-                <a href="https://www.google.com/maps/search/?api=1&amp;query=1st+Floor+Pawan+Market+Station+Road+Sikar+Rajasthan+332001" target="_blank" rel="noopener noreferrer" class="text-on-surface hover:text-primary transition-colors font-medium text-xs leading-relaxed block">
-                  1st Floor, Pawan Market, Station Road, Sikar 332001, Rajasthan, India ↗
-                </a>
-              </div>
-            </div>
-
+            <a href="tel:9116400862" class="text-primary font-bold text-sm hover:underline block mb-1">+91 9116400862</a>
+            <p class="text-[11px] text-on-surface-variant opacity-80 leading-relaxed">CEO Ram Gopal Jangir</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-outline-variant/20">
+            <a href="https://wa.me/919116400862" target="_blank" rel="noopener noreferrer" class="text-emerald-400 hover:underline flex items-center gap-1 font-bold text-[11px]">
+              Open WhatsApp <span class="material-symbols-outlined text-xs">east</span>
+            </a>
           </div>
         </div>
 
-        <!-- Right Column: Contact Form -->
-        <div class="lg:col-span-7">
-          <div class="glass-panel p-8 sm:p-12 border border-white/15 rounded-sm shadow-2xl relative" id="contact-card">
-
-            <form id="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully. Our team will contact you shortly.');">
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label for="user-name" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-primary text-sm">person</span> Full Name *
-                  </label>
-                  <input required id="user-name" type="text" placeholder="e.g. Ram Gopal Jangir" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3.5 px-4 font-body-md text-sm outline-none transition-all rounded-sm" />
-                </div>
-                <div>
-                  <label for="user-phone" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-primary text-sm">call</span> Phone Number *
-                  </label>
-                  <input required id="user-phone" type="tel" placeholder="+91 9116400862" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3.5 px-4 font-body-md text-sm outline-none transition-all rounded-sm" />
-                </div>
+        <!-- Official Email Card -->
+        <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all rounded-lg flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-base">mail</span>
               </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                <div>
-                  <label for="user-email" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-primary text-sm">mail</span> Email Address *
-                  </label>
-                  <input required id="user-email" type="email" placeholder="client@domain.com" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3.5 px-4 font-body-md text-sm outline-none transition-all rounded-sm" />
-                </div>
-                <div>
-                  <label for="user-typology" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5">
-                    <span class="material-symbols-outlined text-primary text-sm">category</span> Service Required *
-                  </label>
-                  <select required id="user-typology" class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface py-3.5 px-4 font-body-md text-sm outline-none transition-all cursor-pointer rounded-sm">
-                    <option value="Architectural Services">Architectural Design &amp; Planning</option>
-                    <option value="Structural Services">Structural Engineering</option>
-                    <option value="Interior Services">Interior Architecture</option>
-                    <option value="Full Building Construction">Full Building Construction</option>
-                  </select>
-                </div>
+              <div>
+                <span class="text-primary font-bold uppercase tracking-wider block text-[10px]">CORPORATE EMAIL</span>
+                <span class="text-on-surface font-bold text-xs">24/7 Digital Desk</span>
               </div>
+            </div>
+            <a href="mailto:support@acyutambuilder.com" class="text-primary hover:underline font-bold text-[11px] block break-all mb-1">support@acyutambuilder.com</a>
+            <a href="mailto:ankitjangir529@gmail.com" class="text-on-surface-variant hover:text-primary transition-colors text-[10px] block break-all">ankitjangir529@gmail.com</a>
+          </div>
+          <div class="mt-4 pt-3 border-t border-outline-variant/20">
+            <a href="mailto:support@acyutambuilder.com" class="text-primary hover:underline flex items-center gap-1 font-bold text-[11px]">
+              Send Email <span class="material-symbols-outlined text-xs">east</span>
+            </a>
+          </div>
+        </div>
 
-              <div class="mb-6">
-                <label for="user-message" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5">
-                  <span class="material-symbols-outlined text-primary text-sm">edit_note</span> Project Details / Message *
-                </label>
-                <textarea required id="user-message" rows="4" placeholder="Tell us about your plot size, location, estimated budget, or structural design requirements..." class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface p-4 font-body-md text-sm outline-none transition-all rounded-sm"></textarea>
+        <!-- Headquarters Address Card -->
+        <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all rounded-lg flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-base">location_on</span>
               </div>
+              <div>
+                <span class="text-primary font-bold uppercase tracking-wider block text-[10px]">HEADQUARTERS</span>
+                <span class="text-on-surface font-bold text-xs">Sikar Office</span>
+              </div>
+            </div>
+            <p class="text-on-surface font-medium text-xs leading-relaxed">
+              1st Floor Pawan Market, Station Road, Sikar 332001, Rajasthan
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-outline-variant/20">
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=1st+Floor+Pawan+Market+Station+Road+Sikar+Rajasthan+332001" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline flex items-center gap-1 font-bold text-[11px]">
+              Google Maps ↗
+            </a>
+          </div>
+        </div>
 
-              <button type="submit" class="w-full py-4 bg-primary text-background font-bold tracking-widest uppercase hover:bg-primary-container transition-all cursor-pointer shadow-xl text-xs flex items-center justify-center gap-2">
-                <span class="material-symbols-outlined text-sm">send</span> SEND MESSAGE TO ACHYUTAM
-              </button>
-            </form>
+        <!-- Branch Offices Card -->
+        <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all rounded-lg flex flex-col justify-between group">
+          <div>
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-9 h-9 rounded-full bg-primary/10 border border-primary/40 flex items-center justify-center text-primary group-hover:scale-110 transition-transform">
+                <span class="material-symbols-outlined text-base">domain</span>
+              </div>
+              <div>
+                <span class="text-primary font-bold uppercase tracking-wider block text-[10px]">BRANCH OFFICES</span>
+                <span class="text-on-surface font-bold text-xs">U.P. &amp; H.P.</span>
+              </div>
+            </div>
+            <p class="text-[11px] text-on-surface leading-tight mb-1.5"><strong class="text-primary">U.P.:</strong> Radhakund Goverdhan, Mathura</p>
+            <p class="text-[11px] text-on-surface leading-tight"><strong class="text-primary">H.P.:</strong> Dharamshala Branch</p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-outline-variant/20">
+            <a href="https://www.google.com/maps/search/?api=1&amp;query=Radhakund+Goverdhan+Mathura+UP" target="_blank" rel="noopener noreferrer" class="text-primary hover:underline flex items-center gap-1 font-bold text-[11px]">
+              View Branches ↗
+            </a>
           </div>
         </div>
 
       </div>
-    </div>
 
-    <!-- EXECUTIVE LEADERSHIP INTRO SECTION BEFORE FOOTER -->
-    <section class="mt-16 max-w-7xl mx-auto px-6">
-      <div class="glass-panel p-8 rounded-2xl border border-primary/30 shadow-2xl">
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 font-label-caps text-xs">
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-2 text-primary font-bold">
-              <span class="material-symbols-outlined text-base">call</span>
-              <span>VOICE &amp; WHATSAPP</span>
-            </div>
-            <p class="text-sm font-bold text-on-surface">+91 9116400862</p>
-            <p class="text-[11px] text-on-surface-variant opacity-80">Founder &amp; CEO Ram Gopal Jangir</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-2 text-primary font-bold">
-              <span class="material-symbols-outlined text-base">mail</span>
-              <span>OFFICIAL EMAIL</span>
-            </div>
-            <p class="text-xs font-bold text-on-surface">support@acyutambuilder.com</p>
-            <p class="text-[11px] text-on-surface-variant opacity-80">ankitjangir529@gmail.com</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-2 text-primary font-bold">
-              <span class="material-symbols-outlined text-base">location_on</span>
-              <span>HEADQUARTERS</span>
-            </div>
-            <p class="text-xs text-on-surface leading-tight font-bold">1st Floor, Pawan Market, Station Road, Sikar 332001, Rajasthan</p>
-          </div>
-          <div class="flex flex-col gap-2">
-            <div class="flex items-center gap-2 text-primary font-bold">
-              <span class="material-symbols-outlined text-base">domain</span>
-              <span>BRANCH OFFICES</span>
-            </div>
-            <p class="text-xs text-on-surface leading-tight"><strong class="text-primary">U.P.:</strong> Radhakund Goverdhan, Mathura</p>
-            <p class="text-xs text-on-surface leading-tight"><strong class="text-primary">H.P.:</strong> Dharamshala Branch</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    </div>
   </main>
 
   <!-- FOOTER -->
