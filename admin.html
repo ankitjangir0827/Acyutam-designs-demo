@@ -167,24 +167,18 @@
 
       <!-- Right Side: Theme Toggle & External Page Links -->
       <div class="flex items-center gap-2 sm:gap-3 flex-wrap justify-end">
-        
+        <a href="index.html" class="hidden md:inline-block text-[11px] text-on-surface-variant hover:text-primary transition-colors">HOME</a>
+        <a href="about.html" class="hidden md:inline-block text-[11px] text-on-surface-variant hover:text-primary transition-colors">ABOUT US</a>
+        <a href="careers.html" class="hidden md:inline-block text-[11px] text-on-surface-variant hover:text-primary transition-colors">CAREERS</a>
+        <a href="contact.html" class="hidden md:inline-block text-[11px] text-on-surface-variant hover:text-primary transition-colors">CONTACT US</a>
+
         <!-- Day / Night Theme Toggle Switch -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
-
-        
-
-        
 
         <!-- Return to Main Admin Dashboard & Enquiries Portal -->
         <a href="admin-dashboard.html" class="flex items-center gap-1.5 border border-outline-variant/60 hover:border-primary bg-surface-container-low text-on-surface-variant hover:text-primary px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all" title="Return to Main Admin Dashboard & Enquiries Portal">
           <span class="material-symbols-outlined text-sm">dashboard</span>
           <span class="hidden sm:inline">ADMIN PORTAL</span>
-        </a>
-
-        <!-- Home Page Link -->
-        <a href="index.html" class="flex items-center gap-1 border border-outline-variant/60 hover:border-primary bg-surface-container-low text-on-surface-variant hover:text-primary px-3 py-1.5 rounded text-[11px] font-mono tracking-wider transition-all" title="Go to Main Website Home">
-          <span class="material-symbols-outlined text-sm">home</span>
-          <span class="hidden sm:inline">HOME</span>
         </a>
       </div>
     </div>
@@ -509,6 +503,47 @@
 
     </section>
 
+    <!-- SECTION 3: CAREER APPLICATIONS & JOB CANDIDATES -->
+    <section id="career-applications-container" class="glass-panel rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden border border-outline-variant/40 mt-8">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-outline-variant/30 pb-5 mb-6">
+        <div>
+          <h2 class="font-display text-xl sm:text-2xl font-bold text-primary flex items-center gap-2.5 gold-gradient-text">
+            <span class="material-symbols-outlined text-primary text-2xl">badge</span>
+            <span>CAREER APPLICATIONS &amp; JOB CANDIDATES</span>
+          </h2>
+          <p class="text-xs text-on-surface-variant font-mono mt-1">
+            Review live job applications submitted through the Careers portal.
+          </p>
+        </div>
+        <button onclick="window.loadCareerApplications()" class="px-4 py-2 border border-outline-variant/60 hover:border-primary bg-surface-container-low text-primary rounded-lg text-xs font-mono tracking-widest uppercase transition-all flex items-center gap-1.5 cursor-pointer">
+          <span class="material-symbols-outlined text-sm">refresh</span>
+          <span>REFRESH APPLICANTS</span>
+        </button>
+      </div>
+
+      <div class="overflow-x-auto rounded-xl border border-outline-variant/30 custom-scrollbar">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-outline-variant/30 bg-surface-container-low/90 text-primary font-mono uppercase tracking-widest text-[10px]">
+              <th class="py-3 px-3 font-bold">Applicant Name</th>
+              <th class="py-3 px-2 font-bold">Role Applied</th>
+              <th class="py-3 px-2 font-bold">Contact Details</th>
+              <th class="py-3 px-2 font-bold">Portfolio / Resume</th>
+              <th class="py-3 px-2 font-bold">Applied Date</th>
+              <th class="py-3 px-3 font-bold text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="career-applications-table-body" class="divide-y divide-outline-variant/20 text-on-surface">
+            <tr>
+              <td colspan="6" class="py-8 text-center text-on-surface-variant font-mono">
+                Loading applicant entries...
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
   </main>
 
   <!-- Delete Confirmation Modal -->
@@ -568,6 +603,7 @@
   <div id="toast-container" class="fixed bottom-6 right-6 z-[300] flex flex-col gap-2 font-mono pointer-events-none"></div>
 
   <!-- Application Script Module -->
+  <script type="module" src="cloudinary-config.js"></script>
   <script type="module" src="firebase-config.js"></script>
   <script type="module" src="admin.js"></script>
 

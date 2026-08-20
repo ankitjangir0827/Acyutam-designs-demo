@@ -15,11 +15,14 @@ import {
   browserLocalPersistence,
   createUserWithEmailAndPassword,
   getAuth,
+  isSignInWithEmailLink,
   onAuthStateChanged,
   sendEmailVerification,
   sendPasswordResetEmail,
+  sendSignInLinkToEmail,
   setPersistence,
   signInWithEmailAndPassword,
+  signInWithEmailLink,
   signInWithPopup,
   signOut,
   updateProfile,
@@ -818,6 +821,88 @@ export async function sendPasswordResetLink(email) {
   }
 }
 
+/**
+ * 10. Passwordless Email Link Login (sendSignInLinkToEmail)
+ */
+export async function sendPasswordlessEmailLink(email) {
+  const cleanEmail = (email || "").toLowerCase().trim();
+  if (!cleanEmail) {
+    return { success: false, error: "Please enter a valid email address." };
+  }
+
+  const targetUrl = window.location.origin 
+    ? (window.location.origin + window.location.pathname) 
+    : window.location.href;
+
+  const actionCodeSettings = {
+    url: targetUrl,
+    handleCodeInApp: true,
+  };
+
+  try {
+    await sendSignInLinkToEmail(auth, cleanEmail, actionCodeSettings);
+    window.localStorage.setItem("emailForSignIn", cleanEmail);
+    console.log("📧 Passwordless Email Link sent to:", cleanEmail);
+    return {
+      success: true,
+      message: `Login link sent to ${cleanEmail}! Please check your email inbox to complete sign in.`,
+    };
+  } catch (error) {
+    console.error("🔥 Error sending passwordless link:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * 11. Complete Email Link Sign In Redirect Check (isSignInWithEmailLink & signInWithEmailLink)
+ */
+export async function handleEmailLinkSignInRedirect() {
+  if (isSignInWithEmailLink(auth, window.location.href)) {
+    let email = window.localStorage.getItem("emailForSignIn");
+    if (!email) {
+      email = window.prompt("Please confirm your email address for login:");
+    }
+    if (!email) return { success: false, error: "Email confirmation cancelled." };
+
+    try {
+      const result = await signInWithEmailLink(auth, email, window.location.href);
+      window.localStorage.removeItem("emailForSignIn");
+      const user = result.user;
+      const cleanEmail = (user.email || email).toLowerCase().trim();
+      const isAdmin = cleanEmail === ADMIN_EMAIL.toLowerCase();
+
+      const userData = {
+        uid: user.uid,
+        email: cleanEmail,
+        identity: cleanEmail,
+        emailVerified: true,
+        displayName: user.displayName || (isAdmin ? "Ankit Jangir (Admin)" : cleanEmail.split("@")[0]),
+        photoURL: user.photoURL || "",
+        provider: "email-link",
+        role: isAdmin ? "admin" : "client",
+        lastLogin: new Date().toISOString(),
+      };
+      localStorage.setItem("achyutam_user", JSON.stringify(userData));
+
+      if (typeof window.updateAuthUI === "function") window.updateAuthUI();
+      alert(`✅ Welcome back, ${userData.displayName}! You have logged in via Passwordless Email Link.`);
+      return { success: true, user: userData, isAdmin };
+    } catch (error) {
+      console.error("🔥 Error completing Email Link Sign In:", error);
+      alert(`⚠️ Login link error: ${error.message}`);
+      return { success: false, error: error.message };
+    }
+  }
+  return { success: false, notLink: true };
+}
+
+// Auto-check for Passwordless Email Link redirect on load
+if (typeof window !== "undefined") {
+  document.addEventListener("DOMContentLoaded", () => {
+    handleEmailLinkSignInRedirect();
+  });
+}
+
 // Aliases for compatibility
 export const saveBookingToFirebase = saveEnquiryToFirebase;
 export const getUserBookings = getUserEnquiries;
@@ -838,6 +923,8 @@ window.AchyutamFirebase = {
   signInWithEmailPassword,
   resendVerificationEmail,
   signInWithGoogleFirebase,
+  sendPasswordlessEmailLink,
+  handleEmailLinkSignInRedirect,
   signOutUser,
   saveEnquiryToFirebase,
   getUserEnquiries,
@@ -850,5 +937,5 @@ window.AchyutamFirebase = {
 };
 
 console.log(
-  "🔥 Achyutam Hardened Firebase Auth System Active [Admin: ankitjangir529@gmail.com | Verification Enforced]",
+  "🔥 Achyutam Hardened Firebase Auth System Active [Admin: ankitjangir529@gmail.com | Verification & Passwordless Links Enforced]",
 );

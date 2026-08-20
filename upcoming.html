@@ -176,6 +176,7 @@
       <!-- Header Navigation Bar -->
       <nav class="hidden lg:flex items-center gap-8 text-[11px] font-medium tracking-widest">
         <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html">HOME</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="about.html">ABOUT US</a>
         
         <!-- Category Dropdown -->
         <div class="relative group cursor-pointer py-2">
@@ -192,15 +193,12 @@
             <a href="ongoing.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Ongoing Projects</a>
             <a href="completed.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Completed Projects</a>
             <div class="border-t border-outline-variant/30 my-1"></div>
-            <a href="documents.html" class="p-2 bg-primary/10 text-primary hover:bg-primary/20 text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">description</span> Docs &amp; PDFs (7 Cats)</a>
+            <a href="documents.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center gap-1.5"><span class="material-symbols-outlined text-sm">description</span> Docs &amp; PDFs</a>
           </div>
         </div>
 
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="documents.html">DOCS &amp; PDFS</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#services">SERVICES</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#details">DETAILS</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="enquire.html">ENQUIRE</a>
-        <a class="text-primary/90 hover:text-primary transition-all duration-300 font-label-caps" href="admin.html">ADMIN</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="careers.html">CAREERS</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="contact.html">CONTACT US</a>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
@@ -213,9 +211,9 @@
           <span id="auth-btn-text" class="hidden sm:inline text-[10px]">PORTAL</span>
         </a>
 
-        <!-- ENQUIRE CTA Button -->
-        <a href="enquire.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
-          ENQUIRE
+        <!-- CONTACT US CTA Button -->
+        <a href="contact.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
+          CONTACT US
         </a>
 
         <!-- Animated Circular Hamburger Button -->
@@ -236,10 +234,10 @@
           <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">MAIN NAVIGATION</h4>
           <div class="flex flex-col gap-3 text-on-surface-variant">
             <a href="index.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">01 / HOME</a>
-            <a href="index.html#services" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">02 / SERVICES</a>
+            <a href="about.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">02 / ABOUT US</a>
             <a href="index.html#portfolio" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">03 / PROJECTS INDEX</a>
-            <a href="index.html#details" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">04 / DETAILS</a>
-            <a href="enquire.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">05 / ENQUIRE &amp; BOOKING</a>
+            <a href="careers.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">04 / CAREERS</a>
+            <a href="contact.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">05 / CONTACT US</a>
             <a href="admin.html" class="text-primary hover:underline transition-colors" onclick="toggleMainNavigation()">06 / ADMIN PORTAL</a>
           </div>
         </div>
@@ -920,5 +918,6 @@
 
     document.addEventListener('DOMContentLoaded', loadUpcomingProjects);
   </script>
+  <script src="custom-projects-loader.js"></script>
 </body>
 </html>

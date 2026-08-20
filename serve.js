@@ -204,6 +204,7 @@ function startServer(port) {
       }
 
       const targetFile = resolvePath(req.url);
+      if (targetFile) {
         const ext = path.extname(targetFile).toLowerCase();
         const contentType = MIME_TYPES[ext] || "application/octet-stream";
         res.writeHead(200, {

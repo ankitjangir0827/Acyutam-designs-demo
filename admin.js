@@ -20,6 +20,8 @@ let editingProjectId = null;
 let projectToDeleteId = null;
 let pendingLocalFile1 = null;
 let pendingLocalFile2 = null;
+let pendingLocalFile1DataUrl = null;
+let pendingLocalFile2DataUrl = null;
 
 // Initial Fallback Projects if JSON fetch fails in strict file:// protocol
 const FALLBACK_SEED_PROJECTS = [
@@ -678,13 +680,10 @@ export function handleLocalImageSelect(event, num) {
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    const previewImg = document.getElementById(`preview-image-${num}`);
-    const placeholder = document.getElementById(`placeholder-image-${num}`);
-    if (previewImg) {
-      previewImg.src = e.target.result;
-      previewImg.classList.remove("hidden");
-    }
-    if (placeholder) placeholder.classList.add("hidden");
+    const dataUrl = e.target.result;
+    if (num === 1) pendingLocalFile1DataUrl = dataUrl;
+    if (num === 2) pendingLocalFile2DataUrl = dataUrl;
+    updateImagePreviews();
   };
   reader.readAsDataURL(file);
 }
@@ -693,34 +692,37 @@ export function updateImagePreviews() {
   const img1Input = document.getElementById("project-image1")?.value.trim();
   const img2Input = document.getElementById("project-image2")?.value.trim();
 
-  if (img1Input && !pendingLocalFile1) {
-    const p1 = document.getElementById("preview-image-1");
-    const ph1 = document.getElementById("placeholder-image-1");
-    if (p1) {
-      p1.src = img1Input;
+  const src1 = pendingLocalFile1DataUrl || img1Input;
+  const src2 = pendingLocalFile2DataUrl || img2Input;
+
+  const p1 = document.getElementById("preview-image-1");
+  const ph1 = document.getElementById("placeholder-image-1");
+
+  if (p1) {
+    if (src1) {
+      p1.src = src1;
       p1.classList.remove("hidden");
+      if (ph1) ph1.classList.add("hidden");
+    } else {
+      p1.src = "";
+      p1.classList.add("hidden");
+      if (ph1) ph1.classList.remove("hidden");
     }
-    if (ph1) ph1.classList.add("hidden");
-  } else if (!pendingLocalFile1) {
-    const p1 = document.getElementById("preview-image-1");
-    const ph1 = document.getElementById("placeholder-image-1");
-    if (p1) p1.classList.add("hidden");
-    if (ph1) ph1.classList.remove("hidden");
   }
 
-  if (img2Input && !pendingLocalFile2) {
-    const p2 = document.getElementById("preview-image-2");
-    const ph2 = document.getElementById("placeholder-image-2");
-    if (p2) {
-      p2.src = img2Input;
+  const p2 = document.getElementById("preview-image-2");
+  const ph2 = document.getElementById("placeholder-image-2");
+
+  if (p2) {
+    if (src2) {
+      p2.src = src2;
       p2.classList.remove("hidden");
+      if (ph2) ph2.classList.add("hidden");
+    } else {
+      p2.src = "";
+      p2.classList.add("hidden");
+      if (ph2) ph2.classList.remove("hidden");
     }
-    if (ph2) ph2.classList.add("hidden");
-  } else if (!pendingLocalFile2) {
-    const p2 = document.getElementById("preview-image-2");
-    const ph2 = document.getElementById("placeholder-image-2");
-    if (p2) p2.classList.add("hidden");
-    if (ph2) ph2.classList.remove("hidden");
   }
 }
 
@@ -771,6 +773,9 @@ export async function handleProjectFormSubmit(event) {
     } catch (err) {
       console.warn("Upload local photo 1 error:", err);
     }
+    if (!image1 && pendingLocalFile1DataUrl) {
+      image1 = pendingLocalFile1DataUrl;
+    }
   }
 
   if (pendingLocalFile2) {
@@ -786,7 +791,13 @@ export async function handleProjectFormSubmit(event) {
     } catch (err) {
       console.warn("Upload local photo 2 error:", err);
     }
+    if (!image2 && pendingLocalFile2DataUrl) {
+      image2 = pendingLocalFile2DataUrl;
+    }
   }
+
+  if (!image1 && pendingLocalFile1DataUrl) image1 = pendingLocalFile1DataUrl;
+  if (!image2 && pendingLocalFile2DataUrl) image2 = pendingLocalFile2DataUrl;
 
   if (!image1) {
     image1 = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
@@ -925,6 +936,8 @@ export function resetProjectForm() {
   editingProjectId = null;
   pendingLocalFile1 = null;
   pendingLocalFile2 = null;
+  pendingLocalFile1DataUrl = null;
+  pendingLocalFile2DataUrl = null;
 
   const form = document.getElementById("project-form");
   if (form) form.reset();
@@ -1141,37 +1154,6 @@ export function resetFilters() {
  * 7. IMAGE PREVIEW HELPERS & MODAL
  * ============================================================================
  */
-export function updateImagePreviews() {
-  const url1 = document.getElementById("project-image1")?.value.trim();
-  const url2 = document.getElementById("project-image2")?.value.trim();
-
-  const preview1 = document.getElementById("preview-image-1");
-  const preview2 = document.getElementById("preview-image-2");
-
-  if (preview1) {
-    if (url1) {
-      preview1.src = url1;
-      preview1.classList.remove("hidden");
-      preview1.nextElementSibling?.classList.add("hidden");
-    } else {
-      preview1.src = "";
-      preview1.classList.add("hidden");
-      preview1.nextElementSibling?.classList.remove("hidden");
-    }
-  }
-
-  if (preview2) {
-    if (url2) {
-      preview2.src = url2;
-      preview2.classList.remove("hidden");
-      preview2.nextElementSibling?.classList.add("hidden");
-    } else {
-      preview2.src = "";
-      preview2.classList.add("hidden");
-      preview2.nextElementSibling?.classList.remove("hidden");
-    }
-  }
-}
 
 export function previewProjectImages(id) {
   const project = allProjects.find((p) => p.id === id);
@@ -1264,8 +1246,69 @@ function formatDate(isoStr) {
   }
 }
 
+// Career Applications Manager
+window.loadCareerApplications = function () {
+  const tbody = document.getElementById("career-applications-table-body");
+  if (!tbody) return;
+
+  let apps = [];
+  try {
+    const raw = localStorage.getItem("achyutam_career_applications");
+    if (raw) apps = JSON.parse(raw);
+  } catch (e) {
+    console.warn("Error reading career applications:", e);
+  }
+
+  if (apps.length === 0) {
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="6" class="py-8 text-center text-on-surface-variant font-mono">
+          No job applications submitted yet.
+        </td>
+      </tr>
+    `;
+    return;
+  }
+
+  tbody.innerHTML = apps.map((app, index) => `
+    <tr class="hover:bg-surface-container-low/60 transition-colors border-b border-outline-variant/20">
+      <td class="py-3 px-3 font-bold text-on-surface">${escapeHtml(app.name)}</td>
+      <td class="py-3 px-2 font-mono text-primary">${escapeHtml(app.role)}</td>
+      <td class="py-3 px-2 font-mono text-[11px]">
+        <div>${escapeHtml(app.phone)}</div>
+        <div class="text-on-surface-variant opacity-70">${escapeHtml(app.email)}</div>
+      </td>
+      <td class="py-3 px-2 font-mono text-[11px]">
+        <a href="${escapeHtml(app.portfolio)}" target="_blank" class="text-primary underline flex items-center gap-1 hover:text-primary-container">
+          <span class="material-symbols-outlined text-xs">open_in_new</span>
+          <span>View Resume / Portfolio</span>
+        </a>
+      </td>
+      <td class="py-3 px-2 font-mono text-[11px] text-on-surface-variant">${escapeHtml(app.date || "2026")}</td>
+      <td class="py-3 px-3 text-right">
+        <button onclick="window.deleteCareerApplication(${index})" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded text-[11px] font-mono cursor-pointer">
+          Delete
+        </button>
+      </td>
+    </tr>
+  `).join('');
+};
+
+window.deleteCareerApplication = function (index) {
+  try {
+    let apps = JSON.parse(localStorage.getItem("achyutam_career_applications") || "[]");
+    apps.splice(index, 1);
+    localStorage.setItem("achyutam_career_applications", JSON.stringify(apps));
+    window.loadCareerApplications();
+    showToast("✅ Career application removed.");
+  } catch (e) {
+    console.error("Delete application error:", e);
+  }
+};
+
 function setupEventListeners() {
   window.closeImagePreviewModal = closeImagePreviewModal;
+  window.loadCareerApplications();
 }
 
 // Global Window Bindings for Inline HTML Callbacks
@@ -1294,7 +1337,11 @@ window.AchyutamAdmin = {
 
 // Initialize on DOM Ready
 if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", initAdminPortal);
+  document.addEventListener("DOMContentLoaded", () => {
+    initAdminPortal();
+    window.loadCareerApplications();
+  });
 } else {
   initAdminPortal();
+  window.loadCareerApplications();
 }

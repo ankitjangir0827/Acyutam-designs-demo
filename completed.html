@@ -122,153 +122,6 @@
       box-shadow: inset 0 0 60px 25px rgba(19, 19, 19, 0.75);
       backdrop-filter: blur(5px);
       -webkit-backdrop-filter: blur(5px);
-      mask-image: radial-gradient(circle at center, transparent 35%, black 100%);
-      -webkit-mask-image: radial-gradient(circle at center, transparent 35%, black 100%);
-    }
-  </style>
-</head>
-
-<body class="bg-background text-on-surface font-body-lg antialiased">
-  
-  <!-- Main Glassmorphism Header -->
-  <header class="fixed top-0 w-full z-50 header-glass">
-    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-3 flex justify-between items-center font-label-ui text-xs tracking-widest uppercase">
-      
-      <!-- Brand Logo Link with Circular Ring Frame -->
-      <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group shrink-0 transition-opacity hover:opacity-90 relative z-50 py-0.5" title="ACHYUTAM BUILDER — Home">
-        <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-0.5 border-2 border-primary/80 ring-2 ring-primary/25 shadow-[0_0_15px_rgba(255,184,0,0.35)] flex items-center justify-center overflow-hidden bg-surface-container/60 shrink-0">
-          <img src="photos_and_videos/logo.png" alt="ACHYUTAM BUILDER Logo" class="w-full h-full rounded-full object-cover transition-transform group-hover:scale-105 shrink-0" onerror="this.src='logo.png'"/>
-        </div>
-        <div class="hidden sm:flex flex-col text-left">
-          <span class="font-display-lg text-sm sm:text-base md:text-lg text-on-surface font-semibold tracking-wider uppercase leading-none group-hover:text-primary transition-colors">
-            ACHYUTAM BUILDER
-          </span>
-          <span class="font-label-caps text-[9px] tracking-[0.2em] text-primary/80 font-medium leading-none mt-1">
-            ENGINEERING &amp; ARCHITECTURE
-          </span>
-        </div>
-      </a>
-
-      <!-- Header Navigation Bar -->
-      <nav class="hidden lg:flex items-center gap-8 text-[11px] font-medium tracking-widest">
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html">HOME</a>
-        
-        <!-- Category Dropdown -->
-        <div class="relative group cursor-pointer py-2">
-          <a class="text-primary font-bold border-b-2 border-primary pb-0.5 transition-all duration-300 flex items-center gap-1" href="index.html#portfolio">
-            PROJECTS <span class="material-symbols-outlined text-xs">expand_more</span>
-          </a>
-          <div class="absolute top-full left-0 w-56 bg-surface-container-low border border-outline-variant/40 p-2 shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all rounded-sm flex flex-col gap-1 z-50">
-            <a href="residential.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Residential Projects (25)</a>
-            <a href="industrial.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Industrial Projects (2)</a>
-            <a href="commercial.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Commercial Complexes (2)</a>
-            <a href="assembly.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Assembly &amp; Temples (3)</a>
-            <div class="border-t border-outline-variant/30 my-1"></div>
-            <a href="upcoming.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Upcoming Projects (6)</a>
-            <a href="ongoing.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Ongoing Projects (12)</a>
-            <a href="completed.html" class="p-2 bg-primary/10 text-primary font-bold text-xs tracking-wider transition-colors rounded-sm font-bold">Completed Projects (20)</a>
-          </div>
-        </div>
-
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#services">SERVICES</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#details">DETAILS</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="enquire.html">ENQUIRE</a>
-      </nav>
-
-      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-        <!-- Day / Night Theme Toggle Switch -->
-        <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
-
-        <!-- Sign In / Login Button (Clean borderless with enlarged icon) -->
-        <button onclick="openAuthModal()" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-primary hover:text-primary-container transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 p-1 border-0 bg-transparent" title="Sign In / Client Account">
-          <span class="material-symbols-outlined text-2xl sm:text-[28px] leading-none font-light hover:scale-110 transition-transform">account_circle</span>
-          <span id="auth-btn-text" class="hidden sm:inline">SIGN IN</span>
-        </button>
-        <!-- ENQUIRE CTA Button -->
-        <a href="enquire.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
-          ENQUIRE
-        </a>
-
-        <!-- Animated Circular Hamburger Button (VISIBLE ALWAYS ON MOBILE & TABLET: lg:hidden) -->
-        <button id="animated-hamburger-btn" onclick="toggleMainNavigation()" class="lg:hidden relative shrink-0 w-10 h-10 flex flex-col justify-center items-center gap-1.5 p-2 focus:outline-none z-50 group border border-outline-variant/40 rounded-full hover:border-primary/50 transition-colors bg-surface-container/40 cursor-pointer" aria-label="Toggle Navigation Menu">
-          <span class="w-5 h-0.5 bg-primary rounded-full transition-all duration-300 transform origin-center" id="burg-line-1"></span>
-          <span class="w-5 h-0.5 bg-on-surface rounded-full transition-all duration-300" id="burg-line-2"></span>
-          <span class="w-5 h-0.5 bg-primary rounded-full transition-all duration-300 transform origin-center" id="burg-line-3"></span>
-        </button>
-      </div>
-    </div>
-
-    <!-- Navigation Overlay Drawer -->
-    <div id="navigation-overlay" class="hidden bg-background/95 backdrop-blur-2xl border-b border-outline-variant/30 px-margin-mobile py-8 font-label-caps text-xs tracking-widest uppercase flex flex-col gap-5 shadow-2xl">
-      <div class="max-w-container-max mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        
-        <!-- Column 1: MAIN NAVIGATION (Visible on Mobile, Tablet & Desktop) -->
-        <div class="block">
-          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">MAIN NAVIGATION</h4>
-          <div class="flex flex-col gap-3 text-on-surface-variant">
-            <a href="index.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">01 / HOME</a>
-            <a href="index.html#services" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">02 / SERVICES</a>
-            <a href="index.html#portfolio" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">03 / PROJECTS INDEX</a>
-            <a href="index.html#details" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">04 / DETAILS</a>
-            <a href="enquire.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">05 / ENQUIRE &amp; BOOKING</a>
-          </div>
-        </div>
-
-        <!-- Column 2: 6 PROJECT TYPOLOGY PAGES (Hidden on Mobile, Visible on Tablet 'sm:' & Desktop 'lg:') -->
-        <div class="hidden sm:block">
-          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">PROJECT TYPOLOGIES</h4>
-          <div class="flex flex-col gap-3 text-on-surface-variant">
-            <a href="residential.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">RESIDENTIAL (25)</a>
-            <a href="industrial.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">INDUSTRIAL (2)</a>
-            <a href="commercial.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">COMMERCIAL (2)</a>
-            <a href="assembly.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">ASSEMBLY &amp; TEMPLES (3)</a>
-            <a href="ongoing.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">ONGOING PROJECTS (12)</a>
-            <a href="completed.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">COMPLETED PROJECTS (20)</a>
-          </div>
-        </div>
-
-        <!-- Column 3: FEATURED PROJECTS (Hidden on Mobile & Tablet, Visible on Desktop 'lg:') -->
-        <div class="hidden lg:block">
-          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">FEATURED PROJECTS</h4>
-          <div class="flex flex-col gap-3 text-on-surface-variant">
-            <a href="project-res-01.html" class="hover:text-primary transition-colors">CANTILEVERED VILLA (DUBAI)</a>
-            <a href="project-res-02.html" class="hover:text-primary transition-colors">ALPINE MONOLITH (ZURICH)</a>
-            <a href="project-com-01.html" class="hover:text-primary transition-colors">CORPORATE HQ (TOKYO)</a>
-            <a href="project-com-02.html" class="hover:text-primary transition-colors">FINANCIAL PAVILION (LONDON)</a>
-          </div>
-        </div>
-
-        <!-- Column 4: DIRECT CONTACT (Hidden on Mobile & Tablet, Visible on Desktop 'lg:') -->
-        <div class="hidden lg:flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-outline-variant/30 pt-4 lg:pt-0 lg:pl-6">
-          <div>
-            <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">DIRECT CONTACT</h4>
-            <p class="text-on-surface-variant text-xs mb-4 lowercase tracking-normal">ankitjangir529@gmail.com</p>
-          </div>
-          <a href="enquire.html" class="w-full py-3.5 bg-primary text-background font-bold text-center tracking-widest uppercase hover:bg-primary-container transition-all">
-            INITIATE ENQUIRY →
-          </a>
-        </div>
-      </div>
-    </div>
-    </div>
-  </header>
-
-  <!-- Interactive Project Sidebar -->
-  <aside id="sidebar-drawer" class="hidden md:flex fixed left-0 top-[20%] h-fit py-3.5 sidebar-glass border-r border-y border-outline-variant/30 flex flex-col gap-1 w-12 lg:w-14 lg:hover:w-64 transition-all duration-500 overflow-hidden group z-40 shadow-2xl rounded-r-lg border-r border-y border-outline-variant/30 flex flex-col gap-1 w-14 hover:w-64 transition-all duration-500 overflow-hidden group z-40 shadow-2xl">
-    <a href="index.html#portfolio" class="sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all" data-filter="all" id="sidebar-btn-all">
-      <span class="material-symbols-outlined text-primary text-xl font-light">grid_view</span>
-      <div class="hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-        <h3 class="font-headline-md text-sm text-on-surface font-light leading-none">All Projects</h3>
-        <p class="font-label-caps text-[10px] text-on-surface-variant opacity-60">Typology Index</p>
-      </div>
-    </a>
-
-    <nav class="flex flex-col gap-1 pt-1 px-1.5" id="sidebar-nav">
-      <a href="documents.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="docs" id="sidebar-btn-docs">
-        <span class="material-symbols-outlined font-light text-lg">description</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Docs &amp; PDFs (7 Cats)</span>
-      </a>
-
       <a href="upcoming.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="upcoming" id="sidebar-btn-upcoming">
         <span class="material-symbols-outlined font-light text-lg">hourglass_top</span>
         <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Upcoming (6)</span>
@@ -403,7 +256,7 @@
         <a href="index.html" class="font-label-caps text-xs text-primary hover:underline font-bold">← Back to Main Showcase</a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div id="completed-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Card 1: Bhagirath Mal Ji Khyaliya CRPF -->
         <div onclick="openProjectModal('Bhagirath Mal Ji Khyaliya CRPF', 'COMPLETED / RESIDENTIAL', '₹1.3 Cr CTC', 'Sikar, Rajasthan', 'G+1/G+2 Residential Elevation', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80')" class="project-card-item flex flex-col group cursor-pointer border border-outline-variant/30 p-4 bg-surface-container-low hover:border-primary/60 transition-all rounded-sm">
           <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
@@ -1046,18 +899,27 @@
   <!-- Modal Controller JavaScript -->
   <script>
     function openProjectModal(name, badge, ctc, loc, det, img1, img2) {
-      document.getElementById('modal-name').textContent = name;
-      document.getElementById('modal-badge').textContent = badge;
-      document.getElementById('modal-ctc').textContent = ctc;
-      document.getElementById('modal-loc').textContent = loc;
-      document.getElementById('modal-det').textContent = det;
-      document.getElementById('modal-img').src = img1;
-      document.getElementById('project-modal').classList.remove('hidden');
+      const modal = document.getElementById('project-modal');
+      if (modal) {
+        document.getElementById('modal-name').textContent = name || '';
+        document.getElementById('modal-badge').textContent = badge || '';
+        document.getElementById('modal-ctc').textContent = ctc || '';
+        document.getElementById('modal-loc').textContent = loc || '';
+        document.getElementById('modal-det').textContent = det || '';
+        document.getElementById('modal-img').src = img1 || '';
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        modal.style.display = 'flex';
+      }
     }
 
     function closeProjectModal() {
       const modal = document.getElementById('project-modal');
-      if (modal) modal.classList.add('hidden');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        modal.style.display = 'none';
+      }
     }
   </script>
 
@@ -1323,5 +1185,6 @@
 
     document.addEventListener('DOMContentLoaded', () => { updateAuthUI(); });
   </script>
+  <script src="custom-projects-loader.js"></script>
 </body>
 </html>

@@ -35,19 +35,24 @@ window.removeAIFingerprint = function(codeText) {
     }
 
     /* Material Symbols Outlined Font Family Rules */
-    .material-symbols-outlined {
+    .material-symbols-outlined,
+    span.material-symbols-outlined,
+    i.material-symbols-outlined {
       font-family: 'Material Symbols Outlined' !important;
-      font-style: normal;
-      line-height: 1;
-      letter-spacing: normal;
-      text-transform: none;
-      display: inline-block;
-      white-space: nowrap;
-      word-wrap: normal;
-      direction: ltr;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
-      -moz-osx-font-smoothing: grayscale;
+      font-style: normal !important;
+      font-weight: normal !important;
+      line-height: 1 !important;
+      letter-spacing: normal !important;
+      text-transform: none !important;
+      font-feature-settings: 'liga' 1 !important;
+      font-variant-ligatures: normal !important;
+      display: inline-block !important;
+      white-space: nowrap !important;
+      word-wrap: normal !important;
+      direction: ltr !important;
+      -webkit-font-smoothing: antialiased !important;
+      text-rendering: optimizeLegibility !important;
+      -moz-osx-font-smoothing: grayscale !important;
     }
 
 

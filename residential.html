@@ -41,7 +41,43 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-  
+  <style>
+    @font-face {
+      font-family: 'Material Symbols Outlined';
+      font-style: normal;
+      font-weight: 100 700;
+      font-display: block;
+      src: url('https://fonts.gstatic.com/s/materialsymbolsoutlined/v367/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOem.ttf') format('truetype');
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none !important;
+      font-feature-settings: 'liga' 1 !important;
+      font-variant-ligatures: normal !important;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    .glass-panel {
+      background: rgba(18, 18, 24, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+    .header-glass {
+      background: rgba(14, 14, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  </style>
+
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -76,56 +112,6 @@
       }
     }
   </script>
-
-  <style>
-    .glass-panel {
-      background: rgba(18, 18, 24, 0.65);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
-    }
-    .header-glass {
-      background: rgba(14, 14, 18, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    .sidebar-glass {
-      background: rgba(14, 14, 18, 0.25) !important;
-      backdrop-filter: blur(8px) !important;
-      -webkit-backdrop-filter: blur(8px) !important;
-      border: 1px solid rgba(255, 255, 255, 0.08) !important;
-      transition: background 0.3s ease, border-color 0.3s ease, width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .sidebar-glass:hover {
-      background: rgba(14, 14, 18, 0.4) !important;
-    }
-    .sidebar-filter-btn {
-      background: transparent !important;
-      transition: all 0.25s ease;
-    }
-    .sidebar-filter-btn.active {
-      background: transparent !important;
-      border-left-color: #ff7722 !important;
-      color: #ff7722 !important;
-    }
-    .sidebar-filter-btn.active .material-symbols-outlined {
-      color: #ff7722 !important;
-      transform: scale(1.1);
-      transition: transform 0.25s ease, color 0.25s ease;
-    }
-    .img-grayscale-hover { filter: grayscale(100%); transition: filter 0.6s ease, transform 0.6s ease; }
-    .group:hover .img-grayscale-hover { filter: grayscale(0%); transform: scale(1.04); }
-    .image-blur-vignette {
-      position: absolute; inset: 0; pointer-events: none; z-index: 15;
-      box-shadow: inset 0 0 60px 25px rgba(19, 19, 19, 0.75);
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(5px);
-      mask-image: radial-gradient(circle at center, transparent 35%, black 100%);
-      -webkit-mask-image: radial-gradient(circle at center, transparent 35%, black 100%);
-    }
-  </style>
 </head>
 
 <body class="bg-background text-on-surface font-body-lg antialiased">
@@ -152,6 +138,7 @@
       <!-- Header Navigation Bar -->
       <nav class="hidden lg:flex items-center gap-8 text-[11px] font-medium tracking-widest">
         <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html">HOME</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="about.html">ABOUT US</a>
         
         <!-- Category Dropdown -->
         <div class="relative group cursor-pointer py-2">
@@ -170,27 +157,19 @@
           </div>
         </div>
 
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#services">SERVICES</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#details">DETAILS</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="enquire.html">ENQUIRE</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="careers.html">CAREERS</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="contact.html">CONTACT US</a>
       </nav>
 
-
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
-        <!-- Day / Night Theme Toggle Switch -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
-
-        <!-- Sign In / Login Button (Clean borderless with enlarged icon) -->
         <button onclick="openAuthModal()" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-primary hover:text-primary-container transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 p-1 border-0 bg-transparent" title="Sign In / Client Account">
           <span class="material-symbols-outlined text-2xl sm:text-[28px] leading-none font-light hover:scale-110 transition-transform">account_circle</span>
           <span id="auth-btn-text" class="hidden sm:inline">SIGN IN</span>
         </button>
-        <!-- ENQUIRE CTA Button -->
-        <a href="enquire.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
-          ENQUIRE
+        <a href="contact.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
+          CONTACT US
         </a>
-
-        <!-- Animated Circular Hamburger Button (VISIBLE ALWAYS ON MOBILE & TABLET: lg:hidden) -->
         <button id="animated-hamburger-btn" onclick="toggleMainNavigation()" class="lg:hidden relative shrink-0 w-10 h-10 flex flex-col justify-center items-center gap-1.5 p-2 focus:outline-none z-50 group border border-outline-variant/40 rounded-full hover:border-primary/50 transition-colors bg-surface-container/40 cursor-pointer" aria-label="Toggle Navigation Menu">
           <span class="w-5 h-0.5 bg-primary rounded-full transition-all duration-300 transform origin-center" id="burg-line-1"></span>
           <span class="w-5 h-0.5 bg-on-surface rounded-full transition-all duration-300" id="burg-line-2"></span>
@@ -198,177 +177,9 @@
         </button>
       </div>
     </div>
-
-    <!-- Navigation Overlay Drawer -->
-    <div id="navigation-overlay" class="hidden bg-background/95 backdrop-blur-2xl border-b border-outline-variant/30 px-margin-mobile py-8 font-label-caps text-xs tracking-widest uppercase flex flex-col gap-5 shadow-2xl">
-      <div class="max-w-container-max mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        
-        <!-- Column 1: MAIN NAVIGATION (Visible on Mobile, Tablet & Desktop) -->
-        <div class="block">
-          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">MAIN NAVIGATION</h4>
-          <div class="flex flex-col gap-3 text-on-surface-variant">
-            <a href="index.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">01 / HOME</a>
-            <a href="index.html#services" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">02 / SERVICES</a>
-            <a href="index.html#portfolio" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">03 / PROJECTS INDEX</a>
-            <a href="index.html#details" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">04 / DETAILS</a>
-            <a href="enquire.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">05 / ENQUIRE &amp; BOOKING</a>
-          </div>
-        </div>
-
-        <!-- Column 2: 6 PROJECT TYPOLOGY PAGES (Hidden on Mobile, Visible on Tablet 'sm:' & Desktop 'lg:') -->
-        <div class="hidden sm:block">
-          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">PROJECT TYPOLOGIES</h4>
-          <div class="flex flex-col gap-3 text-on-surface-variant">
-            <a href="upcoming.html" class="hover:text-primary transition-colors font-bold text-primary" onclick="toggleMainNavigation()">UPCOMING PROJECTS (6)</a>
-            <a href="ongoing.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">ONGOING PROJECTS (12)</a>
-            <a href="completed.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">COMPLETED PROJECTS (20)</a>
-            <a href="residential.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">RESIDENTIAL (25)</a>
-            <a href="industrial.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">INDUSTRIAL (2)</a>
-            <a href="commercial.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">COMMERCIAL (2)</a>
-            <a href="assembly.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">ASSEMBLY &amp; TEMPLES (3)</a>
-          </div>
-        </div>
-
-        <!-- Column 3: FEATURED PROJECTS (Hidden on Mobile & Tablet, Visible on Desktop 'lg:') -->
-        <div class="hidden lg:block">
-          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">FEATURED PROJECTS</h4>
-          <div class="flex flex-col gap-3 text-on-surface-variant">
-            <a href="project-res-01.html" class="hover:text-primary transition-colors">CANTILEVERED VILLA (DUBAI)</a>
-            <a href="project-res-02.html" class="hover:text-primary transition-colors">ALPINE MONOLITH (ZURICH)</a>
-            <a href="project-com-01.html" class="hover:text-primary transition-colors">CORPORATE HQ (TOKYO)</a>
-            <a href="project-com-02.html" class="hover:text-primary transition-colors">FINANCIAL PAVILION (LONDON)</a>
-          </div>
-        </div>
-
-        <!-- Column 4: DIRECT CONTACT (Hidden on Mobile & Tablet, Visible on Desktop 'lg:') -->
-        <div class="hidden lg:flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-outline-variant/30 pt-4 lg:pt-0 lg:pl-6">
-          <div>
-            <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">DIRECT CONTACT</h4>
-            <p class="text-on-surface-variant text-xs mb-4 lowercase tracking-normal">ankitjangir529@gmail.com</p>
-          </div>
-          <a href="enquire.html" class="w-full py-3.5 bg-primary text-background font-bold text-center tracking-widest uppercase hover:bg-primary-container transition-all">
-            INITIATE ENQUIRY →
-          </a>
-        </div>
-      </div>
-    </div>
-    </div>
   </header>
 
-  <!-- Interactive Project Sidebar -->
-  <aside id="sidebar-drawer" class="hidden md:flex fixed left-0 top-[20%] h-fit py-3.5 sidebar-glass border-r border-y border-outline-variant/30 flex flex-col gap-1 w-12 lg:w-14 lg:hover:w-64 transition-all duration-500 overflow-hidden group z-40 shadow-2xl rounded-r-lg border-r border-y border-outline-variant/30 flex flex-col gap-1 w-14 hover:w-64 transition-all duration-500 overflow-hidden group z-40 shadow-2xl">
-    <a href="index.html#portfolio" class="sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all" data-filter="all" id="sidebar-btn-all">
-      <span class="material-symbols-outlined text-primary text-xl font-light">grid_view</span>
-      <div class="hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">
-        <h3 class="font-headline-md text-sm text-on-surface font-light leading-none">All Projects</h3>
-        <p class="font-label-caps text-[10px] text-on-surface-variant opacity-60">Typology Index</p>
-      </div>
-    </a>
-
-    <nav class="flex flex-col gap-1 pt-1 px-1.5" id="sidebar-nav">
-      <a href="documents.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="docs" id="sidebar-btn-docs">
-        <span class="material-symbols-outlined font-light text-lg">description</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Docs &amp; PDFs (7 Cats)</span>
-      </a>
-
-      <a href="upcoming.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="upcoming" id="sidebar-btn-upcoming">
-        <span class="material-symbols-outlined font-light text-lg">hourglass_top</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Upcoming (6)</span>
-      </a>
-
-      <a href="ongoing.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="ongoing" id="sidebar-btn-ongoing">
-        <span class="material-symbols-outlined font-light text-lg">pending_actions</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Ongoing (12)</span>
-      </a>
-
-      <a href="completed.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="completed" id="sidebar-btn-completed">
-        <span class="material-symbols-outlined font-light text-lg">task_alt</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Completed (20)</span>
-      </a>
-
-      <a href="residential.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="residential" id="sidebar-btn-residential">
-        <span class="material-symbols-outlined font-light text-lg">home</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Residential (25)</span>
-      </a>
-
-      <a href="industrial.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="industrial" id="sidebar-btn-industrial">
-        <span class="material-symbols-outlined font-light text-lg">factory</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Industrial (2)</span>
-      </a>
-
-      <a href="commercial.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="commercial" id="sidebar-btn-commercial">
-        <span class="material-symbols-outlined font-light text-lg">business</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Commercial (2)</span>
-      </a>
-
-      <a href="assembly.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="assembly" id="sidebar-btn-assembly">
-        <span class="material-symbols-outlined font-light text-lg">temple_hindu</span>
-        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Assembly &amp; Temples (3)</span>
-      </a>
-    </nav>
-  </aside>
-
-  <script>
-    function setActiveSidebar(category) {
-      const sidebarBtns = document.querySelectorAll('.sidebar-filter-btn');
-      sidebarBtns.forEach(btn => {
-        const cat = btn.getAttribute('data-filter');
-        const icon = btn.querySelector('.material-symbols-outlined');
-        if (cat === category) {
-          if (btn.id === 'sidebar-btn-all') {
-            btn.className = 'sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-primary border-l-2 border-l-primary bg-transparent active';
-          } else {
-            btn.className = 'sidebar-filter-btn flex items-center gap-4 p-2 text-primary border-l-2 border-primary bg-transparent transition-all w-full text-left cursor-pointer active';
-          }
-          if (icon) icon.classList.add('text-primary');
-        } else {
-          if (btn.id === 'sidebar-btn-all') {
-            btn.className = 'sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-on-surface-variant opacity-80 hover:text-primary';
-          } else {
-            btn.className = 'sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer';
-          }
-          if (icon && cat !== 'all') icon.classList.remove('text-primary');
-        }
-      });
-    }
-    document.addEventListener('DOMContentLoaded', () => {
-      setActiveSidebar('residential');
-    });
-  </script>
-
   <main class="pt-24">
-    <!-- Mobile Category Quick Navigation (Icons Only - Transparent Blurred on Mobile, Hidden on Tablet & Desktop) -->
-    <div id="mobile-category-bar" class="md:hidden sticky top-[58px] z-30 bg-background/40 backdrop-blur-xl border-b border-white/10 py-2.5 px-3 shadow-lg">
-      <div class="flex items-center justify-center sm:justify-start gap-2.5 overflow-x-auto no-scrollbar max-w-container-max mx-auto px-2">
-        <a href="index.html#portfolio" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="All Showcase" aria-label="All Showcase">
-          <span class="material-symbols-outlined text-lg">grid_view</span>
-        </a>
-        <a href="upcoming.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Upcoming (6)" aria-label="Upcoming (6)">
-          <span class="material-symbols-outlined text-lg">hourglass_top</span>
-        </a>
-        <a href="ongoing.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Ongoing (12)" aria-label="Ongoing (12)">
-          <span class="material-symbols-outlined text-lg">pending_actions</span>
-        </a>
-        <a href="completed.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Completed (20)" aria-label="Completed (20)">
-          <span class="material-symbols-outlined text-lg">task_alt</span>
-        </a>
-        <a href="residential.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border bg-primary text-background border-primary shadow-[0_0_12px_rgba(255,184,0,0.45)] scale-105 font-bold" title="Residential (25)" aria-label="Residential (25)">
-          <span class="material-symbols-outlined text-lg">home</span>
-        </a>
-        <a href="industrial.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Industrial (2)" aria-label="Industrial (2)">
-          <span class="material-symbols-outlined text-lg">factory</span>
-        </a>
-        <a href="commercial.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Commercial (2)" aria-label="Commercial (2)">
-          <span class="material-symbols-outlined text-lg">business</span>
-        </a>
-        <a href="assembly.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Assembly (3)" aria-label="Assembly (3)">
-          <span class="material-symbols-outlined text-lg">temple_hindu</span>
-        </a>
-        <a href="documents.html" class="w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-all border text-on-surface-variant bg-surface/30 backdrop-blur-md hover:text-primary hover:border-primary border-white/10" title="Docs & PDFs" aria-label="Docs & PDFs">
-          <span class="material-symbols-outlined text-lg">description</span>
-        </a>
-      </div>
-    </div>
     <!-- Hero Banner Section -->
     <section class="relative py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-b border-outline-variant/30 overflow-hidden">
       <div class="absolute inset-0 z-0 opacity-25">
@@ -405,7 +216,7 @@
         <a href="index.html" class="font-label-caps text-xs text-primary hover:underline font-bold">← Back to Main Showcase</a>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div id="residential-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <!-- Card 1: Dr. Madhavkirti Prabhuji -->
         <div onclick="openProjectModal('Dr. Madhavkirti Prabhuji', 'ONGOING / LUXURY ESTATE', '₹4 Cr CTC', 'Tree Road Radhakund, Mathura U.P.', '36,000 SQFT (G+2 Estate)', 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80')" class="project-card-item flex flex-col group cursor-pointer border border-outline-variant/30 p-4 bg-surface-container-low hover:border-primary/60 transition-all rounded-sm">
           <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
@@ -1433,5 +1244,6 @@
 
     document.addEventListener('DOMContentLoaded', () => { updateAuthUI(); });
   </script>
+  <script src="custom-projects-loader.js"></script>
 </body>
 </html>
