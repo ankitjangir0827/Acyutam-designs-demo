@@ -41,7 +41,75 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 
-  
+  <style>
+    @font-face {
+      font-family: 'Material Symbols Outlined';
+      font-style: normal;
+      font-weight: 100 700;
+      font-display: block;
+      src: url('https://fonts.gstatic.com/s/materialsymbolsoutlined/v367/kJF1BvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oDMzByHX9rA6RzaxHMPdY43zj-jCxv3fzvRNU22ZXGJpEpjC_1v-p_4MrImHCIJIZrDCvHOem.ttf') format('truetype');
+    }
+    .material-symbols-outlined {
+      font-family: 'Material Symbols Outlined' !important;
+      font-style: normal;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none !important;
+      font-feature-settings: 'liga' 1 !important;
+      font-variant-ligatures: normal !important;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-smoothing: antialiased;
+    }
+    .glass-panel {
+      background: rgba(18, 18, 24, 0.65);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+    }
+    .header-glass {
+      background: rgba(14, 14, 18, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .sidebar-glass {
+      background: rgba(14, 14, 18, 0.25) !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.08) !important;
+      transition: background 0.3s ease, border-color 0.3s ease, width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .sidebar-glass:hover {
+      background: rgba(14, 14, 18, 0.4) !important;
+    }
+    .sidebar-filter-btn {
+      background: transparent !important;
+      transition: all 0.25s ease;
+    }
+    .sidebar-filter-btn.active {
+      background: transparent !important;
+      border-left-color: #ff7722 !important;
+      color: #ff7722 !important;
+    }
+    .sidebar-filter-btn.active .material-symbols-outlined {
+      color: #ff7722 !important;
+      transform: scale(1.1);
+      transition: transform 0.25s ease, color 0.25s ease;
+    }
+    .img-grayscale-hover { filter: grayscale(100%); transition: filter 0.6s ease, transform 0.6s ease; }
+    .group:hover .img-grayscale-hover { filter: grayscale(0%); transform: scale(1.04); }
+    .image-blur-vignette {
+      position: absolute; inset: 0; pointer-events: none; z-index: 15;
+      box-shadow: inset 0 0 60px 25px rgba(19, 19, 19, 0.75);
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(5px);
+    }
+  </style>
+
   <script id="tailwind-config">
     tailwind.config = {
       darkMode: "class",
@@ -69,19 +137,245 @@
           },
           spacing: {
             "container-max": "1440px",
+            "margin-desktop": "64px",
+            "margin-mobile": "24px"
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body class="bg-background text-on-surface font-body-lg antialiased">
+  
+  <!-- Main Glassmorphism Header -->
+  <header class="fixed top-0 w-full z-50 header-glass">
+    <div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop py-3 flex justify-between items-center font-label-ui text-xs tracking-widest uppercase">
+      
+      <!-- Brand Logo Link with Circular Ring Frame -->
+      <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group shrink-0 transition-opacity hover:opacity-90 relative z-50 py-0.5" title="ACHYUTAM BUILDER — Home">
+        <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-0.5 border-2 border-primary/80 ring-2 ring-primary/25 shadow-[0_0_15px_rgba(255,184,0,0.35)] flex items-center justify-center overflow-hidden bg-surface-container/60 shrink-0">
+          <img src="photos_and_videos/logo.png" alt="ACHYUTAM BUILDER Logo" class="w-full h-full rounded-full object-cover transition-transform group-hover:scale-105 shrink-0" onerror="this.src='logo.png'"/>
+        </div>
+        <div class="hidden sm:flex flex-col text-left">
+          <span class="font-display-lg text-sm sm:text-base md:text-lg text-on-surface font-semibold tracking-wider uppercase leading-none group-hover:text-primary transition-colors">
+            ACHYUTAM BUILDER
+          </span>
+          <span class="font-label-caps text-[9px] tracking-[0.2em] text-primary/80 font-medium leading-none mt-1">
+            ENGINEERING &amp; ARCHITECTURE
+          </span>
+        </div>
+      </a>
+
+      <!-- Header Navigation Bar -->
+      <nav class="hidden lg:flex items-center gap-8 text-[11px] font-medium tracking-widest">
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html">HOME</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="about.html">ABOUT US</a>
+        
+        <!-- Category Dropdown -->
+        <div class="relative group cursor-pointer py-2">
+          <a class="text-primary font-bold border-b-2 border-primary pb-0.5 transition-all duration-300 flex items-center gap-1" href="index.html#portfolio">
+            PROJECTS <span class="material-symbols-outlined text-xs">expand_more</span>
+          </a>
+          <div class="absolute top-full left-0 w-60 bg-surface-container-low border border-outline-variant/40 p-2 shadow-2xl opacity-0 pointer-events-none group-hover:opacity-100 group-hover:pointer-events-auto transition-all duration-200 rounded-sm flex flex-col gap-1 z-50">
+            <a href="ongoing.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center justify-between">
+              <span>Ongoing Projects</span>
+              <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">12</span>
+            </a>
+            <a href="completed.html" class="p-2 bg-primary/10 text-primary font-bold text-xs tracking-wider transition-colors rounded-sm flex items-center justify-between">
+              <span>Completed Projects</span>
+              <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">20</span>
+            </a>
+            <a href="upcoming.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center justify-between">
+              <span>Upcoming Projects</span>
+              <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">6</span>
+            </a>
+            <div class="border-t border-outline-variant/30 my-1"></div>
+            <a href="residential.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Residential Projects (25)</a>
+            <a href="industrial.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Industrial Projects (2)</a>
+            <a href="commercial.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Commercial Complexes (2)</a>
+            <a href="assembly.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Assembly &amp; Temples (3)</a>
+          </div>
+        </div>
+
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="careers.html">CAREERS</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="contact.html">CONTACT US</a>
+      </nav>
+
+      <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- Day / Night Theme Toggle Switch -->
+        <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
+
+        <!-- Admin / Portal Button -->
+        <a href="admin.html" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-primary hover:text-primary-container transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 p-1 border-0 bg-transparent" title="Admin &amp; Management Portal">
+          <span class="material-symbols-outlined text-2xl sm:text-[26px] leading-none font-light hover:scale-110 transition-transform">admin_panel_settings</span>
+          <span id="auth-btn-text" class="hidden sm:inline text-[10px]">PORTAL</span>
+        </a>
+
+        <!-- CONTACT US CTA Button -->
+        <a href="contact.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
+          CONTACT US
+        </a>
+
+        <!-- Animated Circular Hamburger Button -->
+        <button id="animated-hamburger-btn" onclick="toggleMainNavigation()" class="lg:hidden relative shrink-0 w-10 h-10 flex flex-col justify-center items-center gap-1.5 p-2 focus:outline-none z-50 group border border-outline-variant/40 rounded-full hover:border-primary/50 transition-colors bg-surface-container/40 cursor-pointer" aria-label="Toggle Navigation Menu">
+          <span class="w-5 h-0.5 bg-primary rounded-full transition-all duration-300 transform origin-center" id="burg-line-1"></span>
+          <span class="w-5 h-0.5 bg-on-surface rounded-full transition-all duration-300" id="burg-line-2"></span>
+          <span class="w-5 h-0.5 bg-primary rounded-full transition-all duration-300 transform origin-center" id="burg-line-3"></span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation Overlay Drawer -->
+    <div id="navigation-overlay" class="hidden bg-background/95 backdrop-blur-2xl border-b border-outline-variant/30 px-margin-mobile py-8 font-label-caps text-xs tracking-widest uppercase flex flex-col gap-5 shadow-2xl">
+      <div class="max-w-container-max mx-auto w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        
+        <!-- Column 1: MAIN NAVIGATION -->
+        <div class="block">
+          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">MAIN NAVIGATION</h4>
+          <div class="flex flex-col gap-3 text-on-surface-variant">
+            <a href="index.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">01 / HOME</a>
+            <a href="about.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">02 / ABOUT US</a>
+            <a href="index.html#portfolio" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">03 / PROJECTS INDEX</a>
+            <a href="careers.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">04 / CAREERS</a>
+            <a href="contact.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">05 / CONTACT US</a>
+            <a href="admin.html" class="text-primary hover:underline transition-colors" onclick="toggleMainNavigation()">06 / ADMIN PORTAL</a>
+          </div>
+        </div>
+
+        <!-- Column 2: PROJECT TYPOLOGIES -->
+        <div class="block">
+          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">PROJECT TYPOLOGIES</h4>
+          <div class="flex flex-col gap-3 text-on-surface-variant">
+            <a href="completed.html" class="text-primary font-bold hover:text-primary transition-colors" onclick="toggleMainNavigation()">COMPLETED PROJECTS (20)</a>
+            <a href="ongoing.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">ONGOING PROJECTS (12)</a>
+            <a href="upcoming.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">UPCOMING PROJECTS (6)</a>
+            <a href="residential.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">RESIDENTIAL ESTATES</a>
+            <a href="industrial.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">INDUSTRIAL HUBS</a>
+            <a href="commercial.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">COMMERCIAL COMPLEXES</a>
+            <a href="assembly.html" class="hover:text-primary transition-colors" onclick="toggleMainNavigation()">ASSEMBLY &amp; TEMPLES</a>
+          </div>
+        </div>
+
+        <!-- Column 3: HIGHLIGHTS -->
+        <div class="hidden lg:block">
+          <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">COMPLETED HIGHLIGHTS</h4>
+          <div class="flex flex-col gap-3 text-on-surface-variant">
+            <a href="#grid-showcase" class="hover:text-primary transition-colors">BHAGIRATH MAL JI KHYALIYA CRPF</a>
+            <a href="#grid-showcase" class="hover:text-primary transition-colors">GANPAT JI CHOUDHARY VILLA</a>
+            <a href="#grid-showcase" class="hover:text-primary transition-colors">HARLAL JI MAHALA ASI RESIDENCE</a>
+            <a href="#grid-showcase" class="hover:text-primary transition-colors">BHAWANI SINGH THAKUR HOUSE</a>
+          </div>
+        </div>
+
+        <!-- Column 4: DIRECT CONTACT -->
+        <div class="hidden lg:flex flex-col justify-between border-t lg:border-t-0 lg:border-l border-outline-variant/30 pt-4 lg:pt-0 lg:pl-6">
+          <div>
+            <h4 class="text-primary font-bold mb-3 border-b border-outline-variant/30 pb-2">CONSULTANCY &amp; INQUIRY</h4>
+            <p class="text-on-surface-variant text-xs mb-4 lowercase tracking-normal">info@achyutambuilder.com</p>
+          </div>
+          <a href="contact.html" class="w-full py-3.5 bg-primary text-background font-bold text-center tracking-widest uppercase hover:bg-primary-container transition-all">
+            INITIATE PROPOSAL →
+          </a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Interactive Project Sidebar -->
+  <aside id="sidebar-drawer" class="hidden md:flex fixed left-0 top-[20%] h-fit py-3.5 sidebar-glass border-r border-y border-outline-variant/30 flex flex-col gap-1 w-12 lg:w-14 lg:hover:w-64 transition-all duration-500 overflow-hidden group z-40 shadow-2xl rounded-r-lg">
+    <nav class="flex flex-col gap-1 w-full px-1">
+      <a href="index.html#portfolio" class="sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-on-surface-variant opacity-80 hover:text-primary" data-filter="all" id="sidebar-btn-all">
+        <span class="material-symbols-outlined font-light text-lg">grid_view</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">All Showcase</span>
+      </a>
+
+      <a href="upcoming.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="upcoming" id="sidebar-btn-upcoming">
+        <span class="material-symbols-outlined font-light text-lg">hourglass_top</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Upcoming (6)</span>
+      </a>
+
+      <a href="ongoing.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="ongoing" id="sidebar-btn-ongoing">
+        <span class="material-symbols-outlined font-light text-lg">pending_actions</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Ongoing (12)</span>
+      </a>
+
+      <a href="completed.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-primary border-l-2 border-primary bg-transparent transition-all w-full text-left cursor-pointer active" data-filter="completed" id="sidebar-btn-completed">
+        <span class="material-symbols-outlined font-light text-lg text-primary">task_alt</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold">Completed (20)</span>
+      </a>
+
+      <a href="residential.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="residential" id="sidebar-btn-residential">
+        <span class="material-symbols-outlined font-light text-lg">home</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Residential (25)</span>
+      </a>
+
+      <a href="industrial.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="industrial" id="sidebar-btn-industrial">
+        <span class="material-symbols-outlined font-light text-lg">factory</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Industrial (2)</span>
+      </a>
+
+      <a href="commercial.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="commercial" id="sidebar-btn-commercial">
+        <span class="material-symbols-outlined font-light text-lg">business</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Commercial (2)</span>
+      </a>
+
+      <a href="assembly.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="assembly" id="sidebar-btn-assembly">
+        <span class="material-symbols-outlined font-light text-lg">temple_hindu</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Assembly &amp; Temples (3)</span>
+      </a>
+    </nav>
+  </aside>
+
+  <script>
+    function setActiveSidebar(category) {
+      const sidebarBtns = document.querySelectorAll('.sidebar-filter-btn');
+      sidebarBtns.forEach(btn => {
+        const cat = btn.getAttribute('data-filter');
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (cat === category) {
+          if (btn.id === 'sidebar-btn-all') {
+            btn.className = 'sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-primary border-l-2 border-l-primary bg-transparent active';
+          } else {
+            btn.className = 'sidebar-filter-btn flex items-center gap-4 p-2 text-primary border-l-2 border-primary bg-transparent transition-all w-full text-left cursor-pointer active';
+          }
+          if (icon) icon.classList.add('text-primary');
+        } else {
+          if (btn.id === 'sidebar-btn-all') {
+            btn.className = 'sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-on-surface-variant opacity-80 hover:text-primary';
+          } else {
+            btn.className = 'sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer';
+          }
+          if (icon && cat !== 'all') icon.classList.remove('text-primary');
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      setActiveSidebar('completed');
+    });
+  </script>
+
+  <main class="pt-24">
+    <!-- Hero Banner Section -->
+    <section class="relative py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-b border-outline-variant/30 overflow-hidden">
+      <div class="absolute inset-0 z-0 opacity-25">
+        <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1600&q=80" class="w-full h-full object-cover" alt="Completed Projects Index"/>
+      </div>
+      <div class="relative z-10 max-w-3xl">
+        <div class="font-label-caps text-xs text-primary tracking-widest uppercase mb-3 flex items-center gap-2">
           <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span> ACHYUTAM BUILDER® — OFFICIAL PORTFOLIO PAGE
         </div>
         <h1 class="font-display-lg text-4xl md:text-6xl text-on-surface font-light leading-tight mb-4">
           Completed Projects Index <br/><span class="text-primary italic">Portfolio Showcase</span>
         </h1>
         <p class="font-body-md text-base text-on-surface-variant leading-relaxed mb-8">
-          20 Fully Delivered Residential Estates, Villas & Modern Houses successfully completed by ACHYUTAM BUILDER®.
+          20 Fully Delivered Residential Estates, Villas &amp; Modern Houses successfully completed by ACHYUTAM BUILDER®.
         </p>
         <div class="flex flex-wrap items-center gap-4">
           <a href="#grid-showcase" class="px-6 py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest hover:bg-primary-container transition-all">
             Explore All 20 Projects ↓
           </a>
-          <a href="enquire.html" class="px-6 py-3 border border-outline-variant text-on-surface font-label-caps text-xs font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition-all">
+          <a href="contact.html" class="px-6 py-3 border border-outline-variant text-on-surface font-label-caps text-xs font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition-all">
             Initiate Project Proposal →
           </a>
         </div>
@@ -99,6 +393,7 @@
       </div>
 
       <div id="completed-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        
         <!-- Card 1: Bhagirath Mal Ji Khyaliya CRPF -->
         <div onclick="openProjectModal('Bhagirath Mal Ji Khyaliya CRPF', 'COMPLETED / RESIDENTIAL', '₹1.3 Cr CTC', 'Sikar, Rajasthan', 'G+1/G+2 Residential Elevation', 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80')" class="project-card-item flex flex-col group cursor-pointer border border-outline-variant/30 p-4 bg-surface-container-low hover:border-primary/60 transition-all rounded-sm">
           <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
@@ -122,7 +417,7 @@
         </div>
 
         <!-- Card 2: Ganpat Ji Choudhary -->
-        <div onclick="openProjectModal('Ganpat Ji Choudhary', 'COMPLETED / RESIDENTIAL', '₹1.2 Cr CTC', 'Sikar, Rajasthan', 'G+1/G+2 Residential Villa', 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80')" class="project-card-item flex flex-col group cursor-pointer border border-outline-variant/30 p-4 bg-surface-container-low hover:border-primary/60 transition-all rounded-sm">
+        <div onclick="openProjectModal('Ganpat Ji Choudhary', 'COMPLETED / RESIDENTIAL', '₹1.2 Cr CTC', 'Sikar, Rajasthan', 'G+1/G+2 Residential Residence', 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80', 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80')" class="project-card-item flex flex-col group cursor-pointer border border-outline-variant/30 p-4 bg-surface-container-low hover:border-primary/60 transition-all rounded-sm">
           <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
             <div class="image-blur-vignette pointer-events-none"></div>
             <img alt="Ganpat Ji Choudhary Exterior" class="w-full h-full object-cover img-grayscale-hover" src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80"/>
@@ -137,7 +432,7 @@
             <div>
               <h3 class="font-label-ui text-sm text-on-surface uppercase tracking-wider mb-1 group-hover:text-primary transition-colors font-bold">Ganpat Ji Choudhary</h3>
               <p class="font-label-caps text-[11px] text-on-surface-variant opacity-80">Sikar, Rajasthan</p>
-              <p class="font-label-caps text-[10px] text-primary/80 mt-1">G+1/G+2 Residential Villa</p>
+              <p class="font-label-caps text-[10px] text-primary/80 mt-1">G+1/G+2 Residential Residence</p>
             </div>
             <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">open_in_new</span>
           </div>
@@ -600,8 +895,6 @@
 
         <!-- 4 Information & Map Location Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          <!-- 1. Direct Phone & WhatsApp -->
           <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all flex flex-col justify-between group">
             <div>
               <div class="flex items-center gap-3 mb-4">
@@ -623,7 +916,6 @@
             </div>
           </div>
 
-          <!-- 2. Official Email IDs -->
           <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all flex flex-col justify-between group">
             <div>
               <div class="flex items-center gap-3 mb-4">
@@ -631,22 +923,20 @@
                   <span class="material-symbols-outlined text-xl">mail</span>
                 </div>
                 <div>
-                  <span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider block">OFFICIAL CORPORATE EMAIL</span>
-                  <span class="font-label-ui text-xs text-on-surface font-bold">24/7 Digital Desk</span>
+                  <span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider block">OFFICIAL EMAIL</span>
+                  <span class="font-label-ui text-xs text-on-surface font-bold">Digital Helpdesk</span>
                 </div>
               </div>
-              <a href="mailto:info@achyutambuilder.com" class="font-body-md text-xs text-primary hover:underline font-bold block mb-1 break-all">info@achyutambuilder.com</a>
-              <a href="mailto:a.designs121@gmail.com" class="font-body-md text-[11px] text-on-surface hover:underline block mb-1 break-all">a.designs121@gmail.com</a>
-              <a href="mailto:ramgopaljangir21@gmail.com" class="font-body-md text-[11px] text-on-surface hover:underline block mb-2 break-all">ramgopaljangir21@gmail.com</a>
+              <a href="mailto:support@acyutambuilder.com" class="font-display-lg text-sm text-primary hover:underline font-bold block mb-1">support@acyutambuilder.com</a>
+              <p class="font-body-md text-xs text-on-surface-variant opacity-80 leading-relaxed">ankitjangir529@gmail.com</p>
             </div>
             <div class="mt-4 pt-4 border-t border-outline-variant/20">
-              <a href="mailto:info@achyutambuilder.com" class="font-label-caps text-[11px] text-primary hover:underline flex items-center gap-1 font-bold">
-                Send Email <span class="material-symbols-outlined text-xs">east</span>
+              <a href="mailto:support@acyutambuilder.com" class="font-label-caps text-[11px] text-primary hover:underline flex items-center gap-1 font-bold">
+                Send Mail <span class="material-symbols-outlined text-xs">east</span>
               </a>
             </div>
           </div>
 
-          <!-- 3. Headquarters Location -->
           <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all flex flex-col justify-between group">
             <div>
               <div class="flex items-center gap-3 mb-4">
@@ -654,22 +944,19 @@
                   <span class="material-symbols-outlined text-xl">location_on</span>
                 </div>
                 <div>
-                  <span class="font-label-caps text-[10px] text-primary font-bold uppercase tracking-wider block">HEADQUARTERS</span>
-                  <span class="font-label-ui text-xs text-on-surface font-bold">Sikar Head Office</span>
+                  <span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider block">HEADQUARTERS</span>
+                  <span class="font-label-ui text-xs text-on-surface font-bold">Sikar HQ Office</span>
                 </div>
               </div>
-              <a href="https://www.google.com/maps/search/?api=1&amp;query=1st+Floor+Pawan+Market+Station+Road+Sikar+Rajasthan+332001" target="_blank" rel="noopener noreferrer" class="font-body-md text-xs text-on-surface font-medium leading-relaxed mb-2 hover:text-primary transition-colors block">
-                1st Floor, Pawan Market,<br/>Station Road, Sikar 332001,<br/>Rajasthan, India
-              </a>
+              <p class="font-body-md text-xs text-on-surface font-medium leading-relaxed mb-2">1st Floor, Pawan Market, Station Road, Sikar 332001, Rajasthan</p>
             </div>
             <div class="mt-4 pt-4 border-t border-outline-variant/20">
-              <a href="https://www.google.com/maps/search/?api=1&amp;query=1st+Floor+Pawan+Market+Station+Road+Sikar+Rajasthan+332001" target="_blank" rel="noopener noreferrer" class="font-label-caps text-[11px] text-primary hover:underline flex items-center gap-1.5 font-bold">
-                <span class="material-symbols-outlined text-xs">map</span> View on Google Maps ↗
+              <a href="https://www.google.com/maps/search/?api=1&amp;query=1st+Floor+Pawan+Market+Station+Road+Sikar+Rajasthan+332001" target="_blank" rel="noopener noreferrer" class="font-label-caps text-[11px] text-primary hover:underline flex items-center gap-1 font-bold">
+                Google Maps <span class="material-symbols-outlined text-xs">open_in_new</span>
               </a>
             </div>
           </div>
 
-          <!-- 4. Branch Offices -->
           <div class="glass-panel p-6 border border-outline-variant/30 hover:border-primary/50 transition-all flex flex-col justify-between group">
             <div>
               <div class="flex items-center gap-3 mb-4">
@@ -677,81 +964,147 @@
                   <span class="material-symbols-outlined text-xl">domain</span>
                 </div>
                 <div>
-                  <span class="font-label-caps text-[10px] text-primary font-bold uppercase tracking-wider block">BRANCH OFFICES</span>
-                  <span class="font-label-ui text-xs text-on-surface font-bold">Mathura &amp; Dharamshala</span>
+                  <span class="font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider block">BRANCH OFFICES</span>
+                  <span class="font-label-ui text-xs text-on-surface font-bold">U.P. &amp; H.P.</span>
                 </div>
               </div>
-              <div class="mb-3">
-                <span class="font-label-caps text-[10px] text-primary font-bold block">U.P. BRANCH:</span>
-                <p class="font-body-md text-[11px] text-on-surface font-medium leading-relaxed">Radhakund Goverdhan, Mathura, U.P.</p>
-              </div>
-              <div>
-                <span class="font-label-caps text-[10px] text-primary font-bold block">H.P. BRANCH:</span>
-                <p class="font-body-md text-[11px] text-on-surface font-medium leading-relaxed">Civil Bazar, Dharamshala, H.P.</p>
-              </div>
+              <p class="font-body-md text-xs text-on-surface leading-relaxed mb-1"><strong class="text-primary">U.P.:</strong> Radhakund Goverdhan, Mathura</p>
+              <p class="font-body-md text-xs text-on-surface leading-relaxed"><strong class="text-primary">H.P.:</strong> Dharamshala Branch</p>
             </div>
             <div class="mt-4 pt-4 border-t border-outline-variant/20">
-              <a href="https://www.google.com/maps/search/?api=1&amp;query=Radhakund+Goverdhan+Mathura+UP" target="_blank" rel="noopener noreferrer" class="font-label-caps text-[11px] text-primary hover:underline flex items-center gap-1.5 font-bold">
-                <span class="material-symbols-outlined text-xs">map</span> View Branches ↗
+              <a href="contact.html" class="font-label-caps text-[11px] text-primary hover:underline flex items-center gap-1 font-bold">
+                Contact Branch <span class="material-symbols-outlined text-xs">east</span>
               </a>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
   </main>
 
-  <!-- Interactive Project Details Floating Modal -->
-  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-md flex items-center justify-center p-4">
-    <div class="glass-panel max-w-2xl w-full p-6 md:p-8 rounded-lg relative border border-primary/50 shadow-2xl">
-      <button onclick="closeProjectModal()" class="absolute top-4 right-4 w-10 h-10 rounded-full border border-outline-variant flex items-center justify-center text-on-surface hover:text-primary hover:border-primary transition-all">
-        <span class="material-symbols-outlined">close</span>
+  <!-- Interactive Project Details Modal -->
+  <div id="project-modal" class="fixed inset-0 z-50 hidden bg-background/80 backdrop-blur-md items-center justify-center p-4 sm:p-6 overflow-y-auto">
+    <div class="glass-panel max-w-4xl w-full rounded-lg overflow-hidden border border-outline-variant/40 shadow-2xl relative animate-fadeIn my-auto">
+      
+      <!-- Modal Close Button -->
+      <button onclick="closeProjectModal()" class="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-surface/80 border border-white/20 text-on-surface hover:text-primary hover:border-primary transition-all flex items-center justify-center cursor-pointer shadow-lg">
+        <span class="material-symbols-outlined text-xl">close</span>
       </button>
 
-      <div class="flex items-center gap-2 mb-2">
-        <span id="modal-badge" class="font-label-caps text-xs text-primary font-bold px-3 py-1 bg-primary/10 border border-primary/40 rounded-full"></span>
-        <span id="modal-ctc" class="font-label-caps text-xs text-background bg-primary font-bold px-3 py-1 rounded-full"></span>
-      </div>
+      <div class="grid grid-cols-1 md:grid-cols-2">
+        <!-- Modal Image Slider / Feature Image -->
+        <div class="relative min-h-[260px] md:min-h-[380px] bg-surface-container-lowest overflow-hidden flex items-center justify-center">
+          <img id="modal-img-main" src="" alt="Project Feature" class="w-full h-full object-cover transition-all duration-500"/>
+          <div class="absolute bottom-3 left-3 flex gap-2 z-10" id="modal-thumbnails"></div>
+        </div>
 
-      <h2 id="modal-name" class="font-display-lg text-2xl md:text-4xl text-on-surface font-medium mb-2"></h2>
-      <p id="modal-loc" class="font-label-caps text-xs text-primary mb-4 font-bold"></p>
-      
-      <div class="aspect-video w-full overflow-hidden rounded-md mb-4 border border-outline-variant/30 relative">
-        <img id="modal-img" src="" class="w-full h-full object-cover" alt="Project Preview"/>
-      </div>
+        <!-- Modal Content Information -->
+        <div class="p-6 sm:p-8 flex flex-col justify-between bg-surface-container-low/90 font-label-caps text-xs">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span id="modal-tag" class="px-2.5 py-1 bg-primary/20 text-primary border border-primary/40 font-bold rounded-sm text-[10px] tracking-wider uppercase">CATEGORIZED PROJECT</span>
+              <span id="modal-cost" class="px-2.5 py-1 bg-surface-container text-on-surface border border-outline-variant/30 font-bold rounded-sm text-[10px] tracking-wider">PROJECT ESTIMATE</span>
+            </div>
+            
+            <h2 id="modal-title" class="font-display-lg text-2xl sm:text-3xl text-on-surface font-semibold tracking-wide uppercase leading-tight mb-3">
+              PROJECT TITLE
+            </h2>
 
-      <p id="modal-det" class="font-body-md text-sm text-on-surface-variant mb-6 leading-relaxed"></p>
+            <div class="space-y-2 border-y border-outline-variant/30 py-4 my-4">
+              <div class="flex items-center gap-2 text-on-surface-variant">
+                <span class="material-symbols-outlined text-primary text-base">location_on</span>
+                <span id="modal-location" class="text-on-surface font-medium">Location Info</span>
+              </div>
+              <div class="flex items-center gap-2 text-on-surface-variant">
+                <span class="material-symbols-outlined text-primary text-base">square_foot</span>
+                <span id="modal-scope" class="text-on-surface font-medium">Scope Info</span>
+              </div>
+            </div>
 
-      <div class="flex flex-wrap items-center gap-4 border-t border-outline-variant/30 pt-4">
-        <a href="tel:9116400862" class="px-5 py-2.5 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-wider hover:bg-primary-container transition-all">
-          Call Hotline (+91 9116400862)
-        </a>
-        <a href="https://wa.me/919116400862" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 border border-primary/50 text-primary font-label-caps text-xs font-bold uppercase tracking-wider hover:bg-primary/10 transition-all">
-          WhatsApp Inquiry
-        </a>
-        <a href="enquire.html" class="px-5 py-2.5 border border-outline-variant text-on-surface font-label-caps text-xs font-bold uppercase tracking-wider hover:border-primary transition-all">
-          Enquire Proposal
-        </a>
+            <p class="font-body-md text-xs text-on-surface-variant opacity-80 leading-relaxed mb-6">
+              Turnkey architectural planning, structural engineering calculations, and high-precision execution managed by ACHYUTAM BUILDER®.
+            </p>
+          </div>
+
+          <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-outline-variant/30">
+            <a id="modal-whatsapp-btn" href="https://wa.me/919116400862" target="_blank" rel="noopener noreferrer" class="flex-1 py-3 bg-primary text-background font-bold text-center uppercase tracking-widest hover:bg-primary-container transition-all flex items-center justify-center gap-2 rounded-sm shadow">
+              <span class="material-symbols-outlined text-base">chat</span> INQUIRE ON WHATSAPP
+            </a>
+            <button onclick="closeProjectModal()" class="px-4 py-3 border border-outline-variant/40 text-on-surface font-bold uppercase tracking-widest hover:border-primary hover:text-primary transition-all rounded-sm cursor-pointer">
+              CLOSE
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <!-- Modal Controller JavaScript -->
+  <!-- Footer -->
+  <footer class="bg-surface-container-lowest border-t border-outline-variant/30 py-10 px-margin-mobile md:px-margin-desktop font-label-caps text-xs text-on-surface-variant">
+    <div class="max-w-container-max mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <img src="photos_and_videos/logo.png" alt="ACHYUTAM Logo" class="w-8 h-8 object-cover rounded-full border border-primary/50" onerror="this.src='logo.png'"/>
+        <div>
+          <span class="font-display-lg text-sm text-on-surface font-bold">ACHYUTAM BUILDER®</span>
+          <span class="text-[10px] text-on-surface-variant opacity-70 block">Sikar • Mathura • Dharamshala</span>
+        </div>
+      </div>
+      <div class="flex flex-wrap items-center justify-center gap-6 text-[11px]">
+        <a href="index.html" class="hover:text-primary transition-colors">Home</a>
+        <a href="about.html" class="hover:text-primary transition-colors">About Us</a>
+        <a href="index.html#portfolio" class="hover:text-primary transition-colors">Projects</a>
+        <a href="careers.html" class="hover:text-primary transition-colors">Careers</a>
+        <a href="contact.html" class="hover:text-primary transition-colors">Contact</a>
+        <a href="documents.html" class="hover:text-primary transition-colors text-primary font-bold">Official Documents</a>
+        <a href="admin.html" class="hover:text-primary transition-colors text-primary">Admin Portal</a>
+      </div>
+      <p class="text-[10px] opacity-60">© 2026 ACHYUTAM BUILDER®. All rights reserved.</p>
+    </div>
+  </footer>
+
   <script>
-    function openProjectModal(name, badge, ctc, loc, det, img1, img2) {
+    function toggleMainNavigation() {
+      const overlay = document.getElementById('navigation-overlay');
+      const burg1 = document.getElementById('burg-line-1');
+      const burg2 = document.getElementById('burg-line-2');
+      const burg3 = document.getElementById('burg-line-3');
+
+      if (overlay) {
+        overlay.classList.toggle('hidden');
+        const isOpen = !overlay.classList.contains('hidden');
+        if (isOpen) {
+          if (burg1) burg1.style.transform = 'rotate(45deg) translate(5px, 5px)';
+          if (burg2) burg2.style.opacity = '0';
+          if (burg3) burg3.style.transform = 'rotate(-45deg) translate(5px, -5px)';
+        } else {
+          if (burg1) burg1.style.transform = 'none';
+          if (burg2) burg2.style.opacity = '1';
+          if (burg3) burg3.style.transform = 'none';
+        }
+      }
+    }
+
+    function openProjectModal(title, category, cost, location, scope, img1, img2) {
       const modal = document.getElementById('project-modal');
+      const mTitle = document.getElementById('modal-title');
+      const mTag = document.getElementById('modal-tag');
+      const mCost = document.getElementById('modal-cost');
+      const mLocation = document.getElementById('modal-location');
+      const mScope = document.getElementById('modal-scope');
+      const mImgMain = document.getElementById('modal-img-main');
+      const mWaBtn = document.getElementById('modal-whatsapp-btn');
+
+      if (mTitle) mTitle.textContent = title;
+      if (mTag) mTag.textContent = category;
+      if (mCost) mCost.textContent = cost;
+      if (mLocation) mLocation.textContent = location;
+      if (mScope) mScope.textContent = scope;
+      if (mImgMain) mImgMain.src = img1 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+      if (mWaBtn) mWaBtn.href = `https://wa.me/919116400862?text=Hello%20Achyutam%20Builder,%20I%20want%20to%20inquire%20about%20the%20${encodeURIComponent(title)}%20project.`;
+
       if (modal) {
-        document.getElementById('modal-name').textContent = name || '';
-        document.getElementById('modal-badge').textContent = badge || '';
-        document.getElementById('modal-ctc').textContent = ctc || '';
-        document.getElementById('modal-loc').textContent = loc || '';
-        document.getElementById('modal-det').textContent = det || '';
-        document.getElementById('modal-img').src = img1 || '';
         modal.classList.remove('hidden');
         modal.classList.add('flex');
-        modal.style.display = 'flex';
       }
     }
 
@@ -760,252 +1113,6 @@
       if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
-        modal.style.display = 'none';
-      }
-    }
-  </script>
-
-  <!-- Sign In / Login Glassmorphism Modal -->
-  <!-- Sign In / Login Glassmorphism Modal -->
-  <div id="auth-modal" class="fixed inset-0 z-[100] hidden flex items-center justify-center bg-black/80 backdrop-blur-md p-4 transition-all duration-300">
-    <div class="relative w-full max-w-md bg-surface-container-low border border-primary/40 rounded-xl p-6 sm:p-8 shadow-[0_0_50px_rgba(255,220,161,0.15)] flex flex-col gap-5 text-on-surface">
-      
-      <!-- Close Modal Button -->
-      <button onclick="closeAuthModal()" class="absolute top-4 right-4 text-on-surface-variant hover:text-primary transition-colors p-1" aria-label="Close Modal">
-        <span class="material-symbols-outlined text-2xl">close</span>
-      </button>
-
-      <!-- Brand Header -->
-      <div class="text-center">
-        <img src="photos_and_videos/logo.png" alt="ACHYUTAM BUILDER" class="w-12 h-12 rounded-full border border-primary/40 mx-auto mb-2 object-cover shadow-[0_0_15px_rgba(255,184,0,0.4)]"/>
-        <h3 class="font-display-lg text-2xl text-on-surface font-light">ACHYUTAM <span class="text-primary font-normal">BUILDER®</span></h3>
-        <p class="font-label-caps text-[11px] text-primary tracking-widest uppercase mt-1">Sign In to Deploy Instant Inquiry</p>
-      </div>
-
-      <!-- Auth Method Tabs: SIGN IN / SIGN UP -->
-      <div class="flex border-b border-outline-variant/30 font-label-caps text-xs">
-        <button id="tab-btn-signin" onclick="switchAuthTab('signin')" class="flex-1 py-2.5 text-center font-bold border-b-2 border-primary text-primary transition-all flex items-center justify-center gap-1 cursor-pointer">
-          <span class="material-symbols-outlined text-base">login</span> Sign In
-        </button>
-        <button id="tab-btn-signup" onclick="switchAuthTab('signup')" class="flex-1 py-2.5 text-center font-bold border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center justify-center gap-1 cursor-pointer">
-          <span class="material-symbols-outlined text-base">person_add</span> Sign Up
-        </button>
-      </div>
-
-      <!-- Sign In Form -->
-      <form id="auth-form-signin" onsubmit="handleEmailSignIn(event)" class="flex flex-col gap-4">
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Email Address</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">mail</span>
-            <input type="email" id="signin-email" required placeholder="client@domain.com" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-          </div>
-        </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Password</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock</span>
-            <input type="password" id="signin-password" required placeholder="••••••••" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-            <button type="button" onclick="togglePasswordVisibility('signin-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
-              <span class="material-symbols-outlined text-base">visibility</span>
-            </button>
-          </div>
-        </div>
-        <div id="auth-signin-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
-        <button type="submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
-          <span>Sign In &amp; Proceed</span>
-          <span class="material-symbols-outlined text-sm">arrow_forward</span>
-        </button>
-      </form>
-
-      <!-- Sign Up Form -->
-      <form id="auth-form-signup" onsubmit="handleEmailSignUp(event)" class="hidden flex flex-col gap-4">
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Full Name</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">person</span>
-            <input type="text" id="signup-name" required placeholder="Ram Gopal Jangir" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-          </div>
-        </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Email Address</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">mail</span>
-            <input type="email" id="signup-email" required placeholder="name@domain.com" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-          </div>
-        </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Password</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock</span>
-            <input type="password" id="signup-password" required minlength="6" placeholder="Min. 6 characters" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-            <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
-              <span class="material-symbols-outlined text-base">visibility</span>
-            </button>
-          </div>
-        </div>
-        <div id="auth-signup-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
-        <button type="submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
-          <span>Create Account &amp; Proceed</span>
-          <span class="material-symbols-outlined text-sm">person_add</span>
-        </button>
-      </form>
-
-      <div class="relative flex items-center justify-center my-1">
-        <div class="border-t border-outline-variant/30 w-full"></div>
-        <span class="bg-surface-container-low px-3 font-label-caps text-[10px] text-on-surface-variant uppercase absolute">OR</span>
-      </div>
-      <button type="button" onclick="handleQuickGoogleAuth()" class="w-full py-2.5 border border-outline-variant/40 hover:border-primary bg-background/50 text-on-surface font-label-caps text-xs tracking-wider rounded-md transition-all flex items-center justify-center gap-3 cursor-pointer">
-        <svg class="w-4 h-4" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-        <span>Continue with Google</span>
-      </button>
-
-      <p class="font-label-caps text-[10px] text-center text-on-surface-variant/70 mt-1">
-        🔒 Encrypted &amp; Secure Authentication — Achyutam Builder®
-      </p>
-    </div>
-  </div>
-
-  <script>
-    function togglePasswordVisibility(inputId, btn) {
-      const input = document.getElementById(inputId);
-      if (!input) return;
-      const icon = btn.querySelector('.material-symbols-outlined');
-      if (input.type === 'password') {
-        input.type = 'text';
-        if (icon) icon.textContent = 'visibility_off';
-      } else {
-        input.type = 'password';
-        if (icon) icon.textContent = 'visibility';
-      }
-    }
-
-    function openAuthModal() {
-      const modal = document.getElementById('auth-modal');
-      if (modal) {
-        modal.classList.remove('hidden');
-        modal.classList.add('flex');
-        modal.style.display = 'flex';
-      }
-    }
-
-    function closeAuthModal() {
-      const modal = document.getElementById('auth-modal');
-      if (modal) {
-        modal.classList.add('hidden');
-        modal.classList.remove('flex');
-        modal.style.display = 'none';
-      }
-    }
-
-    function switchAuthTab(tab) {
-      const btnSignin = document.getElementById('tab-btn-signin');
-      const btnSignup = document.getElementById('tab-btn-signup');
-
-      const formSignin = document.getElementById('auth-form-signin');
-      const formSignup = document.getElementById('auth-form-signup');
-
-      const activeClass = 'flex-1 py-2.5 text-center font-bold border-b-2 border-primary text-primary transition-all flex items-center justify-center gap-1 cursor-pointer';
-      const inactiveClass = 'flex-1 py-2.5 text-center font-bold border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center justify-center gap-1 cursor-pointer';
-
-      if (btnSignin) btnSignin.className = tab === 'signin' ? activeClass : inactiveClass;
-      if (btnSignup) btnSignup.className = tab === 'signup' ? activeClass : inactiveClass;
-
-      if (formSignin) formSignin.classList.toggle('hidden', tab !== 'signin');
-      if (formSignup) formSignup.classList.toggle('hidden', tab !== 'signup');
-    }
-
-    function saveAuthAndDeployEnquiry(email, type, isAdmin = false, displayName = '') {
-      const cleanEmail = email.toLowerCase().trim();
-      const isUserAdmin = isAdmin || cleanEmail === 'ankitjangir529@gmail.com';
-      const name = displayName || (isUserAdmin ? 'ANKITJANGIR' : cleanEmail.split('@')[0].toUpperCase());
-      const userData = { email: cleanEmail, identity: cleanEmail, name: name, displayName: name, type: type, role: isUserAdmin ? 'admin' : 'client', emailVerified: true, time: new Date().toISOString() };
-      localStorage.setItem('achyutam_user', JSON.stringify(userData));
-      updateAuthUI();
-      closeAuthModal();
-      if (isUserAdmin) {
-        setTimeout(() => { window.location.href = 'admin-dashboard.html'; }, 500);
-      }
-    }
-
-    async function handleEmailSignUp(e) {
-      e.preventDefault();
-      const errEl = document.getElementById('auth-signup-error');
-      if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
-
-      const name = document.getElementById('signup-name')?.value.trim() || '';
-      const email = document.getElementById('signup-email')?.value.trim() || '';
-      const password = document.getElementById('signup-password')?.value || '';
-
-      if (!email || !password) {
-        if (errEl) { errEl.textContent = '⚠️ Please enter both email and password!'; errEl.classList.remove('hidden'); }
-        return;
-      }
-
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signUpWithEmailPassword) {
-        const res = await window.AchyutamFirebase.signUpWithEmailPassword(email, password, name);
-        if (res.success && res.needsVerification) {
-          switchAuthTab('signin');
-          const signinEmail = document.getElementById('signin-email');
-          if (signinEmail) signinEmail.value = email;
-          const signinErr = document.getElementById('auth-signin-error');
-          if (signinErr) {
-            signinErr.innerHTML = `📧 <strong>Verification link sent to ${email}</strong><br>Please verify your email via the link sent to your inbox before signing in.`;
-            signinErr.classList.remove('hidden');
-          }
-          return;
-        } else if (errEl) {
-          errEl.textContent = '⚠️ ' + (res.error || 'Sign up failed');
-          errEl.classList.remove('hidden');
-          return;
-        }
-      }
-    }
-
-    async function handleEmailSignIn(e) {
-      e.preventDefault();
-      const errEl = document.getElementById('auth-signin-error');
-      if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
-
-      const email = document.getElementById('signin-email')?.value.trim() || '';
-      const password = document.getElementById('signin-password')?.value || '';
-
-      if (!email || !password) {
-        if (errEl) { errEl.textContent = '⚠️ Please enter both email and password!'; errEl.classList.remove('hidden'); }
-        return;
-      }
-
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signInWithEmailPassword) {
-        const res = await window.AchyutamFirebase.signInWithEmailPassword(email, password);
-        if (res.success) {
-          saveAuthAndDeployEnquiry(email, 'email', res.isAdmin, res.user?.displayName);
-          return;
-        } else if (res.emailUnverified) {
-          if (errEl) {
-            errEl.innerHTML = `⚠️ <strong>Email Not Verified:</strong> Please check your email inbox at <span class="underline">${email}</span> and verify your account.`;
-            errEl.classList.remove('hidden');
-          }
-          return;
-        } else if (errEl) {
-          errEl.textContent = '⚠️ ' + (res.error || 'Invalid email or password!');
-          errEl.classList.remove('hidden');
-          return;
-        }
-      }
-    }
-
-    async function handleQuickGoogleAuth() {
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signInWithGoogleFirebase) {
-        const res = await window.AchyutamFirebase.signInWithGoogleFirebase();
-        if (res.success && res.user) {
-          saveAuthAndDeployEnquiry(res.user.email, 'google', res.isAdmin, res.user.displayName);
-        } else {
-          const errEl = document.getElementById('auth-signin-error');
-          if (errEl) {
-            errEl.textContent = '⚠️ ' + (res.error || 'Google Sign-In failed.');
-            errEl.classList.remove('hidden');
-          }
-        }
       }
     }
 

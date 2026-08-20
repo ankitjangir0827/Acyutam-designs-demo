@@ -188,6 +188,79 @@
     </div>
   </header>
 
+  <!-- Interactive Project Sidebar -->
+  <aside id="sidebar-drawer" class="hidden md:flex fixed left-0 top-[20%] h-fit py-3.5 sidebar-glass border-r border-y border-outline-variant/30 flex flex-col gap-1 w-12 lg:w-14 lg:hover:w-64 transition-all duration-500 overflow-hidden group z-40 shadow-2xl rounded-r-lg">
+    <nav class="flex flex-col gap-1 w-full px-1">
+      <a href="index.html#portfolio" class="sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-on-surface-variant opacity-80 hover:text-primary" data-filter="all" id="sidebar-btn-all">
+        <span class="material-symbols-outlined font-light text-lg">grid_view</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">All Showcase</span>
+      </a>
+
+      <a href="upcoming.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="upcoming" id="sidebar-btn-upcoming">
+        <span class="material-symbols-outlined font-light text-lg">hourglass_top</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Upcoming (6)</span>
+      </a>
+
+      <a href="ongoing.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="ongoing" id="sidebar-btn-ongoing">
+        <span class="material-symbols-outlined font-light text-lg">pending_actions</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Ongoing (12)</span>
+      </a>
+
+      <a href="completed.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="completed" id="sidebar-btn-completed">
+        <span class="material-symbols-outlined font-light text-lg">task_alt</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Completed (20)</span>
+      </a>
+
+      <a href="residential.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="residential" id="sidebar-btn-residential">
+        <span class="material-symbols-outlined font-light text-lg">home</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Residential (25)</span>
+      </a>
+
+      <a href="industrial.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="industrial" id="sidebar-btn-industrial">
+        <span class="material-symbols-outlined font-light text-lg">factory</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Industrial (2)</span>
+      </a>
+
+      <a href="commercial.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-primary border-l-2 border-primary bg-transparent transition-all w-full text-left cursor-pointer active" data-filter="commercial" id="sidebar-btn-commercial">
+        <span class="material-symbols-outlined font-light text-lg text-primary">business</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap font-bold">Commercial (2)</span>
+      </a>
+
+      <a href="assembly.html" class="sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer" data-filter="assembly" id="sidebar-btn-assembly">
+        <span class="material-symbols-outlined font-light text-lg">temple_hindu</span>
+        <span class="hidden lg:inline font-label-caps text-xs hidden lg:block opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap">Assembly &amp; Temples (3)</span>
+      </a>
+    </nav>
+  </aside>
+
+  <script>
+    function setActiveSidebar(category) {
+      const sidebarBtns = document.querySelectorAll('.sidebar-filter-btn');
+      sidebarBtns.forEach(btn => {
+        const cat = btn.getAttribute('data-filter');
+        const icon = btn.querySelector('.material-symbols-outlined');
+        if (cat === category) {
+          if (btn.id === 'sidebar-btn-all') {
+            btn.className = 'sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-primary border-l-2 border-l-primary bg-transparent active';
+          } else {
+            btn.className = 'sidebar-filter-btn flex items-center gap-4 p-2 text-primary border-l-2 border-primary bg-transparent transition-all w-full text-left cursor-pointer active';
+          }
+          if (icon) icon.classList.add('text-primary');
+        } else {
+          if (btn.id === 'sidebar-btn-all') {
+            btn.className = 'sidebar-filter-btn px-3.5 pb-2.5 mb-1 border-b border-outline-variant/30 flex items-center gap-3 cursor-pointer transition-all text-on-surface-variant opacity-80 hover:text-primary';
+          } else {
+            btn.className = 'sidebar-filter-btn flex items-center gap-4 p-2 text-on-surface-variant opacity-70 hover:opacity-100 hover:text-primary transition-all border-l-2 border-transparent hover:border-outline-variant w-full text-left cursor-pointer';
+          }
+          if (icon && cat !== 'all') icon.classList.remove('text-primary');
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      setActiveSidebar('commercial');
+    });
+  </script>
+
   <main class="pt-24">
     <!-- Hero Banner Section -->
     <section class="relative py-20 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto border-b border-outline-variant/30 overflow-hidden">

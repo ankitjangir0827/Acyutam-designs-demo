@@ -121,12 +121,19 @@
     const isCompleted = path.includes("completed");
     const isUpcoming = path.includes("upcoming");
 
-    // Find grid elements strictly for project subpages
-    const grids = document.querySelectorAll(
-      "#residential-grid, #ongoing-grid, #completed-grid, #upcoming-grid, #industrial-grid, #commercial-grid, #assembly-grid"
-    );
+    // Strictly find ONLY the specific grid element for the active page
+    let targetGridId = null;
+    if (isCompleted) targetGridId = "completed-grid";
+    else if (isOngoing) targetGridId = "ongoing-grid";
+    else if (isUpcoming) targetGridId = "upcoming-grid";
+    else if (isResidential) targetGridId = "residential-grid";
+    else if (isIndustrial) targetGridId = "industrial-grid";
+    else if (isCommercial) targetGridId = "commercial-grid";
+    else if (isAssembly) targetGridId = "assembly-grid";
 
-    if (!grids || grids.length === 0) return;
+    if (!targetGridId) return;
+    const grid = document.getElementById(targetGridId);
+    if (!grid) return;
 
     projects.forEach((p) => {
       const pCat = (p.category || "").toLowerCase();
@@ -134,29 +141,36 @@
 
       let shouldShow = false;
 
-      if (isResidential && (pCat.includes("residen") || pCat.includes("home") || pCat.includes("villa") || !pCat)) shouldShow = true;
-      else if (isIndustrial && (pCat.includes("indust") || !pCat)) shouldShow = true;
-      else if (isCommercial && (pCat.includes("commer") || pCat.includes("retail") || !pCat)) shouldShow = true;
-      else if (isAssembly && (pCat.includes("assembl") || pCat.includes("temple") || pCat.includes("cultur") || !pCat)) shouldShow = true;
-      else if (isOngoing && (pStatus.includes("ongoi") || pStatus.includes("active"))) shouldShow = true;
-      else if (isCompleted && (pStatus.includes("complet") || pStatus.includes("done"))) shouldShow = true;
-      else if (isUpcoming && (pStatus.includes("upcom") || pStatus.includes("draft"))) shouldShow = true;
+      // Strict filtering logic per page context
+      if (isCompleted) {
+        shouldShow = pStatus.includes("complet") || pStatus.includes("done");
+      } else if (isOngoing) {
+        shouldShow = pStatus.includes("ongoi") || pStatus.includes("active");
+      } else if (isUpcoming) {
+        shouldShow = pStatus.includes("upcom") || pStatus.includes("draft");
+      } else if (isResidential) {
+        shouldShow = pCat.includes("residen") || pCat.includes("home") || pCat.includes("villa");
+      } else if (isIndustrial) {
+        shouldShow = pCat.includes("indust");
+      } else if (isCommercial) {
+        shouldShow = pCat.includes("commer") || pCat.includes("retail");
+      } else if (isAssembly) {
+        shouldShow = pCat.includes("assembl") || pCat.includes("temple") || pCat.includes("cultur");
+      }
 
       if (shouldShow) {
-        grids.forEach((grid) => {
-          const cardId = p.id || ("custom-prj-" + (p.title || "").replace(/\s+/g, '-'));
-          const existing = grid.querySelector(`[data-project-id="${cardId}"]`);
-          if (!existing) {
-            const tempDiv = document.createElement("div");
-            tempDiv.setAttribute("data-project-id", cardId);
-            tempDiv.innerHTML = createProjectCardHTML(p);
-            if (grid.firstChild) {
-              grid.insertBefore(tempDiv.firstElementChild, grid.firstChild);
-            } else {
-              grid.appendChild(tempDiv.firstElementChild);
-            }
+        const cardId = p.id || ("custom-prj-" + (p.title || "").replace(/\s+/g, '-'));
+        const existing = grid.querySelector(`[data-project-id="${cardId}"]`);
+        if (!existing) {
+          const tempDiv = document.createElement("div");
+          tempDiv.setAttribute("data-project-id", cardId);
+          tempDiv.innerHTML = createProjectCardHTML(p);
+          if (grid.firstChild) {
+            grid.insertBefore(tempDiv.firstElementChild, grid.firstChild);
+          } else {
+            grid.appendChild(tempDiv.firstElementChild);
           }
-        });
+        }
       }
     });
   }

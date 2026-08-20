@@ -3453,7 +3453,7 @@
         preloaderVideo.playsInline = true;
 
         preloaderVideo.addEventListener('canplay', () => {
-          try { preloaderVideo.playbackRate = 1.25; } catch(e){}
+          try { preloaderVideo.playbackRate = 1.0; } catch(e){}
         }, { once: true });
 
         const playPromise = preloaderVideo.play();
@@ -3475,7 +3475,7 @@
           if (preloaderVideo.duration && preloaderVideo.duration > 0 && !preloaderVideo.paused) {
             preloaderProgress = Math.floor((preloaderVideo.currentTime / preloaderVideo.duration) * 100);
           } else {
-            preloaderProgress += 4;
+            preloaderProgress += 1.25;
           }
 
           const clampedPct = Math.min(100, Math.max(0, preloaderProgress));
@@ -3503,7 +3503,7 @@
             videoEnded = true; 
             checkPreloaderCompletion(); 
           } 
-        }, 3000);
+        }, 4500);
       } else { 
         videoEnded = true; 
         setTimeout(checkPreloaderCompletion, 500); 
