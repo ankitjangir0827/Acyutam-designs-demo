@@ -88,7 +88,11 @@ window.removeAIFingerprint = function(codeText) {
 
     /* Dark Mode Root Overrides */
     body {
-      background-color: #3C3C3C !important;
+      background-color: #1E1E1E !important;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.060'/></svg>"), radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(circle at 65.06% 49.96%, rgba(45, 46, 46, 1) 0%, rgba(45, 46, 46, 0.844) 12.2%, rgba(45, 46, 46, 0.5) 24.4%, rgba(45, 46, 46, 0.156) 36.6%, rgba(45, 46, 46, 0) 48.8%), radial-gradient(circle at 31.49% 68.84%, rgba(72, 72, 72, 1) 0%, rgba(72, 72, 72, 0.844) 12.03%, rgba(72, 72, 72, 0.5) 24.05%, rgba(72, 72, 72, 0.156) 36.08%, rgba(72, 72, 72, 0) 48.1%), radial-gradient(circle at 52.34% 13.63%, rgba(127, 127, 127, 1) 0%, rgba(127, 127, 127, 0.844) 12.03%, rgba(127, 127, 127, 0.5) 24.05%, rgba(127, 127, 127, 0.156) 36.08%, rgba(127, 127, 127, 0) 48.1%), radial-gradient(circle at 69.03% 91.15%, rgba(156, 159, 159, 1) 0%, rgba(156, 159, 159, 0.844) 10.1%, rgba(156, 159, 159, 0.5) 20.2%, rgba(156, 159, 159, 0.156) 30.3%, rgba(156, 159, 159, 0) 40.4%) !important;
+      background-size: 120px 120px, auto, auto, auto, auto, auto !important;
+      background-blend-mode: overlay, normal, normal, normal, normal, normal !important;
+      background-attachment: fixed !important;
       color: #e5e2e1 !important;
     }
 
@@ -154,8 +158,12 @@ window.removeAIFingerprint = function(codeText) {
       color-scheme: light;
     }
     html.light-mode body {
-      background-color: #92A6BA !important;
-      color: #0f172a !important;
+      background-color: #00588A !important;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.060'/></svg>"), radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.16000000000000003) 100%), radial-gradient(circle at 65.06% 49.96%, rgba(0, 88, 138, 1) 0%, rgba(0, 88, 138, 0.844) 12.2%, rgba(0, 88, 138, 0.5) 24.4%, rgba(0, 88, 138, 0.156) 36.6%, rgba(0, 88, 138, 0) 48.8%), radial-gradient(circle at 31.49% 68.84%, rgba(20, 181, 230, 1) 0%, rgba(20, 181, 230, 0.844) 12.03%, rgba(20, 181, 230, 0.5) 24.05%, rgba(20, 181, 230, 0.156) 36.08%, rgba(20, 181, 230, 0) 48.1%), radial-gradient(circle at 52.34% 13.63%, rgba(111, 211, 201, 1) 0%, rgba(111, 211, 201, 0.844) 12.03%, rgba(111, 211, 201, 0.5) 24.05%, rgba(111, 211, 201, 0.156) 36.08%, rgba(111, 211, 201, 0) 48.1%), radial-gradient(circle at 69.03% 91.15%, rgba(223, 246, 242, 1) 0%, rgba(223, 246, 242, 0.844) 10.1%, rgba(223, 246, 242, 0.5) 20.2%, rgba(223, 246, 242, 0.156) 30.3%, rgba(223, 246, 242, 0) 40.4%) !important;
+      background-size: 120px 120px, auto, auto, auto, auto, auto !important;
+      background-blend-mode: overlay, normal, normal, normal, normal, normal !important;
+      background-attachment: fixed !important;
+      color: #ffffff !important;
     }
 
     /* Card Badges Glass & Backdrop Blur Styling (Dark & Light) - Dark Blue Blur */
@@ -170,22 +178,22 @@ window.removeAIFingerprint = function(codeText) {
     }
 
     .card-tag-badge {
-      background: rgba(32, 31, 31, 0.88) !important;
+      background: rgba(45, 46, 46, 0.88) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-color: rgba(255, 255, 255, 0.2) !important;
+      border-color: rgba(156, 159, 159, 0.25) !important;
       border-radius: 0px !important;
     }
     html.light-mode .card-tag-badge {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
+      background: rgba(0, 88, 138, 0.75) !important;
+      background-color: rgba(0, 88, 138, 0.75) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-color: rgba(0, 0, 0, 0.15) !important;
+      border-color: rgba(255, 255, 255, 0.25) !important;
       border-radius: 0px !important;
     }
     html.light-mode .card-tag-badge span {
-      color: #ff7722 !important;
+      color: #14B5E6 !important;
     }
 
     /* Contact Section, Footer, Buttons & Table Headers Styling */
@@ -197,10 +205,11 @@ window.removeAIFingerprint = function(codeText) {
     section#details table thead th,
     section#details table th,
     section#details table thead tr th {
-      background-color: #3C3C3C !important;
+      background-color: rgba(45, 46, 46, 0.65) !important;
+      background: rgba(45, 46, 46, 0.65) !important;
       backdrop-filter: blur(28px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border: 1px solid rgba(156, 159, 159, 0.18) !important;
       box-shadow: none !important;
       text-shadow: none !important;
       border-radius: 0px !important;
@@ -213,10 +222,10 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode section#details table thead th,
     html.light-mode section#details table th,
     html.light-mode header#main-header button:not(.dn-button-wrapper):not(#animated-hamburger-btn):not(#auth-header-btn) {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
-      color: #0f172a !important;
-      border: 1px solid rgba(0, 0, 0, 0.1) !important;
+      background: rgba(0, 50, 80, 0.55) !important;
+      background-color: rgba(0, 50, 80, 0.55) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.15) !important;
       backdrop-filter: blur(28px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
       box-shadow: none !important;
@@ -264,10 +273,10 @@ window.removeAIFingerprint = function(codeText) {
     .header-glass,
     header.header-glass,
     header.sticky-header {
-      background: #3C3C3C !important;
+      background: rgba(45, 46, 46, 0.65) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+      border-bottom: 1px solid rgba(156, 159, 159, 0.18) !important;
     }
 
     main > section#hero > div > div,
@@ -277,9 +286,9 @@ window.removeAIFingerprint = function(codeText) {
     [id^="carousel-wrapper-"] > div > div {
       backdrop-filter: blur(24px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
-      background-color: rgba(60, 60, 60, 0.45) !important;
-      background: rgba(60, 60, 60, 0.45) !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      background-color: rgba(45, 46, 46, 0.45) !important;
+      background: rgba(45, 46, 46, 0.45) !important;
+      border: 1px solid rgba(156, 159, 159, 0.20) !important;
       box-shadow: none !important;
       transition: backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                   -webkit-backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
@@ -296,11 +305,11 @@ window.removeAIFingerprint = function(codeText) {
     section#achyutam-details .glass-panel,
     section#services .glass-panel,
     .glass-panel {
-      background: rgba(60, 60, 60, 0.45) !important;
-      background-color: rgba(60, 60, 60, 0.45) !important;
+      background: rgba(45, 46, 46, 0.45) !important;
+      background-color: rgba(45, 46, 46, 0.45) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border: 1px solid rgba(255, 255, 255, 0.15) !important;
+      border: 1px solid rgba(156, 159, 159, 0.20) !important;
       box-shadow: none !important;
       border-radius: 0px !important;
       transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease !important;
@@ -406,7 +415,7 @@ window.removeAIFingerprint = function(codeText) {
       background-color: #e5e7eb !important;
     }
 
-    /* Light Mode Day Theme Overrides — Color Code #92A6BA */
+    /* Light Mode Day Theme Overrides — Gradient Mesh Palette */
     html.light-mode header#main-header,
     html.light-mode header#main-header > div,
     html.light-mode header.header-glass,
@@ -415,11 +424,11 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .header-glass,
     html.light-mode #desktop-nav div.absolute,
     html.light-mode div.absolute.top-full {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
-      color: #0f172a !important;
-      border-color: rgba(0, 0, 0, 0.12) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
+      background: rgba(0, 50, 80, 0.55) !important;
+      background-color: rgba(0, 50, 80, 0.55) !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     }
@@ -440,18 +449,18 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode aside#sidebar-drawer,
     html.light-mode .sidebar-glass,
     html.light-mode aside.sidebar-glass {
-      background: rgba(146, 166, 186, 0.55) !important;
-      background-color: rgba(146, 166, 186, 0.55) !important;
-      border-color: rgba(0, 0, 0, 0.08) !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
+      background: rgba(0, 60, 95, 0.55) !important;
+      background-color: rgba(0, 60, 95, 0.55) !important;
+      border-color: rgba(255, 255, 255, 0.18) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
       backdrop-filter: blur(28px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
     }
     html.light-mode aside#sidebar-drawer:hover,
     html.light-mode .sidebar-glass:hover,
     html.light-mode aside.sidebar-glass:hover {
-      background: rgba(146, 166, 186, 0.75) !important;
-      background-color: rgba(146, 166, 186, 0.75) !important;
+      background: rgba(0, 60, 95, 0.75) !important;
+      background-color: rgba(0, 60, 95, 0.75) !important;
     }
     html.light-mode main > section#hero > div > div,
     /* Day / Light Theme Cards & Containers (Services, Projects, Leadership, Registration, Contact Info) */
@@ -463,10 +472,10 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .it-card-container,
     html.light-mode [id^="carousel-wrapper-"] > div > div,
     html.light-mode .glass-panel {
-      background: rgba(146, 166, 186, 0.55) !important;
-      background-color: rgba(146, 166, 186, 0.55) !important;
-      color: #0f172a !important;
-      border: 1px solid rgba(255, 255, 255, 0.6) !important;
+      background: rgba(0, 65, 105, 0.45) !important;
+      background-color: rgba(0, 65, 105, 0.45) !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.22) !important;
       box-shadow: none !important;
       backdrop-filter: blur(28px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
@@ -480,10 +489,10 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .it-card-container:hover,
     html.light-mode [id^="carousel-wrapper-"] > div > div:hover,
     html.light-mode .glass-panel:hover {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
-      border-color: #ff7722 !important;
-      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12) !important;
+      background: rgba(0, 88, 138, 0.75) !important;
+      background-color: rgba(0, 88, 138, 0.75) !important;
+      border-color: #6FD3C9 !important;
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25) !important;
     }
 
     html.light-mode section#methodology,
@@ -495,24 +504,24 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .bg-surface-container-high,
     html.light-mode .bg-surface-container-lowest,
     html.light-mode .bg-surface-dim {
-      background: #92A6BA !important;
-      background-color: #92A6BA !important;
-      color: #0f172a !important;
-      border: 1px solid rgba(0, 0, 0, 0.12) !important;
+      background: transparent !important;
+      background-color: transparent !important;
+      color: #ffffff !important;
+      border: 1px solid rgba(255, 255, 255, 0.12) !important;
     }
 
     html.light-mode .project-card-item h3,
     html.light-mode [id^="carousel-wrapper-"] h3,
     html.light-mode section#services h3,
     html.light-mode .it-card-container .it-card-title {
-      color: #0f172a !important;
+      color: #ffffff !important;
     }
 
     html.light-mode .project-card-item p,
     html.light-mode [id^="carousel-wrapper-"] p,
     html.light-mode section#services p,
     html.light-mode .it-card-container .it-card-description {
-      color: #1e293b !important;
+      color: #DFF6F2 !important;
     }
 
     html.light-mode .glass-panel-hero:hover,
@@ -532,7 +541,7 @@ window.removeAIFingerprint = function(codeText) {
     .glass-panel-hero:hover h3,
     .glass-panel-hero:hover p,
     .glass-panel-hero:hover span,
-    .glass-panel-hero:hover div,
+    .glass-panel-hover div,
     .glass-panel:hover h1,
     .glass-panel:hover h2,
     .glass-panel:hover h3,
@@ -567,42 +576,42 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .bg-\[\#1c1b22\],
     html.light-mode .bg-\[\#222129\],
     html.light-mode .bg-background {
-      background-color: #92A6BA !important;
-      background: #92A6BA !important;
-      color: #0f172a !important;
-      border-color: rgba(0, 0, 0, 0.08) !important;
+      background-color: transparent !important;
+      background: transparent !important;
+      color: #ffffff !important;
+      border-color: rgba(255, 255, 255, 0.12) !important;
       backdrop-filter: blur(16px) !important;
       -webkit-backdrop-filter: blur(16px) !important;
     }
     html.light-mode .bg-surface-dim,
     html.light-mode .bg-surface-container-lowest {
-      background-color: #92A6BA !important;
-      background: #92A6BA !important;
-      color: #0f172a !important;
+      background-color: transparent !important;
+      background: transparent !important;
+      color: #ffffff !important;
     }
     html.light-mode .text-on-surface {
-      color: #0f172a !important;
+      color: #ffffff !important;
     }
     html.light-mode .text-on-surface-variant {
-      color: #334155 !important;
+      color: #DFF6F2 !important;
     }
     html.light-mode .text-primary {
-      color: #d97706 !important;
+      color: #14B5E6 !important;
     }
     html.light-mode .border-primary,
     html.light-mode .border-primary\/40,
     html.light-mode .border-primary\/60 {
-      border-color: #d97706 !important;
+      border-color: #14B5E6 !important;
     }
     html.light-mode .bg-primary {
-      background-color: #d97706 !important;
+      background-color: #14B5E6 !important;
       color: #ffffff !important;
     }
     html.light-mode .bg-primary\/10 {
-      background-color: rgba(217, 119, 6, 0.12) !important;
+      background-color: rgba(20, 181, 230, 0.15) !important;
     }
     html.light-mode .hover\:bg-primary:hover {
-      background-color: #d97706 !important;
+      background-color: #14B5E6 !important;
       color: #ffffff !important;
     }
 
@@ -754,18 +763,18 @@ window.removeAIFingerprint = function(codeText) {
     /* DAY & NIGHT TOGGLE BUTTON STYLES */
     :root {
       --dn-ease: cubic-bezier(.4,-0.3,.6,1.3);
-      --dn-clr-bg-day: #92A6BA;
-      --dn-clr-bg-night: #3C3C3C;
-      --dn-clr-sun: #ff7722;
-      --dn-clr-sun-lgt: #ffe5d6;
-      --dn-clr-moon: #9CAEC1;
+      --dn-clr-bg-day: #00588A;
+      --dn-clr-bg-night: #2D2E2E;
+      --dn-clr-sun: #14B5E6;
+      --dn-clr-sun-lgt: #DFF6F2;
+      --dn-clr-moon: #9C9F9F;
       --dn-button-width: 1.0rem;
     }
 
     html.light-mode {
-      --dn-clr-sun: #ff7722;
-      --dn-clr-sun-lgt: #fff0e6;
-      --dn-clr-bg-day: #92A6BA;
+      --dn-clr-sun: #14B5E6;
+      --dn-clr-sun-lgt: #DFF6F2;
+      --dn-clr-bg-day: #00588A;
     }
 
     .dn-button-wrapper {
