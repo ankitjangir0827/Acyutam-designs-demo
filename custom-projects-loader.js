@@ -348,6 +348,10 @@
     // Collect valid project IDs for this page context
     const activeProjectIds = new Set();
 
+    // Live search query filtering
+    const searchInput = document.getElementById("category-search-input") || document.getElementById("search-input");
+    const searchQuery = (searchInput ? searchInput.value : "").trim().toLowerCase();
+
     projects.forEach((p) => {
       const pCat = (p.category || "").toLowerCase();
       const pStatus = (p.status || "").toLowerCase();
@@ -369,6 +373,11 @@
         shouldShow = pCat.includes("commer") || pCat.includes("retail");
       } else if (isAssembly) {
         shouldShow = pCat.includes("assembl") || pCat.includes("temple") || pCat.includes("cultur");
+      }
+
+      if (shouldShow && searchQuery) {
+        const fullText = `${p.title || ''} ${p.clientName || ''} ${p.location || ''} ${p.description || ''} ${p.category || ''} ${p.cost || ''}`.toLowerCase();
+        shouldShow = fullText.includes(searchQuery);
       }
 
       if (shouldShow) {
@@ -401,6 +410,11 @@
       }
     });
   }
+
+  // Expose global live category search handler
+  window.handleCategorySearch = function(val) {
+    injectProjectsIntoPage();
+  };
 
   document.addEventListener("DOMContentLoaded", () => {
     injectProjectsIntoPage();

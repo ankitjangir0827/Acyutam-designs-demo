@@ -311,6 +311,17 @@
           <h2 class="font-display-lg text-3xl text-on-surface font-light mt-1">Full Project Directory (3 Total)</h2>
         </div>
         <a href="index.html" class="font-label-caps text-xs text-primary hover:underline font-bold">← Back to Main Showcase</a>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-8 border-b border-outline-variant/30 pb-4">
+        <div class="relative w-full sm:w-80">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-base pointer-events-none">search</span>
+          <input 
+            type="text" 
+            id="category-search-input" 
+            oninput="if(typeof window.handleCategorySearch==='function') window.handleCategorySearch(this.value)" 
+            placeholder="Search assembly & cultural projects..." 
+            class="w-full bg-surface-container-low border border-outline-variant/40 rounded-sm py-2 pl-9 pr-3 text-xs text-on-surface placeholder:text-on-surface-variant/50 focus:border-primary focus:outline-none font-mono"
+          />
+        </div>
       </div>
 
       <div id="assembly-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
