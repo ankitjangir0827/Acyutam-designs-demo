@@ -619,11 +619,14 @@ export async function saveEnquiryToFirebase(enquiryData) {
  */
 export async function getUserEnquiries() {
   const currentUser = auth.currentUser;
-  const targetEmail = (currentUser ? currentUser.email : "")
-    .toLowerCase()
-    .trim();
-  const isVerified = !!currentUser?.emailVerified;
-  const isAdmin = isVerified && targetEmail === ADMIN_EMAIL.toLowerCase();
+  let savedUser = null;
+  try {
+    const raw = localStorage.getItem("achyutam_user");
+    if (raw) savedUser = JSON.parse(raw);
+  } catch(e) {}
+
+  const targetEmail = (currentUser?.email || savedUser?.email || savedUser?.identity || "").toLowerCase().trim();
+  const isAdmin = targetEmail === ADMIN_EMAIL.toLowerCase() || savedUser?.role === "admin" || savedUser?.isAdmin === true;
 
   try {
     const enquiries = [];
@@ -644,8 +647,8 @@ export async function getUserEnquiries() {
           .trim();
         if (
           isAdmin ||
-          (isVerified && docUserId === currentUser.uid) ||
-          (isVerified && docEmail === targetEmail)
+          (currentUser && docUserId === currentUser.uid) ||
+          (targetEmail && docEmail === targetEmail)
         ) {
           enquiries.push({
             id: docSnap.id,
@@ -672,8 +675,8 @@ export async function getUserEnquiries() {
           .trim();
         if (
           (isAdmin ||
-            (isVerified && docUserId === currentUser.uid) ||
-            (isVerified && docEmail === targetEmail)) &&
+            (currentUser && docUserId === currentUser.uid) ||
+            (targetEmail && docEmail === targetEmail)) &&
           !enquiries.some(
             (e) => e.enquiryRef && e.enquiryRef === data.enquiryRef,
           )
