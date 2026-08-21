@@ -14,7 +14,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ADMIN PORTAL — ACHYUTAM BUILDER®</title>
-  <!-- Favicon Icons (Priority 1: WebP, Priority 2: PNG, Priority 3: JPEG) -->
+  <!-- Favicon Icons -->
   <link rel="icon" type="image/webp" href="/favicon.webp" />
   <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
   <link rel="icon" type="image/png" href="/favicon.png" />
@@ -106,11 +106,10 @@
   <div class="fixed top-0 left-1/4 w-[500px] h-[500px] bg-primary/5 rounded-full blur-[140px] pointer-events-none z-0"></div>
   <div class="fixed bottom-0 right-1/4 w-[600px] h-[600px] bg-emerald-500/5 rounded-full blur-[160px] pointer-events-none z-0"></div>
 
-  <!-- Header Component (Matches Main Website Header) -->
+  <!-- Header Component -->
   <header class="sticky top-0 z-50 header-glass py-3 px-4 sm:px-8">
     <div class="w-full max-w-full px-4 sm:px-8 md:px-10 py-3 flex items-center justify-between gap-3 sm:gap-4 font-mono text-xs tracking-widest uppercase">
       
-      <!-- Left Side: Logo & Brand Title (Direct Link to Home Page) -->
       <!-- Brand Logo Link with Circular Ring Frame -->
       <a href="index.html" class="flex items-center gap-2.5 sm:gap-3 group shrink-0 transition-opacity hover:opacity-90 relative z-50 py-0.5" title="ACHYUTAM BUILDER — Home">
         <div class="relative w-10 h-10 sm:w-11 sm:h-11 rounded-full p-0.5 border-2 border-primary/80 ring-2 ring-primary/25 shadow-[0_0_15px_rgba(255,184,0,0.35)] flex items-center justify-center overflow-hidden bg-surface-container/60 shrink-0">
@@ -130,6 +129,7 @@
       <div class="flex items-center gap-3">
         <!-- Day / Night Theme Toggle Switch -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
+        
         <div class="hidden md:flex items-center gap-3 bg-surface-container-low/80 border border-outline-variant/40 px-4 py-2 rounded-lg">
           <div class="w-8 h-8 rounded-full border border-primary/50 overflow-hidden shrink-0 shadow-[0_0_8px_rgba(255,184,0,0.3)]">
             <img src="photos and videos/ceo-admin-profile.png" alt="Admin Profile" class="w-full h-full object-cover object-center" referrerPolicy="no-referrer" onerror="this.onerror=null; this.src='photos and videos/logo.png';"/>
@@ -158,7 +158,7 @@
   <!-- Main Content Area -->
   <main class="relative z-10 flex-grow max-w-7xl w-full mx-auto p-4 sm:p-8 flex flex-col gap-6">
 
-    <!-- Top Dashboard Overview Cards (Glassmorphism Luxury Cards) -->
+    <!-- Top Dashboard Overview Cards -->
     <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
       
       <div class="glass-panel p-6 rounded-xl flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-primary/60 transition-all">
@@ -183,14 +183,14 @@
         </div>
       </div>
 
-      <div class="glass-panel p-6 rounded-xl flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-primary/60 transition-all">
-        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/5 rounded-full blur-xl group-hover:bg-primary/10 transition-all"></div>
+      <div class="glass-panel p-6 rounded-xl flex items-center justify-between shadow-2xl relative overflow-hidden group hover:border-blue-500/60 transition-all">
+        <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-blue-500/5 rounded-full blur-xl group-hover:bg-blue-500/10 transition-all"></div>
         <div>
-          <p class="font-mono text-xs text-on-surface-variant uppercase tracking-widest font-semibold">ANSWERED PROPOSALS</p>
-          <h3 id="stat-answered-count" class="text-4xl font-display font-bold text-on-surface mt-2">0</h3>
+          <p class="font-mono text-xs text-on-surface-variant uppercase tracking-widest font-semibold">JOB APPLICANTS</p>
+          <h3 id="stat-careers-count" class="text-4xl font-display font-bold text-blue-400 mt-2">0</h3>
         </div>
-        <div class="w-14 h-14 rounded-xl bg-primary/10 border border-primary/30 flex items-center justify-center text-primary shadow-inner">
-          <span class="material-symbols-outlined text-3xl">task_alt</span>
+        <div class="w-14 h-14 rounded-xl bg-blue-500/10 border border-blue-500/30 flex items-center justify-center text-blue-400 shadow-inner">
+          <span class="material-symbols-outlined text-3xl">work</span>
         </div>
       </div>
 
@@ -198,27 +198,33 @@
 
     <!-- Tabbed Navigation Bar -->
     <div class="flex items-center justify-between border-b border-outline-variant/30 pb-px font-mono">
-      <div class="flex gap-4">
-        <a href="admin.html" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-primary hover:text-primary-hover transition-all flex items-center gap-2 cursor-pointer bg-primary/10 rounded-t">
+      <div class="flex gap-4 overflow-x-auto no-scrollbar">
+        <a href="admin.html" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-primary hover:text-primary-hover transition-all flex items-center gap-2 cursor-pointer bg-primary/10 rounded-t shrink-0">
           <span class="material-symbols-outlined text-base">domain</span>
           <span>PROJECTS MANAGER</span>
           <span class="px-2 py-0.5 rounded-full bg-primary text-black font-mono text-[10px] font-bold">NEW</span>
         </a>
 
-        <button id="tab-btn-enquiries" onclick="switchAdminTab('enquiries')" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-primary text-primary transition-all flex items-center gap-2 cursor-pointer">
+        <button id="tab-btn-enquiries" onclick="switchAdminTab('enquiries')" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-primary text-primary transition-all flex items-center gap-2 cursor-pointer shrink-0">
           <span class="material-symbols-outlined text-base">inbox</span>
           <span>RECENT ENQUIRIES</span>
           <span id="badge-pending" class="px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 font-mono text-[10px] font-bold">0</span>
         </button>
 
-        <button id="tab-btn-users" onclick="switchAdminTab('users')" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 cursor-pointer">
+        <button id="tab-btn-careers" onclick="switchAdminTab('careers')" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 cursor-pointer shrink-0">
+          <span class="material-symbols-outlined text-base">work</span>
+          <span>CAREERS DATA</span>
+          <span id="badge-careers" class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono text-[10px] font-bold">0</span>
+        </button>
+
+        <button id="tab-btn-users" onclick="switchAdminTab('users')" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 cursor-pointer shrink-0">
           <span class="material-symbols-outlined text-base">badge</span>
           <span>USERS DATA</span>
           <span id="badge-users" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold">0</span>
         </button>
       </div>
 
-      <button onclick="reloadAdminData()" class="hidden sm:flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-primary transition-colors cursor-pointer px-3 py-1.5 rounded border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low font-mono uppercase tracking-wider">
+      <button onclick="reloadAdminData()" class="hidden sm:flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-primary transition-colors cursor-pointer px-3 py-1.5 rounded border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low font-mono uppercase tracking-wider shrink-0">
         <span class="material-symbols-outlined text-sm">refresh</span>
         <span>REFRESH DATA</span>
       </button>
@@ -265,7 +271,48 @@
       </div>
     </section>
 
-    <!-- TAB 2: Users Data View -->
+    <!-- TAB 2: Careers Data View -->
+    <section id="view-careers" class="hidden flex-col gap-4">
+      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 glass-panel p-4 rounded-xl">
+        <div>
+          <h2 class="text-xs font-mono font-bold text-blue-400 uppercase tracking-widest">JOB APPLICATIONS &amp; CANDIDATES</h2>
+          <p class="text-xs text-on-surface-variant/80 font-sans">Review live job applications submitted through the Careers portal.</p>
+        </div>
+        <div class="relative w-full sm:w-80 font-mono">
+          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-base">search</span>
+          <input type="text" id="search-careers" onkeyup="filterCareersTable()" placeholder="Search Candidate Name, Role, Email..." class="w-full bg-surface border border-outline-variant/40 rounded-sm py-2 pl-9 pr-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40"/>
+        </div>
+      </div>
+
+      <!-- Data Table for Careers -->
+      <div class="overflow-x-auto rounded-xl glass-panel custom-scrollbar">
+        <table class="w-full text-left text-xs border-collapse">
+          <thead>
+            <tr class="border-b border-outline-variant/30 bg-surface-container-low/80 text-blue-400/90 font-mono uppercase tracking-widest text-[11px]">
+              <th class="py-4 px-4 font-bold">Applicant Name</th>
+              <th class="py-4 px-4 font-bold">Role Applied</th>
+              <th class="py-4 px-4 font-bold">Email Address</th>
+              <th class="py-4 px-4 font-bold">Phone Number</th>
+              <th class="py-4 px-4 font-bold">Portfolio / Resume</th>
+              <th class="py-4 px-4 font-bold">Applied Date</th>
+              <th class="py-4 px-4 font-bold text-right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="careers-table-body" class="divide-y divide-outline-variant/20 text-on-surface font-sans">
+            <tr>
+              <td colspan="7" class="py-12 text-center text-on-surface-variant">
+                <div class="flex flex-col items-center justify-center gap-2 font-mono">
+                  <span class="material-symbols-outlined text-3xl text-blue-400 animate-pulse">hourglass_empty</span>
+                  <span>Loading job applications from Firestore...</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- TAB 3: Users Data View -->
     <section id="view-users" class="hidden flex-col gap-4">
       <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 glass-panel p-4 rounded-xl">
         <div>
@@ -355,6 +402,7 @@
   <script>
     let globalPendingEnquiries = [];
     let globalUsersList = [];
+    let globalCareersList = [];
     let activeReplyEnquiry = null;
 
     // Toast Notification helper
@@ -371,24 +419,30 @@
     function switchAdminTab(tab) {
       const btnEnq = document.getElementById('tab-btn-enquiries');
       const btnUsers = document.getElementById('tab-btn-users');
+      const btnCareers = document.getElementById('tab-btn-careers');
       const viewEnq = document.getElementById('view-enquiries');
       const viewUsers = document.getElementById('view-users');
+      const viewCareers = document.getElementById('view-careers');
 
-      const activeStyle = 'px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-primary text-primary transition-all flex items-center gap-2 cursor-pointer';
-      const inactiveStyle = 'px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 cursor-pointer';
+      const activeStyle = 'px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-primary text-primary transition-all flex items-center gap-2 cursor-pointer shrink-0';
+      const inactiveStyle = 'px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 cursor-pointer shrink-0';
+
+      if (btnEnq) btnEnq.className = tab === 'enquiries' ? activeStyle : inactiveStyle;
+      if (btnUsers) btnUsers.className = tab === 'users' ? activeStyle : inactiveStyle;
+      if (btnCareers) btnCareers.className = tab === 'careers' ? activeStyle : inactiveStyle;
 
       if (tab === 'enquiries') {
-        btnEnq.className = activeStyle;
-        btnUsers.className = inactiveStyle;
-        viewEnq.classList.remove('hidden');
-        viewEnq.classList.add('flex');
-        viewUsers.classList.add('hidden');
-      } else {
-        btnUsers.className = activeStyle;
-        btnEnq.className = inactiveStyle;
-        viewUsers.classList.remove('hidden');
-        viewUsers.classList.add('flex');
-        viewEnq.classList.add('hidden');
+        if (viewEnq) { viewEnq.classList.remove('hidden'); viewEnq.classList.add('flex'); }
+        if (viewUsers) viewUsers.classList.add('hidden');
+        if (viewCareers) viewCareers.classList.add('hidden');
+      } else if (tab === 'users') {
+        if (viewUsers) { viewUsers.classList.remove('hidden'); viewUsers.classList.add('flex'); }
+        if (viewEnq) viewEnq.classList.add('hidden');
+        if (viewCareers) viewCareers.classList.add('hidden');
+      } else if (tab === 'careers') {
+        if (viewCareers) { viewCareers.classList.remove('hidden'); viewCareers.classList.add('flex'); }
+        if (viewEnq) viewEnq.classList.add('hidden');
+        if (viewUsers) viewUsers.classList.add('hidden');
       }
     }
 
@@ -409,8 +463,10 @@
         if (res.success && res.data) {
           globalPendingEnquiries = res.data;
           renderEnquiriesTable(globalPendingEnquiries);
-          document.getElementById('stat-pending-count').textContent = globalPendingEnquiries.length.toString();
-          document.getElementById('badge-pending').textContent = globalPendingEnquiries.length.toString();
+          const pEl = document.getElementById('stat-pending-count');
+          const bEl = document.getElementById('badge-pending');
+          if (pEl) pEl.textContent = globalPendingEnquiries.length.toString();
+          if (bEl) bEl.textContent = globalPendingEnquiries.length.toString();
         } else {
           renderEnquiriesTable([]);
         }
@@ -438,10 +494,27 @@
           }
           globalUsersList = usersList;
           renderUsersTable(globalUsersList);
-          document.getElementById('stat-users-count').textContent = globalUsersList.length.toString();
-          document.getElementById('badge-users').textContent = globalUsersList.length.toString();
+          const uEl = document.getElementById('stat-users-count');
+          const bUEl = document.getElementById('badge-users');
+          if (uEl) uEl.textContent = globalUsersList.length.toString();
+          if (bUEl) bUEl.textContent = globalUsersList.length.toString();
         } catch(e) {
           renderUsersTable([]);
+        }
+      }
+
+      // 3. Fetch Careers Applications
+      if (window.AchyutamFirebase && window.AchyutamFirebase.getCareerApplicationsForAdmin) {
+        const cRes = await window.AchyutamFirebase.getCareerApplicationsForAdmin();
+        if (cRes.success && cRes.applications) {
+          globalCareersList = cRes.applications;
+          renderCareersTable(globalCareersList);
+          const cEl = document.getElementById('stat-careers-count');
+          const bCEl = document.getElementById('badge-careers');
+          if (cEl) cEl.textContent = globalCareersList.length.toString();
+          if (bCEl) bCEl.textContent = globalCareersList.length.toString();
+        } else {
+          renderCareersTable([]);
         }
       }
     }
@@ -499,6 +572,59 @@
       `).join('');
     }
 
+    // Render Careers Applications Table
+    function renderCareersTable(list) {
+      const tbody = document.getElementById('careers-table-body');
+      if (!tbody) return;
+
+      if (!list || list.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="7" class="py-12 text-center text-on-surface-variant">
+              <div class="flex flex-col items-center justify-center gap-2 font-mono">
+                <span class="material-symbols-outlined text-3xl text-blue-400">work_off</span>
+                <span class="font-semibold text-on-surface text-sm">NO CAREER APPLICATIONS</span>
+                <span class="text-xs text-on-surface-variant/70">No job candidates have submitted applications yet.</span>
+              </div>
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tbody.innerHTML = list.map((item) => `
+        <tr class="hover:bg-primary/5 border-b border-outline-variant/20 transition-colors">
+          <td class="py-4 px-4 font-semibold text-on-surface">
+            <div class="flex items-center gap-2.5">
+              <span class="w-8 h-8 rounded-full bg-blue-500/10 border border-blue-500/40 flex items-center justify-center text-blue-400 text-xs font-mono font-bold shadow-sm">
+                ${(item.name || 'A').charAt(0).toUpperCase()}
+              </span>
+              <span>${item.name || 'Applicant'}</span>
+            </div>
+          </td>
+          <td class="py-4 px-4">
+            <span class="px-2.5 py-1 rounded bg-blue-500/10 border border-blue-500/40 text-blue-300 font-mono text-[10px] uppercase font-bold tracking-wider">
+              ${item.role || 'Architectural Candidate'}
+            </span>
+          </td>
+          <td class="py-4 px-4 font-mono text-emerald-400 text-xs">${item.email || 'N/A'}</td>
+          <td class="py-4 px-4 font-mono text-on-surface-variant text-xs">${item.phone || 'N/A'}</td>
+          <td class="py-4 px-4 text-xs">
+            ${item.portfolio ? `<a href="${item.portfolio}" target="_blank" class="text-primary hover:underline font-mono flex items-center gap-1"><span class="material-symbols-outlined text-sm">link</span> Open Link</a>` : '<span class="text-on-surface-variant/50">None</span>'}
+          </td>
+          <td class="py-4 px-4 font-mono text-[11px] text-on-surface-variant/70">
+            ${item.date || 'Recent'}
+          </td>
+          <td class="py-4 px-4 text-right">
+            <button onclick="deleteCareerApplicant('${item.id}')" class="px-3.5 py-1.5 border border-red-500/60 text-red-400 hover:bg-red-500 hover:text-white font-mono text-[11px] font-bold uppercase tracking-widest rounded-sm transition-all flex items-center gap-1 ml-auto cursor-pointer shadow">
+              <span class="material-symbols-outlined text-sm">delete</span>
+              <span>DELETE</span>
+            </button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
     // Render Users Table
     function renderUsersTable(list) {
       const tbody = document.getElementById('users-table-body');
@@ -509,8 +635,9 @@
           <tr>
             <td colspan="5" class="py-12 text-center text-on-surface-variant">
               <div class="flex flex-col items-center justify-center gap-2 font-mono">
-                <span class="material-symbols-outlined text-3xl text-outline-variant">group_off</span>
-                <span class="font-semibold text-on-surface text-sm">NO REGISTERED CLIENTS FOUND</span>
+                <span class="material-symbols-outlined text-3xl text-emerald-400">group_off</span>
+                <span class="font-semibold text-on-surface text-sm">NO USER ACCOUNTS</span>
+                <span class="text-xs text-on-surface-variant/70">No registered client accounts found in Firestore.</span>
               </div>
             </td>
           </tr>
@@ -519,52 +646,64 @@
       }
 
       tbody.innerHTML = list.map(user => `
-        <tr class="hover:bg-emerald-500/5 border-b border-outline-variant/20 transition-colors">
-          <td class="py-4 px-4 font-mono text-[11px] text-primary" title="${user.uid}">
-            ${user.uid.substring(0, 14)}...
-          </td>
+        <tr class="hover:bg-primary/5 border-b border-outline-variant/20 transition-colors">
+          <td class="py-4 px-4 font-mono text-[11px] text-primary/90 font-bold">${user.uid}</td>
           <td class="py-4 px-4 font-semibold text-on-surface">${user.username}</td>
           <td class="py-4 px-4 font-mono text-emerald-400 text-xs">${user.email}</td>
           <td class="py-4 px-4 font-mono text-on-surface-variant text-xs">${user.phone}</td>
-          <td class="py-4 px-4 font-mono text-[11px] text-on-surface-variant/70">
-            ${new Date(user.createdAt).toLocaleDateString()}
-          </td>
+          <td class="py-4 px-4 font-mono text-[11px] text-on-surface-variant/70">${new Date(user.createdAt).toLocaleDateString()}</td>
         </tr>
       `).join('');
     }
 
-    // Search Enquiries Filter
-    function filterEnquiriesTable() {
-      const query = document.getElementById('search-enquiries')?.value.toLowerCase().trim() || '';
-      if (!query) {
-        renderEnquiriesTable(globalPendingEnquiries);
-        return;
+    // Delete Career Applicant
+    async function deleteCareerApplicant(docId) {
+      if (!confirm("Are you sure you want to delete this career application?")) return;
+      if (window.AchyutamFirebase && window.AchyutamFirebase.deleteCareerApplicationByAdmin) {
+        const res = await window.AchyutamFirebase.deleteCareerApplicationByAdmin(docId);
+        if (res.success) {
+          showToast("Career application deleted!");
+          loadAdminDashboardData();
+        } else {
+          showToast("Error deleting: " + res.error, true);
+        }
       }
-      const filtered = globalPendingEnquiries.filter(item => {
-        return (item.userName || '').toLowerCase().includes(query) ||
-               (item.userEmail || '').toLowerCase().includes(query) ||
-               (item.serviceType || '').toLowerCase().includes(query) ||
-               (item.message || '').toLowerCase().includes(query);
-      });
+    }
+
+    // Filter Tables
+    function filterEnquiriesTable() {
+      const q = (document.getElementById('search-enquiries')?.value || '').toLowerCase();
+      const filtered = globalPendingEnquiries.filter(e => 
+        (e.userName || '').toLowerCase().includes(q) ||
+        (e.userEmail || '').toLowerCase().includes(q) ||
+        (e.serviceType || '').toLowerCase().includes(q) ||
+        (e.message || '').toLowerCase().includes(q)
+      );
       renderEnquiriesTable(filtered);
     }
 
-    // Search Users Filter
+    function filterCareersTable() {
+      const q = (document.getElementById('search-careers')?.value || '').toLowerCase();
+      const filtered = globalCareersList.filter(c => 
+        (c.name || '').toLowerCase().includes(q) ||
+        (c.role || '').toLowerCase().includes(q) ||
+        (c.email || '').toLowerCase().includes(q) ||
+        (c.phone || '').toLowerCase().includes(q)
+      );
+      renderCareersTable(filtered);
+    }
+
     function filterUsersTable() {
-      const query = document.getElementById('search-users')?.value.toLowerCase().trim() || '';
-      if (!query) {
-        renderUsersTable(globalUsersList);
-        return;
-      }
-      const filtered = globalUsersList.filter(user => {
-        return (user.username || '').toLowerCase().includes(query) ||
-               (user.email || '').toLowerCase().includes(query) ||
-               (user.uid || '').toLowerCase().includes(query);
-      });
+      const q = (document.getElementById('search-users')?.value || '').toLowerCase();
+      const filtered = globalUsersList.filter(u => 
+        (u.uid || '').toLowerCase().includes(q) ||
+        (u.username || '').toLowerCase().includes(q) ||
+        (u.email || '').toLowerCase().includes(q)
+      );
       renderUsersTable(filtered);
     }
 
-    // Modal Control & Reply Handler
+    // Reply Modal Handlers
     function openReplyModal(idx) {
       activeReplyEnquiry = globalPendingEnquiries[idx];
       if (!activeReplyEnquiry) return;
@@ -589,158 +728,54 @@
 
     async function submitAdminReply() {
       if (!activeReplyEnquiry) return;
-      const replyMsg = document.getElementById('admin-reply-textarea')?.value.trim();
-
-      if (!replyMsg) {
-        showToast('⚠️ Please enter a response message for the client!', true);
+      const msg = document.getElementById('admin-reply-textarea')?.value.trim();
+      if (!msg) {
+        showToast("Please enter a reply message for the client!", true);
         return;
       }
 
       const btn = document.getElementById('btn-submit-reply');
-      if (btn) { btn.disabled = true; btn.innerHTML = `<span>Sending...</span>`; }
+      btn.disabled = true;
+      btn.innerHTML = `<span>Sending...</span>`;
 
-      if (window.AchyutamFirebase && window.AchyutamFirebase.adminReplyToEnquiry) {
-        const res = await window.AchyutamFirebase.adminReplyToEnquiry(
-          activeReplyEnquiry.userUid,
-          activeReplyEnquiry.enquiryId,
-          replyMsg
-        );
-
-        if (res.success) {
-          showToast(`✅ Reply sent to ${activeReplyEnquiry.userName}! Proposal marked as Answered.`);
-          closeReplyModal();
-          loadAdminDashboardData();
-        } else {
-          showToast(`⚠️ Reply notice: ${res.error}`, true);
-        }
-      } else {
-        showToast('✅ Reply saved and proposal marked as answered.');
-        closeReplyModal();
-      }
-
-      if (btn) { btn.disabled = false; btn.innerHTML = `<span>SEND &amp; MARK ANSWERED</span> <span class="material-symbols-outlined text-sm">send</span>`; }
-    }
-
-    // Direct Email/Password Admin Login Handler with 16-digit Admin Key Verification
-    async function handleDirectAdminLogin(e) {
-      if (e) e.preventDefault();
-      const emailInput = document.getElementById('admin-input-email');
-      const passInput = document.getElementById('admin-input-password');
-      const keyInput = document.getElementById('admin-input-key');
-      const errEl = document.getElementById('admin-login-error');
-      const btn = document.getElementById('btn-admin-login');
-
-      const email = (emailInput?.value || '').toLowerCase().trim();
-      const pass = passInput?.value || '';
-      const key = (keyInput?.value || '').trim();
-
-      if (errEl) errEl.classList.add('hidden');
-
-      if (key !== "Ak#0827!Achyutam") {
-        if (errEl) {
-          errEl.innerText = "Invalid Admin Key! Please enter valid 16-digit Admin Key.";
-          errEl.classList.remove('hidden');
-        }
-        return;
-      }
-
-      if (btn) btn.innerText = 'LOGGING IN...';
-
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signInWithEmailPassword) {
-        const res = await window.AchyutamFirebase.signInWithEmailPassword(email, pass, key);
-        if (res.success && (res.isAdmin || email === 'ankitjangir529@gmail.com')) {
-          const guard = document.getElementById('admin-access-guard');
-          if (guard) guard.classList.add('hidden');
-          loadAdminDashboardData();
-          showToast('Welcome Admin, Login Successful!');
-        } else {
-          if (errEl) {
-            errEl.innerText = res.error || 'Access Denied: Invalid Admin Credentials or Admin Key.';
-            errEl.classList.remove('hidden');
+      try {
+        if (window.AchyutamFirebase && window.AchyutamFirebase.saveAdminReplyToFirebase) {
+          const res = await window.AchyutamFirebase.saveAdminReplyToFirebase(activeReplyEnquiry.id || activeReplyEnquiry.docId, msg);
+          if (res.success) {
+            showToast("Reply sent & proposal marked answered!");
+            closeReplyModal();
+            loadAdminDashboardData();
+          } else {
+            showToast("Error: " + (res.error || "Failed to save reply"), true);
           }
         }
-      }
-      if (btn) btn.innerText = 'LOG IN AS ADMIN';
-    }
-
-    // Google Admin Login Handler with 16-digit Admin Key Verification
-    async function handleGoogleAdminLogin() {
-      const keyInput = document.getElementById('admin-input-key');
-      const errEl = document.getElementById('admin-login-error');
-      const key = (keyInput?.value || '').trim();
-
-      if (errEl) errEl.classList.add('hidden');
-
-      if (key !== "Ak#0827!Achyutam") {
-        if (errEl) {
-          errEl.innerText = "Invalid Admin Key! Please enter valid 16-digit Admin Key.";
-          errEl.classList.remove('hidden');
-        }
-        return;
-      }
-
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signInWithGoogleFirebase) {
-        const res = await window.AchyutamFirebase.signInWithGoogleFirebase(key);
-        if (res.success && (res.isAdmin || (res.user?.email || '').toLowerCase().trim() === 'ankitjangir529@gmail.com')) {
-          const guard = document.getElementById('admin-access-guard');
-          if (guard) guard.classList.add('hidden');
-          loadAdminDashboardData();
-          showToast('Welcome Admin, Google Login Successful!');
-        } else {
-          if (errEl) {
-            errEl.innerText = res.error || 'Access Denied: Invalid Admin Key or Non-Admin Account.';
-            errEl.classList.remove('hidden');
-          }
-        }
+      } catch (err) {
+        showToast("System error sending reply", true);
+      } finally {
+        btn.disabled = false;
+        btn.innerHTML = `<span>SEND &amp; MARK ANSWERED</span><span class="material-symbols-outlined text-sm">send</span>`;
       }
     }
 
-    // Expose handlers globally
-    window.handleDirectAdminLogin = handleDirectAdminLogin;
-    window.handleGoogleAdminLogin = handleGoogleAdminLogin;
-
-    // Handle Admin Sign Out
-    async function handleAdminSignOut() {
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signOutUser) {
-        await window.AchyutamFirebase.signOutUser();
-      }
-      localStorage.removeItem('achyutam_user');
-      showToast('Signed out of Admin Portal.');
-      setTimeout(() => {
-        window.location.href = 'index.html';
-      }, 1000);
-    }
-
-    // Refresh Trigger
     function reloadAdminData() {
-      showToast('Refreshing admin portal data...');
+      showToast("Refreshing data from Firestore...");
       loadAdminDashboardData();
     }
 
-    // Expose for admin.js route guard
-    window.loadAdminDashboardData = loadAdminDashboardData;
-
-    // Initialize on DOM Load with Reactive Firebase Auth Guard
-    document.addEventListener('DOMContentLoaded', () => {
-      checkAdminAuthGuard();
-      
-      if (window.AchyutamFirebase && window.AchyutamFirebase.auth) {
-        window.AchyutamFirebase.onAuthStateChanged(window.AchyutamFirebase.auth, (user) => {
-          if (!user || (user.email || '').toLowerCase().trim() !== 'ankitjangir529@gmail.com') {
-            const guard = document.getElementById('admin-access-guard');
-            if (guard) {
-              guard.classList.remove('hidden');
-              guard.classList.add('flex');
-            }
-          } else {
-            const guard = document.getElementById('admin-access-guard');
-            if (guard) guard.classList.add('hidden');
-            loadAdminDashboardData();
-          }
-        });
+    function handleAdminSignOut() {
+      if (window.AchyutamFirebase && window.AchyutamFirebase.signOutUser) {
+        window.AchyutamFirebase.signOutUser();
       }
+      localStorage.removeItem("achyutam_user");
+      window.location.href = "index.html";
+    }
 
-      setTimeout(loadAdminDashboardData, 500);
+    // Initialize Dashboard on DOM Load
+    document.addEventListener("DOMContentLoaded", () => {
+      loadAdminDashboardData();
+    });
+    window.addEventListener("load", () => {
+      loadAdminDashboardData();
     });
   </script>
 </body>
