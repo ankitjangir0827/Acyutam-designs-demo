@@ -559,7 +559,7 @@ window.removeAIFingerprint = function(codeText) {
       background-color: #e5e7eb !important;
     }
 
-    /* Light Mode Day Theme Overrides — Gradient Mesh Palette */
+    /* Light Mode Day Theme Overrides — Editorial Warm Cream & Glass Palette */
     html.light-mode header#main-header,
     html.light-mode header#main-header > div,
     html.light-mode header.header-glass,
@@ -568,11 +568,11 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .header-glass,
     html.light-mode #desktop-nav div.absolute,
     html.light-mode div.absolute.top-full {
-      background: rgba(0, 50, 80, 0.55) !important;
-      background-color: rgba(0, 50, 80, 0.55) !important;
-      color: #ffffff !important;
-      border-color: rgba(255, 255, 255, 0.18) !important;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+      background: rgba(250, 245, 240, 0.92) !important;
+      background-color: rgba(250, 245, 240, 0.92) !important;
+      color: #0f172a !important;
+      border-color: rgba(15, 23, 42, 0.12) !important;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
     }
@@ -593,21 +593,20 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode aside#sidebar-drawer,
     html.light-mode .sidebar-glass,
     html.light-mode aside.sidebar-glass {
-      background: rgba(0, 60, 95, 0.55) !important;
-      background-color: rgba(0, 60, 95, 0.55) !important;
-      border-color: rgba(255, 255, 255, 0.18) !important;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+      background: rgba(245, 238, 232, 0.92) !important;
+      background-color: rgba(245, 238, 232, 0.92) !important;
+      border-color: rgba(15, 23, 42, 0.12) !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08) !important;
       backdrop-filter: blur(28px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
     }
     html.light-mode aside#sidebar-drawer:hover,
     html.light-mode .sidebar-glass:hover,
     html.light-mode aside.sidebar-glass:hover {
-      background: rgba(0, 60, 95, 0.75) !important;
-      background-color: rgba(0, 60, 95, 0.75) !important;
+      background: rgba(255, 255, 255, 0.95) !important;
+      background-color: rgba(255, 255, 255, 0.95) !important;
     }
     html.light-mode main > section#hero > div > div,
-    /* Day / Light Theme Cards & Containers (Services, Projects, Leadership, Registration, Contact Info) */
     html.light-mode section#methodology .glass-panel,
     html.light-mode section#details .glass-panel,
     html.light-mode section#achyutam-details .glass-panel,
@@ -615,12 +614,12 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .project-card-item,
     html.light-mode .it-card-container,
     html.light-mode .glass-panel {
-      background: rgba(0, 65, 105, 0.45) !important;
-      background-color: rgba(0, 65, 105, 0.45) !important;
-      color: #ffffff !important;
-      border: 2px solid rgba(255, 255, 255, 0.25) !important;
-      border-radius: 25px !important;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.20) !important;
+      background: rgba(255, 255, 255, 0.88) !important;
+      background-color: rgba(255, 255, 255, 0.88) !important;
+      color: #0f172a !important;
+      border: 1.5px solid rgba(15, 23, 42, 0.12) !important;
+      border-radius: 16px !important;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06) !important;
       backdrop-filter: blur(16px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
     }
@@ -1298,6 +1297,19 @@ window.addEventListener(
   },
   { passive: true },
 );
+
+// Initializer: Ensure Dark Mode is default on page load unless user set light
+(function initTheme() {
+  const saved = localStorage.getItem("acyutam_theme");
+  if (saved === "light") {
+    document.documentElement.classList.add("light-mode");
+    document.documentElement.classList.remove("dark");
+  } else {
+    document.documentElement.classList.remove("light-mode");
+    document.documentElement.classList.add("dark");
+    localStorage.setItem("acyutam_theme", "dark");
+  }
+})();
 
 // Global Theme Toggle Handler
 window.toggleTheme = () => {
