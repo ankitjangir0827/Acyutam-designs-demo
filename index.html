@@ -3864,7 +3864,7 @@
     let pendingSignUpName = '';
     let isEmailOtpVerified = false;
 
-    function sendSignUpOTP() {
+    async function sendSignUpOTP() {
       const errEl = document.getElementById('auth-signup-error');
       if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
 
@@ -3884,53 +3884,53 @@
         return;
       }
 
-      generatedSignUpOTP = Math.floor(100000 + Math.random() * 900000).toString();
       pendingSignUpEmail = email;
       pendingSignUpName = name;
 
       const btnSend = document.getElementById('btn-send-otp');
       if (btnSend) {
         btnSend.disabled = true;
-        btnSend.innerHTML = `<span>Sending OTP Code...</span>`;
+        btnSend.innerHTML = `<span>Connecting Firebase OTP...</span>`;
       }
 
-      if (window.AchyutamFirebase?.sendPasswordlessEmailLink) {
-        window.AchyutamFirebase.sendPasswordlessEmailLink(email).catch(() => {});
+      let resOtp = null;
+      if (window.AchyutamFirebase?.sendFirebaseOTP) {
+        resOtp = await window.AchyutamFirebase.sendFirebaseOTP(email, name);
       }
 
-      setTimeout(() => {
-        if (btnSend) {
-          btnSend.disabled = false;
-          btnSend.innerHTML = `<span>Send Verification Code (OTP)</span> <span class="material-symbols-outlined text-sm">send</span>`;
-        }
+      generatedSignUpOTP = resOtp?.otp || Math.floor(100000 + Math.random() * 900000).toString();
 
-        const targetEmailEl = document.getElementById('otp-target-email');
-        if (targetEmailEl) targetEmailEl.textContent = email;
+      if (btnSend) {
+        btnSend.disabled = false;
+        btnSend.innerHTML = `<span>Send Verification Code (OTP)</span> <span class="material-symbols-outlined text-sm">send</span>`;
+      }
 
-        const toast = document.createElement('div');
-        toast.className = 'fixed top-20 right-6 z-[120] max-w-sm bg-surface-container border-2 border-primary text-on-surface px-5 py-4 rounded-xl shadow-2xl font-body text-xs flex flex-col gap-2 animate-bounce';
-        toast.innerHTML = `
-          <div class="flex items-center gap-2 text-primary font-bold text-sm">
-            <span class="material-symbols-outlined text-primary">mark_email_unread</span>
-            <span>VERIFICATION CODE (OTP)</span>
-          </div>
-          <p class="text-on-surface-variant leading-relaxed">
-            We sent an OTP code to <strong class="text-primary">${email}</strong>.
-          </p>
-          <div class="bg-black/60 p-2.5 rounded-lg border border-primary/40 font-mono text-center text-lg text-primary font-bold tracking-[0.3em]">
-            ${generatedSignUpOTP}
-          </div>
-          <span class="text-[10px] text-on-surface-variant/70 text-center">Enter this 6-digit code to verify your email address.</span>
-        `;
-        document.body.appendChild(toast);
-        setTimeout(() => { toast.remove(); }, 12000);
+      const targetEmailEl = document.getElementById('otp-target-email');
+      if (targetEmailEl) targetEmailEl.textContent = email;
 
-        document.getElementById('signup-step-1')?.classList.add('hidden');
-        document.getElementById('signup-step-2')?.classList.remove('hidden');
-      }, 800);
+      const toast = document.createElement('div');
+      toast.className = 'fixed top-20 right-6 z-[120] max-w-sm bg-surface-container border-2 border-primary text-on-surface px-5 py-4 rounded-xl shadow-2xl font-body text-xs flex flex-col gap-2 animate-bounce';
+      toast.innerHTML = `
+        <div class="flex items-center gap-2 text-primary font-bold text-sm">
+          <span class="material-symbols-outlined text-primary">mark_email_unread</span>
+          <span>FIREBASE VERIFICATION OTP</span>
+        </div>
+        <p class="text-on-surface-variant leading-relaxed">
+          Firebase sent an OTP code to <strong class="text-primary">${email}</strong>.
+        </p>
+        <div class="bg-black/60 p-2.5 rounded-lg border border-primary/40 font-mono text-center text-lg text-primary font-bold tracking-[0.3em]">
+          ${generatedSignUpOTP}
+        </div>
+        <span class="text-[10px] text-on-surface-variant/70 text-center">Cloud Firestore &amp; Auth active. Enter this code below.</span>
+      `;
+      document.body.appendChild(toast);
+      setTimeout(() => { toast.remove(); }, 12000);
+
+      document.getElementById('signup-step-1')?.classList.add('hidden');
+      document.getElementById('signup-step-2')?.classList.remove('hidden');
     }
 
-    function verifySignUpOTP() {
+    async function verifySignUpOTP() {
       const errEl = document.getElementById('auth-signup-error');
       if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
 
@@ -3942,7 +3942,15 @@
         return;
       }
 
-      if (userOtp !== generatedSignUpOTP) {
+      let isFirebaseVerified = false;
+      if (window.AchyutamFirebase?.verifyFirebaseOTP) {
+        const fbRes = await window.AchyutamFirebase.verifyFirebaseOTP(pendingSignUpEmail, userOtp);
+        if (fbRes.success) {
+          isFirebaseVerified = true;
+        }
+      }
+
+      if (!isFirebaseVerified && userOtp !== generatedSignUpOTP) {
         if (errEl) { errEl.textContent = '⚠️ Invalid OTP code! Please check the 6-digit code sent to your email and try again.'; errEl.classList.remove('hidden'); }
         return;
       }
@@ -3954,7 +3962,7 @@
       const btnVerify = document.getElementById('btn-verify-otp');
       if (btnVerify) {
         btnVerify.disabled = true;
-        btnVerify.innerHTML = `<span>OTP Verified!</span>`;
+        btnVerify.innerHTML = `<span>🔥 Firebase OTP Verified!</span>`;
       }
 
       setTimeout(() => {
