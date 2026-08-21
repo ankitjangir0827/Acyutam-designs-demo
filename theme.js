@@ -1399,11 +1399,11 @@ window.updateAuthUI = async function () {
           headerMyEnquiriesBtn.classList.remove('hidden');
           headerMyEnquiriesBtn.style.display = 'inline-flex';
           headerMyEnquiriesBtn.href = 'admin-dashboard.html';
-          headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm';
+          headerMyEnquiriesBtn.className = 'border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3.5 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm font-bold flex items-center justify-center gap-1.5';
         }
         if (labelSpan) {
           labelSpan.textContent = 'ADMIN PORTAL';
-          labelSpan.className = 'text-on-surface font-semibold tracking-widest';
+          labelSpan.className = 'text-on-surface font-bold tracking-widest';
         }
 
         let pendingCount = 0;
@@ -1433,11 +1433,11 @@ window.updateAuthUI = async function () {
           headerMyEnquiriesBtn.classList.remove('hidden');
           headerMyEnquiriesBtn.style.display = 'inline-flex';
           headerMyEnquiriesBtn.href = 'contact.html';
-          headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm';
+          headerMyEnquiriesBtn.className = 'border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3.5 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm font-bold flex items-center justify-center gap-1.5';
         }
         if (labelSpan) {
           labelSpan.textContent = 'MY MESSAGES';
-          labelSpan.className = 'text-on-surface font-semibold tracking-widest';
+          labelSpan.className = 'text-on-surface font-bold tracking-widest';
         }
 
         if (window.AchyutamFirebase?.getUserEnquiries) {
