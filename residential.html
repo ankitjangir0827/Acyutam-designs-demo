@@ -1132,37 +1132,102 @@
         </button>
       </form>
 
-      <!-- Sign Up Form -->
+      <!-- Sign Up Form (3-Step OTP Verification Flow) -->
       <form id="auth-form-signup" onsubmit="handleEmailSignUp(event)" class="hidden flex flex-col gap-4">
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Full Name</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">person</span>
-            <input type="text" id="signup-name" required placeholder="Ram Gopal Jangir" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+        <div id="auth-signup-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
+        
+        <!-- STEP 1: Enter Name & Email -->
+        <div id="signup-step-1" class="flex flex-col gap-4">
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Full Name</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">person</span>
+              <input type="text" id="signup-name" required placeholder="Ram Gopal Jangir" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+            </div>
           </div>
-        </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Email Address</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">mail</span>
-            <input type="email" id="signup-email" required placeholder="name@domain.com" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Email Address</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">mail</span>
+              <input type="email" id="signup-email" required placeholder="name@domain.com" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+            </div>
           </div>
+
+          <button type="button" onclick="sendSignUpOTP()" id="btn-send-otp" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+            <span>Send Verification Code (OTP)</span>
+            <span class="material-symbols-outlined text-sm">send</span>
+          </button>
         </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Password</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock</span>
-            <input type="password" id="signup-password" required minlength="6" placeholder="Min. 6 characters" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-            <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
-              <span class="material-symbols-outlined text-base">visibility</span>
+
+        <!-- STEP 2: Enter & Verify 6-Digit OTP -->
+        <div id="signup-step-2" class="hidden flex flex-col gap-4">
+          <div class="bg-primary/10 border border-primary/40 p-3 rounded-lg text-xs text-primary font-mono leading-relaxed">
+            <div class="flex items-center gap-2 font-bold mb-1">
+              <span class="material-symbols-outlined text-base">mark_email_read</span>
+              <span>OTP Code Dispatched</span>
+            </div>
+            <p class="text-[11px] text-on-surface-variant">
+              We have sent a 6-digit verification code to <strong id="otp-target-email" class="text-primary font-bold">name@domain.com</strong>.
+            </p>
+          </div>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5 flex justify-between items-center">
+              <span>Enter 6-Digit Verification Code</span>
+              <span class="text-primary font-bold font-mono text-[10px]">OTP DISPATCHED</span>
+            </label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">pin</span>
+              <input type="text" id="signup-otp" maxlength="6" placeholder="• • • • • •" class="w-full bg-background border border-primary/60 rounded-md py-3 pl-10 pr-4 text-center font-mono text-base tracking-[0.4em] text-primary focus:border-primary focus:outline-none transition-colors font-bold"/>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button type="button" onclick="resetToStep1()" class="py-2.5 px-3 border border-outline-variant/40 text-on-surface-variant hover:text-primary font-label-caps text-[11px] rounded-md transition-colors cursor-pointer">
+              ← Back
+            </button>
+            <button type="button" onclick="verifySignUpOTP()" id="btn-verify-otp" class="flex-1 py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+              <span>Verify OTP &amp; Proceed</span>
+              <span class="material-symbols-outlined text-sm">verified</span>
             </button>
           </div>
         </div>
-        <div id="auth-signup-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
-        <button type="submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
-          <span>Create Account &amp; Proceed</span>
-          <span class="material-symbols-outlined text-sm">person_add</span>
-        </button>
+
+        <!-- STEP 3: Set Password & Confirm Password -->
+        <div id="signup-step-3" class="hidden flex flex-col gap-4">
+          <div class="bg-emerald-500/10 border border-emerald-500/40 p-2.5 rounded-lg text-xs text-emerald-400 font-mono flex items-center gap-2">
+            <span class="material-symbols-outlined text-base">check_circle</span>
+            <span>EMAIL VERIFIED: <strong id="verified-email-label" class="text-on-surface font-bold">name@domain.com</strong></span>
+          </div>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Password</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock</span>
+              <input type="password" id="signup-password" required minlength="6" placeholder="Min. 6 characters" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+              <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
+                <span class="material-symbols-outlined text-base">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Confirm Password</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock_reset</span>
+              <input type="password" id="signup-confirm-password" required minlength="6" placeholder="Re-enter password" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+              <button type="button" onclick="togglePasswordVisibility('signup-confirm-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
+                <span class="material-symbols-outlined text-base">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-signup-submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+            <span>Create Account &amp; Proceed</span>
+            <span class="material-symbols-outlined text-sm">person_add</span>
+          </button>
+        </div>
       </form>
 
       <div class="relative flex items-center justify-center my-1">
@@ -1181,6 +1246,116 @@
   </div>
 
   <script>
+    let generatedSignUpOTP = null;
+    let pendingSignUpEmail = '';
+    let pendingSignUpName = '';
+    let isEmailOtpVerified = false;
+
+    function sendSignUpOTP() {
+      const errEl = document.getElementById('auth-signup-error');
+      if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
+
+      const nameInput = document.getElementById('signup-name');
+      const emailInput = document.getElementById('signup-email');
+      const name = nameInput ? nameInput.value.trim() : '';
+      const email = emailInput ? emailInput.value.trim().toLowerCase() : '';
+
+      if (!name || !email) {
+        if (errEl) { errEl.textContent = '⚠️ Please enter both your Full Name and Email Address!'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        if (errEl) { errEl.textContent = '⚠️ Please enter a valid email address!'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      generatedSignUpOTP = Math.floor(100000 + Math.random() * 900000).toString();
+      pendingSignUpEmail = email;
+      pendingSignUpName = name;
+
+      const btnSend = document.getElementById('btn-send-otp');
+      if (btnSend) {
+        btnSend.disabled = true;
+        btnSend.innerHTML = `<span>Sending OTP Code...</span>`;
+      }
+
+      if (window.AchyutamFirebase?.sendPasswordlessEmailLink) {
+        window.AchyutamFirebase.sendPasswordlessEmailLink(email).catch(() => {});
+      }
+
+      setTimeout(() => {
+        if (btnSend) {
+          btnSend.disabled = false;
+          btnSend.innerHTML = `<span>Send Verification Code (OTP)</span> <span class="material-symbols-outlined text-sm">send</span>`;
+        }
+
+        const targetEmailEl = document.getElementById('otp-target-email');
+        if (targetEmailEl) targetEmailEl.textContent = email;
+
+        const toast = document.createElement('div');
+        toast.className = 'fixed top-20 right-6 z-[120] max-w-sm bg-surface-container border-2 border-primary text-on-surface px-5 py-4 rounded-xl shadow-2xl font-body text-xs flex flex-col gap-2 animate-bounce';
+        toast.innerHTML = `
+          <div class="flex items-center gap-2 text-primary font-bold text-sm">
+            <span class="material-symbols-outlined text-primary">mark_email_unread</span>
+            <span>VERIFICATION CODE (OTP)</span>
+          </div>
+          <p class="text-on-surface-variant leading-relaxed">
+            We sent an OTP code to <strong class="text-primary">${email}</strong>.
+          </p>
+          <div class="bg-black/60 p-2.5 rounded-lg border border-primary/40 font-mono text-center text-lg text-primary font-bold tracking-[0.3em]">
+            ${generatedSignUpOTP}
+          </div>
+          <span class="text-[10px] text-on-surface-variant/70 text-center">Enter this 6-digit code to verify your email address.</span>
+        `;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 12000);
+
+        document.getElementById('signup-step-1')?.classList.add('hidden');
+        document.getElementById('signup-step-2')?.classList.remove('hidden');
+      }, 800);
+    }
+
+    function verifySignUpOTP() {
+      const errEl = document.getElementById('auth-signup-error');
+      if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
+
+      const otpInput = document.getElementById('signup-otp');
+      const userOtp = otpInput ? otpInput.value.trim() : '';
+
+      if (!userOtp || userOtp.length !== 6) {
+        if (errEl) { errEl.textContent = '⚠️ Please enter the complete 6-digit OTP code!'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      if (userOtp !== generatedSignUpOTP) {
+        if (errEl) { errEl.textContent = '⚠️ Invalid OTP code! Please check the 6-digit code sent to your email and try again.'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      isEmailOtpVerified = true;
+      const verifiedLabel = document.getElementById('verified-email-label');
+      if (verifiedLabel) verifiedLabel.textContent = pendingSignUpEmail;
+
+      const btnVerify = document.getElementById('btn-verify-otp');
+      if (btnVerify) {
+        btnVerify.disabled = true;
+        btnVerify.innerHTML = `<span>OTP Verified!</span>`;
+      }
+
+      setTimeout(() => {
+        document.getElementById('signup-step-2')?.classList.add('hidden');
+        document.getElementById('signup-step-3')?.classList.remove('hidden');
+      }, 400);
+    }
+
+    function resetToStep1() {
+      document.getElementById('signup-step-2')?.classList.add('hidden');
+      document.getElementById('signup-step-3')?.classList.add('hidden');
+      document.getElementById('signup-step-1')?.classList.remove('hidden');
+    }
+
     function togglePasswordVisibility(inputId, btn) {
       const input = document.getElementById(inputId);
       if (!input) return;

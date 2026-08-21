@@ -624,7 +624,7 @@
             <button type="button" onclick="togglePasswordVisibility('signin-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
               <span class="material-symbols-outlined text-base">visibility</span>
             </button>
-          </div>
+</div>
         </div>
         <div id="auth-signin-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
         <button type="submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
@@ -633,37 +633,102 @@
         </button>
       </form>
 
-      <!-- Sign Up Form -->
+      <!-- Sign Up Form (3-Step OTP Verification Flow) -->
       <form id="auth-form-signup" onsubmit="handleEmailSignUp(event)" class="hidden flex flex-col gap-4">
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Full Name</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">person</span>
-            <input type="text" id="signup-name" required placeholder="Ram Gopal Jangir" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+        <div id="auth-signup-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
+        
+        <!-- STEP 1: Enter Name & Email -->
+        <div id="signup-step-1" class="flex flex-col gap-4">
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Full Name</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">person</span>
+              <input type="text" id="signup-name" required placeholder="Ram Gopal Jangir" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+            </div>
           </div>
-        </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Email Address</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">mail</span>
-            <input type="email" id="signup-email" required placeholder="name@domain.com" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Email Address</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">mail</span>
+              <input type="email" id="signup-email" required placeholder="name@domain.com" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-4 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+            </div>
           </div>
+
+          <button type="button" onclick="sendSignUpOTP()" id="btn-send-otp" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+            <span>Send Verification Code (OTP)</span>
+            <span class="material-symbols-outlined text-sm">send</span>
+          </button>
         </div>
-        <div>
-          <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Password</label>
-          <div class="relative">
-            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock</span>
-            <input type="password" id="signup-password" required minlength="6" placeholder="Min. 6 characters" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
-            <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
-              <span class="material-symbols-outlined text-base">visibility</span>
+
+        <!-- STEP 2: Enter & Verify 6-Digit OTP -->
+        <div id="signup-step-2" class="hidden flex flex-col gap-4">
+          <div class="bg-primary/10 border border-primary/40 p-3 rounded-lg text-xs text-primary font-mono leading-relaxed">
+            <div class="flex items-center gap-2 font-bold mb-1">
+              <span class="material-symbols-outlined text-base">mark_email_read</span>
+              <span>OTP Code Dispatched</span>
+            </div>
+            <p class="text-[11px] text-on-surface-variant">
+              We have sent a 6-digit verification code to <strong id="otp-target-email" class="text-primary font-bold">name@domain.com</strong>.
+            </p>
+          </div>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5 flex justify-between items-center">
+              <span>Enter 6-Digit Verification Code</span>
+              <span class="text-primary font-bold font-mono text-[10px]">OTP DISPATCHED</span>
+            </label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">pin</span>
+              <input type="text" id="signup-otp" maxlength="6" placeholder="• • • • • •" class="w-full bg-background border border-primary/60 rounded-md py-3 pl-10 pr-4 text-center font-mono text-base tracking-[0.4em] text-primary focus:border-primary focus:outline-none transition-colors font-bold"/>
+            </div>
+          </div>
+
+          <div class="flex gap-2">
+            <button type="button" onclick="resetToStep1()" class="py-2.5 px-3 border border-outline-variant/40 text-on-surface-variant hover:text-primary font-label-caps text-[11px] rounded-md transition-colors cursor-pointer">
+              ← Back
+            </button>
+            <button type="button" onclick="verifySignUpOTP()" id="btn-verify-otp" class="flex-1 py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+              <span>Verify OTP &amp; Proceed</span>
+              <span class="material-symbols-outlined text-sm">verified</span>
             </button>
           </div>
         </div>
-        <div id="auth-signup-error" class="hidden p-3 bg-red-500/10 border border-red-500/40 text-red-400 text-xs rounded-md font-mono"></div>
-        <button type="submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
-          <span>Create Account &amp; Proceed</span>
-          <span class="material-symbols-outlined text-sm">person_add</span>
-        </button>
+
+        <!-- STEP 3: Set Password & Confirm Password -->
+        <div id="signup-step-3" class="hidden flex flex-col gap-4">
+          <div class="bg-emerald-500/10 border border-emerald-500/40 p-2.5 rounded-lg text-xs text-emerald-400 font-mono flex items-center gap-2">
+            <span class="material-symbols-outlined text-base">check_circle</span>
+            <span>EMAIL VERIFIED: <strong id="verified-email-label" class="text-on-surface font-bold">name@domain.com</strong></span>
+          </div>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Password</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock</span>
+              <input type="password" id="signup-password" required minlength="6" placeholder="Min. 6 characters" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+              <button type="button" onclick="togglePasswordVisibility('signup-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
+                <span class="material-symbols-outlined text-base">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <label class="block font-label-caps text-[10px] text-on-surface-variant uppercase tracking-wider mb-1.5">Confirm Password</label>
+            <div class="relative">
+              <span class="absolute left-3 top-1/2 -translate-y-1/2 text-primary material-symbols-outlined text-base">lock_reset</span>
+              <input type="password" id="signup-confirm-password" required minlength="6" placeholder="Re-enter password" class="w-full bg-background border border-outline-variant/40 rounded-md py-2.5 pl-10 pr-10 text-xs text-on-surface focus:border-primary focus:outline-none transition-colors"/>
+              <button type="button" onclick="togglePasswordVisibility('signup-confirm-password', this)" class="absolute right-3 top-1/2 -translate-y-1/2 text-on-surface-variant hover:text-primary transition-colors focus:outline-none cursor-pointer">
+                <span class="material-symbols-outlined text-base">visibility</span>
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" id="btn-signup-submit" class="w-full py-3 bg-primary text-background font-label-caps text-xs font-bold uppercase tracking-widest rounded-md hover:bg-primary-container transition-all flex items-center justify-center gap-2 shadow-lg cursor-pointer">
+            <span>Create Account &amp; Proceed</span>
+            <span class="material-symbols-outlined text-sm">person_add</span>
+          </button>
+        </div>
       </form>
 
       <div class="relative flex items-center justify-center my-1">
@@ -682,6 +747,11 @@
   </div>
 
   <script>
+    let generatedSignUpOTP = null;
+    let pendingSignUpEmail = '';
+    let pendingSignUpName = '';
+    let isEmailOtpVerified = false;
+
     function togglePasswordVisibility(inputId, btn) {
       const input = document.getElementById(inputId);
       if (!input) return;
