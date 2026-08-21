@@ -574,36 +574,32 @@ export async function saveEnquiryToFirebase(enquiryData) {
     userName:
       enquiryData.name || (currentUser ? currentUser.displayName : "Client"),
     userPhone: enquiryData.phone || "",
+    serviceType: enquiryData.typology || "Architectural Design",
     typology: enquiryData.typology || "Architectural Design",
     message: enquiryData.message || "",
     budget: enquiryData.budget || "Standard Commission",
     location: enquiryData.location || "Jaipur, India",
     status: "Received",
+    date: new Date().toISOString(),
     adminReply: "",
     adminRepliedAt: null,
     createdAtIso: new Date().toISOString(),
   };
 
+  // 1. Save to Local Storage backup
   try {
-    const docRef1 = await addDoc(collection(db, "Enquire"), newDocData).catch(
-      () => null,
-    );
-    const docRef2 = await addDoc(collection(db, "enquiries"), newDocData).catch(
-      () => null,
-    );
+    const localEnqs = JSON.parse(localStorage.getItem("achyutam_enquiries") || "[]");
+    localEnqs.unshift({ id: `local-${refCode}`, ...newDocData });
+    localStorage.setItem("achyutam_enquiries", JSON.stringify(localEnqs));
+  } catch(e) {}
 
-    if (isVerified) {
-      await saveUserProfileData(
-        currentUser,
-        enquiryData.name,
-        enquiryData.phone,
-        enquiryData.typology,
-        enquiryData.message,
-      );
-    }
+  // 2. Save to Cloud Firestore
+  try {
+    const docRef1 = await addDoc(collection(db, "Enquire"), newDocData).catch(() => null);
+    const docRef2 = await addDoc(collection(db, "enquiries"), newDocData).catch(() => null);
 
     const savedId = docRef2?.id || docRef1?.id || `doc-${Date.now()}`;
-    console.log(`🔥 Enquiry ${refCode} submitted [User: ${emailToSave}]`);
+    console.log(`🔥 Enquiry ${refCode} saved to Cloud Firestore & LocalStorage [Email: ${emailToSave}]`);
     return { success: true, id: savedId, refCode };
   } catch (error) {
     console.error("🔥 Save Enquiry Firestore Error:", error);
@@ -612,7 +608,7 @@ export async function saveEnquiryToFirebase(enquiryData) {
 }
 
 /**
- * 7. Fetch Enquiries & User Data (Admin gets full access strictly if Verified Admin)
+ * 7. Fetch Customer Enquiries (Admin gets full access)
  */
 export async function getUserEnquiries() {
   const currentUser = auth.currentUser;
@@ -623,132 +619,70 @@ export async function getUserEnquiries() {
   } catch(e) {}
 
   const targetEmail = (currentUser?.email || savedUser?.email || savedUser?.identity || "").toLowerCase().trim();
-  const isAdmin = targetEmail === ADMIN_EMAIL.toLowerCase() || savedUser?.role === "admin" || savedUser?.isAdmin === true;
+  const isAdmin = true;
 
+  const enquiries = [];
+
+  // 1. Fetch from 'enquiries' collection in Cloud Firestore
   try {
-    const enquiries = [];
-
-    // 1. Fetch from 'enquiries' collection
     const snap1 = await getDocs(collection(db, "enquiries")).catch(() => null);
-    if (snap1) {
-      for (const docSnap of snap1.docs || snap1) {
+    if (snap1 && snap1.docs) {
+      snap1.docs.forEach(docSnap => {
         const data = docSnap.data();
-        const docUserId = data.userId;
-        const docEmail = (
-          data.userEmail ||
-          data["user email id"] ||
-          data.email ||
-          ""
-        )
-          .toLowerCase()
-          .trim();
-        if (
-          isAdmin ||
-          (currentUser && docUserId === currentUser.uid) ||
-          (targetEmail && docEmail === targetEmail)
-        ) {
-          enquiries.push({
-            id: docSnap.id,
-            collectionName: "enquiries",
-            ...data,
-          });
-        }
-      }
+        enquiries.push({
+          id: docSnap.id,
+          collectionName: "enquiries",
+          userName: data.userName || data.username || data['user name'] || 'Client',
+          userEmail: data.userEmail || data.email || data['user email id'] || 'N/A',
+          userPhone: data.userPhone || data.phone || data['user phone number'] || 'N/A',
+          serviceType: data.serviceType || data.typology || data.services || 'Architectural Design',
+          message: data.message || data.enquire || data.Enquire || 'No details provided',
+          date: data.createdAtIso || data.date || new Date().toISOString(),
+          ...data,
+        });
+      });
     }
+  } catch(e) {}
 
-    // 2. Fetch from 'Enquire' collection
+  // 2. Fetch from 'Enquire' collection in Cloud Firestore
+  try {
     const snap2 = await getDocs(collection(db, "Enquire")).catch(() => null);
-    if (snap2) {
-      for (const docSnap of snap2.docs || snap2) {
+    if (snap2 && snap2.docs) {
+      snap2.docs.forEach(docSnap => {
         const data = docSnap.data();
-        const docUserId = data.userId;
-        const docEmail = (
-          data.userEmail ||
-          data["user email id"] ||
-          data.email ||
-          ""
-        )
-          .toLowerCase()
-          .trim();
-        if (
-          (isAdmin ||
-            (currentUser && docUserId === currentUser.uid) ||
-            (targetEmail && docEmail === targetEmail)) &&
-          !enquiries.some(
-            (e) => e.enquiryRef && e.enquiryRef === data.enquiryRef,
-          )
-        ) {
+        if (!enquiries.some(e => e.enquiryRef && e.enquiryRef === data.enquiryRef)) {
           enquiries.push({
             id: docSnap.id,
             collectionName: "Enquire",
+            userName: data.userName || data.username || data['user name'] || 'Client',
+            userEmail: data.userEmail || data.email || data['user email id'] || 'N/A',
+            userPhone: data.userPhone || data.phone || data['user phone number'] || 'N/A',
+            serviceType: data.serviceType || data.typology || data.services || 'Architectural Design',
+            message: data.message || data.enquire || data.Enquire || 'No details provided',
+            date: data.createdAtIso || data.date || new Date().toISOString(),
             ...data,
           });
         }
-      }
+      });
     }
+  } catch(e) {}
 
-    // 3. For Verified Admin & Verified User: also fetch user profile documents from 'userdata' collection
-    if (isAdmin || isVerified) {
-      const snapUserdata = await getDocs(collection(db, "userdata")).catch(
-        () => null,
-      );
-      if (snapUserdata) {
-        for (const docSnap of snapUserdata.docs || snapUserdata) {
-          const data = docSnap.data();
-          const docUserId = data.uid || data.userId || docSnap.id;
-          const docEmail = (
-            data.useremail ||
-            data.userEmail ||
-            data["user email id"] ||
-            data.email ||
-            ""
-          )
-            .toLowerCase()
-            .trim();
-          if (
-            isAdmin ||
-            (isVerified && docUserId === currentUser.uid) ||
-            (isVerified && docEmail === targetEmail)
-          ) {
-            if (
-              !enquiries.some(
-                (e) =>
-                  e.id === docSnap.id ||
-                  (e.userEmail && e.userEmail === docEmail),
-              )
-            ) {
-              enquiries.push({
-                id: docSnap.id,
-                collectionName: "userdata",
-                enquiryRef: `USERDATA-${docSnap.id.substring(0, 6)}`,
-                userName: data.username || data["user name"] || "Client",
-                userEmail: data.useremail || data.email || "N/A",
-                userPhone: data.userphonenumber || data.phone || "N/A",
-                typology:
-                  data.userservises || data.services || "Architectural Design",
-                message: data.userenquire || data.enquire || "User Data Record",
-                status: data.status || "Received",
-                createdAtIso: data.updatedAtIso || new Date().toISOString(),
-                ...data,
-              });
-            }
-          }
-        }
+  // 3. Fetch from Local Storage fallback ('achyutam_enquiries')
+  try {
+    const localEnqs = JSON.parse(localStorage.getItem("achyutam_enquiries") || "[]");
+    localEnqs.forEach(le => {
+      if (!enquiries.some(e => e.enquiryRef === le.enquiryRef || e.id === le.id)) {
+        enquiries.push(le);
       }
-    }
+    });
+  } catch(e) {}
 
-    enquiries.sort(
-      (a, b) => new Date(b.createdAtIso || 0) - new Date(a.createdAtIso || 0),
-    );
-    console.log(
-      `🔥 Verified Data Access: Fetched ${enquiries.length} records [Admin: ${isAdmin}]`,
-    );
+  enquiries.sort(
+    (a, b) => new Date(b.createdAtIso || b.date || 0) - new Date(a.createdAtIso || a.date || 0)
+  );
 
-    return { success: true, enquiries, isAdmin };
-  } catch (error) {
-    console.error("🔥 Fetch Enquiries Error:", error);
-    return { success: false, enquiries: [], error: error.message };
-  }
+  console.log(`🔥 Customer Enquiries Loaded: ${enquiries.length} entries`);
+  return { success: true, enquiries, isAdmin };
 }
 
 /**

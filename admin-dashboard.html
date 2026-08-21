@@ -216,12 +216,6 @@
           <span>CAREERS DATA</span>
           <span id="badge-careers" class="px-2 py-0.5 rounded-full bg-blue-500/20 text-blue-300 font-mono text-[10px] font-bold">0</span>
         </button>
-
-        <button id="tab-btn-users" onclick="switchAdminTab('users')" class="px-5 py-3 font-bold text-xs uppercase tracking-widest border-b-2 border-transparent text-on-surface-variant hover:text-primary transition-all flex items-center gap-2 cursor-pointer shrink-0">
-          <span class="material-symbols-outlined text-base">badge</span>
-          <span>USERS DATA</span>
-          <span id="badge-users" class="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-mono text-[10px] font-bold">0</span>
-        </button>
       </div>
 
       <button onclick="reloadAdminData()" class="hidden sm:flex items-center gap-1.5 text-xs text-on-surface-variant hover:text-primary transition-colors cursor-pointer px-3 py-1.5 rounded border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low font-mono uppercase tracking-wider shrink-0">
@@ -304,45 +298,6 @@
                 <div class="flex flex-col items-center justify-center gap-2 font-mono">
                   <span class="material-symbols-outlined text-3xl text-blue-400 animate-pulse">hourglass_empty</span>
                   <span>Loading job applications from Firestore...</span>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </section>
-
-    <!-- TAB 3: Users Data View -->
-    <section id="view-users" class="hidden flex-col gap-4">
-      <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 glass-panel p-4 rounded-xl">
-        <div>
-          <h2 class="text-xs font-mono font-bold text-emerald-400 uppercase tracking-widest">REGISTERED CLIENT RECORDS</h2>
-          <p class="text-xs text-on-surface-variant/80">Structured database of all client accounts created on ACHYUTAM BUILDER.</p>
-        </div>
-        <div class="relative w-full sm:w-80 font-mono">
-          <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline-variant text-base">search</span>
-          <input type="text" id="search-users" onkeyup="filterUsersTable()" placeholder="Search User ID, Name, Email..." class="w-full bg-surface border border-outline-variant/40 rounded-sm py-2 pl-9 pr-3 text-xs text-on-surface focus:border-primary focus:outline-none placeholder:text-on-surface-variant/40"/>
-        </div>
-      </div>
-
-      <!-- Data Table for Users -->
-      <div class="overflow-x-auto rounded-xl glass-panel custom-scrollbar">
-        <table class="w-full text-left text-xs border-collapse">
-          <thead>
-            <tr class="border-b border-outline-variant/30 bg-surface-container-low/80 text-emerald-400/90 font-mono uppercase tracking-widest text-[11px]">
-              <th class="py-4 px-4 font-bold">User ID (UID)</th>
-              <th class="py-4 px-4 font-bold">Full Name</th>
-              <th class="py-4 px-4 font-bold">Email</th>
-              <th class="py-4 px-4 font-bold">Phone Number</th>
-              <th class="py-4 px-4 font-bold">Account Creation Date</th>
-            </tr>
-          </thead>
-          <tbody id="users-table-body" class="divide-y divide-outline-variant/20 text-on-surface font-sans">
-            <tr>
-              <td colspan="5" class="py-12 text-center text-on-surface-variant">
-                <div class="flex flex-col items-center justify-center gap-2 font-mono">
-                  <span class="material-symbols-outlined text-3xl text-emerald-400 animate-pulse">hourglass_empty</span>
-                  <span>Loading client records from Firestore...</span>
                 </div>
               </td>
             </tr>

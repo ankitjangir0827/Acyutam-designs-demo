@@ -396,4 +396,12 @@
   document.addEventListener("DOMContentLoaded", injectProjectsIntoPage);
   window.addEventListener("load", injectProjectsIntoPage);
   window.addEventListener("achyutam-projects-updated", injectProjectsIntoPage);
+  window.addEventListener("storage", (e) => {
+    if (e.key === "achyutam_static_projects" || e.key === "achyutam_projects_cache" || e.key === "achyutam_all_projects") {
+      injectProjectsIntoPage();
+    }
+  });
+
+  // Auto-refresh project grids every 5 seconds for live cloud sync
+  setInterval(injectProjectsIntoPage, 5000);
 })();
