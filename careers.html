@@ -371,7 +371,7 @@
   </footer>
 
   <script>
-    function submitCareerApplication(e) {
+    async function submitCareerApplication(e) {
       e.preventDefault();
       const name = document.getElementById("app-name").value.trim();
       const phone = document.getElementById("app-phone").value.trim();
@@ -380,7 +380,6 @@
       const portfolio = document.getElementById("app-portfolio").value.trim();
 
       const newApp = {
-        id: "app-" + Date.now(),
         name,
         phone,
         email,
@@ -389,6 +388,23 @@
         date: new Date().toLocaleString(),
         status: "Pending Review"
       };
+
+      const btn = e.target.querySelector('button[type="submit"]');
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `SUBMITTING APPLICATION...`;
+      }
+
+      if (window.AchyutamFirebase && window.AchyutamFirebase.saveCareerApplicationToFirebase) {
+        const res = await window.AchyutamFirebase.saveCareerApplicationToFirebase(newApp);
+        if (res.success) {
+          newApp.id = res.id;
+        }
+      }
+
+      if (!newApp.id) {
+        newApp.id = "app-" + Date.now();
+      }
 
       try {
         let existing = JSON.parse(localStorage.getItem("achyutam_career_applications") || "[]");
@@ -400,6 +416,10 @@
 
       alert(`✅ Thank you ${name}! Your application for "${role}" has been submitted to ACHYUTAM BUILDER® HR Board.`);
       document.getElementById("career-job-form").reset();
+      if (btn) {
+        btn.disabled = false;
+        btn.innerHTML = `SUBMIT APPLICATION →`;
+      }
     }
   </script>
 

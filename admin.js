@@ -330,44 +330,41 @@ async function initAdminPortal() {
     );
   }
 
+  // Fetch master project dataset from projects.json
+  let fileProjects = [];
+  try {
+    const response = await fetch(DEFAULT_JSON_PATH);
+    if (response.ok) {
+      fileProjects = await response.json();
+      console.log(`📁 Loaded ${fileProjects.length} master projects from ${DEFAULT_JSON_PATH}`);
+    }
+  } catch (err) {
+    console.warn("Fetch from projects.json failed:", err);
+  }
+
   // Load user data from localStorage if existing
   const localSaved = localStorage.getItem(STORAGE_KEY);
   if (localSaved) {
     try {
       allProjects = JSON.parse(localSaved);
-      console.log(
-        `📦 Loaded ${allProjects.length} projects from browser storage`,
-      );
+      console.log(`📦 Loaded ${allProjects.length} projects from browser storage`);
     } catch (err) {
-      console.warn(
-        "Could not parse localStorage projects, fetching projects.json...",
-        err,
-      );
+      console.warn("Could not parse localStorage projects:", err);
     }
   }
 
-  // If no projects in localStorage, fetch from projects.json
   if (!allProjects || allProjects.length === 0) {
-    try {
-      const response = await fetch(DEFAULT_JSON_PATH);
-      if (response.ok) {
-        allProjects = await response.json();
-        console.log(
-          `📁 Loaded ${allProjects.length} projects from ${DEFAULT_JSON_PATH}`,
-        );
-        saveProjectsToLocalStorage();
-      } else {
-        throw new Error(`HTTP ${response.status}`);
+    allProjects = fileProjects.length > 0 ? fileProjects : [...FALLBACK_SEED_PROJECTS];
+  } else if (fileProjects.length > 0) {
+    // Merge any missing master projects from projects.json into allProjects
+    fileProjects.forEach((fp) => {
+      if (!allProjects.some((p) => p.id === fp.id || p.title === fp.title)) {
+        allProjects.push(fp);
       }
-    } catch (err) {
-      console.warn(
-        "Fetch from projects.json failed (possibly local file protocol), using fallback seed:",
-        err,
-      );
-      allProjects = [...FALLBACK_SEED_PROJECTS];
-      saveProjectsToLocalStorage();
-    }
+    });
   }
+
+  saveProjectsToLocalStorage();
 
   // Update UI and Statistics
   renderProjectsTable();
@@ -1247,16 +1244,33 @@ function formatDate(isoStr) {
 }
 
 // Career Applications Manager
-window.loadCareerApplications = function () {
+window.loadCareerApplications = async function () {
   const tbody = document.getElementById("career-applications-table-body");
   if (!tbody) return;
 
   let apps = [];
+
+  // 1. Fetch from Firestore if available
+  if (window.AchyutamFirebase && window.AchyutamFirebase.getCareerApplicationsForAdmin) {
+    const res = await window.AchyutamFirebase.getCareerApplicationsForAdmin();
+    if (res.success && res.applications?.length > 0) {
+      apps = res.applications;
+    }
+  }
+
+  // 2. Fallback / Merge with localStorage
   try {
     const raw = localStorage.getItem("achyutam_career_applications");
-    if (raw) apps = JSON.parse(raw);
+    if (raw) {
+      const localApps = JSON.parse(raw);
+      for (const la of localApps) {
+        if (!apps.some((a) => a.id === la.id || (a.email === la.email && a.role === la.role))) {
+          apps.push(la);
+        }
+      }
+    }
   } catch (e) {
-    console.warn("Error reading career applications:", e);
+    console.warn("Error reading career applications from localStorage:", e);
   }
 
   if (apps.length === 0) {
@@ -1270,23 +1284,20 @@ window.loadCareerApplications = function () {
     return;
   }
 
-  tbody.innerHTML = apps.map((app, index) => `
+  tbody.innerHTML = apps.map((app) => `
     <tr class="hover:bg-surface-container-low/60 transition-colors border-b border-outline-variant/20">
-      <td class="py-3 px-3 font-bold text-on-surface">${escapeHtml(app.name)}</td>
-      <td class="py-3 px-2 font-mono text-primary">${escapeHtml(app.role)}</td>
+      <td class="py-3 px-3 font-bold text-on-surface">${escapeHtml(app.name || "Candidate")}</td>
+      <td class="py-3 px-2 font-mono text-primary">${escapeHtml(app.role || "Role")}</td>
       <td class="py-3 px-2 font-mono text-[11px]">
-        <div>${escapeHtml(app.phone)}</div>
-        <div class="text-on-surface-variant opacity-70">${escapeHtml(app.email)}</div>
+        <div>${escapeHtml(app.phone || "N/A")}</div>
+        <div class="text-on-surface-variant opacity-70">${escapeHtml(app.email || "N/A")}</div>
       </td>
       <td class="py-3 px-2 font-mono text-[11px]">
-        <a href="${escapeHtml(app.portfolio)}" target="_blank" class="text-primary underline flex items-center gap-1 hover:text-primary-container">
-          <span class="material-symbols-outlined text-xs">open_in_new</span>
-          <span>View Resume / Portfolio</span>
-        </a>
+        ${app.portfolio ? `<a href="${escapeHtml(app.portfolio)}" target="_blank" class="text-primary underline flex items-center gap-1 hover:text-primary-container"><span class="material-symbols-outlined text-xs">open_in_new</span><span>View Resume / Portfolio</span></a>` : '<span class="text-on-surface-variant opacity-50">None</span>'}
       </td>
-      <td class="py-3 px-2 font-mono text-[11px] text-on-surface-variant">${escapeHtml(app.date || "2026")}</td>
+      <td class="py-3 px-2 font-mono text-[11px] text-on-surface-variant">${escapeHtml(app.date || (app.createdAtIso ? new Date(app.createdAtIso).toLocaleDateString() : "Recent"))}</td>
       <td class="py-3 px-3 text-right">
-        <button onclick="window.deleteCareerApplication(${index})" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded text-[11px] font-mono cursor-pointer">
+        <button onclick="window.deleteCareerApplication('${escapeHtml(app.id)}')" class="px-2.5 py-1 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 rounded text-[11px] font-mono cursor-pointer">
           Delete
         </button>
       </td>
@@ -1294,12 +1305,15 @@ window.loadCareerApplications = function () {
   `).join('');
 };
 
-window.deleteCareerApplication = function (index) {
+window.deleteCareerApplication = async function (appId) {
   try {
+    if (window.AchyutamFirebase && window.AchyutamFirebase.deleteCareerApplicationByAdmin) {
+      await window.AchyutamFirebase.deleteCareerApplicationByAdmin(appId);
+    }
     let apps = JSON.parse(localStorage.getItem("achyutam_career_applications") || "[]");
-    apps.splice(index, 1);
+    apps = apps.filter((a) => a.id !== appId);
     localStorage.setItem("achyutam_career_applications", JSON.stringify(apps));
-    window.loadCareerApplications();
+    await window.loadCareerApplications();
     showToast("✅ Career application removed.");
   } catch (e) {
     console.error("Delete application error:", e);

@@ -51,7 +51,7 @@
     if (modal) modal.classList.add('hidden');
   };
 
-  function getStoredProjects() {
+  async function getStoredProjects() {
     let projects = [];
     try {
       const p1 = localStorage.getItem("achyutam_static_projects");
@@ -63,7 +63,21 @@
     } catch (e) {
       console.warn("Could not read projects from localStorage:", e);
     }
-    return projects;
+
+    if (!projects || projects.length === 0) {
+      try {
+        const res = await fetch("./projects.json");
+        if (res.ok) {
+          projects = await res.json();
+          try {
+            localStorage.setItem("achyutam_projects_cache", JSON.stringify(projects));
+          } catch(e) {}
+        }
+      } catch (err) {
+        console.warn("Fetch ./projects.json error:", err);
+      }
+    }
+    return projects || [];
   }
 
   function createProjectCardHTML(p) {
@@ -80,7 +94,7 @@
     return `
       <div onclick="openProjectModal('${title.replace(/'/g, "\\'")}', '${tag.replace(/'/g, "\\'")}', '${cost.replace(/'/g, "\\'")}', '${location.replace(/'/g, "\\'")}', '${specs.replace(/'/g, "\\'")}', '${img1}', '${img2}')" class="project-card-item custom-dynamic-card flex flex-col group cursor-pointer border border-primary/50 p-4 bg-surface-container-low hover:border-primary transition-all rounded-sm shadow-xl relative">
         <div class="absolute top-2 left-2 bg-primary text-background font-label-caps text-[9px] font-bold px-2 py-0.5 rounded z-30 uppercase tracking-widest shadow">
-          NEW / CUSTOM
+          PROJECT showcase
         </div>
         <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
           <div class="image-blur-vignette pointer-events-none"></div>
@@ -104,8 +118,8 @@
     `;
   }
 
-  function injectProjectsIntoPage() {
-    const projects = getStoredProjects();
+  async function injectProjectsIntoPage() {
+    const projects = await getStoredProjects();
     if (!projects || projects.length === 0) return;
 
     // Detect page context

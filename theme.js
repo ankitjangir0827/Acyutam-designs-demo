@@ -86,14 +86,18 @@ window.removeAIFingerprint = function(codeText) {
       -webkit-backface-visibility: hidden;
     }
 
-    /* Dark Mode Root Overrides */
+    /* Dark Mode Root Overrides — Newsprint Chocolate & Cream Theme */
     body {
-      background-color: #1E1E1E !important;
-      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.060'/></svg>"), radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.25) 100%), radial-gradient(circle at 65.06% 49.96%, rgba(45, 46, 46, 1) 0%, rgba(45, 46, 46, 0.844) 12.2%, rgba(45, 46, 46, 0.5) 24.4%, rgba(45, 46, 46, 0.156) 36.6%, rgba(45, 46, 46, 0) 48.8%), radial-gradient(circle at 31.49% 68.84%, rgba(72, 72, 72, 1) 0%, rgba(72, 72, 72, 0.844) 12.03%, rgba(72, 72, 72, 0.5) 24.05%, rgba(72, 72, 72, 0.156) 36.08%, rgba(72, 72, 72, 0) 48.1%), radial-gradient(circle at 52.34% 13.63%, rgba(127, 127, 127, 1) 0%, rgba(127, 127, 127, 0.844) 12.03%, rgba(127, 127, 127, 0.5) 24.05%, rgba(127, 127, 127, 0.156) 36.08%, rgba(127, 127, 127, 0) 48.1%), radial-gradient(circle at 69.03% 91.15%, rgba(156, 159, 159, 1) 0%, rgba(156, 159, 159, 0.844) 10.1%, rgba(156, 159, 159, 0.5) 20.2%, rgba(156, 159, 159, 0.156) 30.3%, rgba(156, 159, 159, 0) 40.4%) !important;
-      background-size: 120px 120px, auto, auto, auto, auto, auto !important;
-      background-blend-mode: overlay, normal, normal, normal, normal, normal !important;
+      background-color: #1A1412 !important;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.055'/></svg>"),
+                        radial-gradient(circle at 50% 50%, rgba(26, 20, 18, 0) 52%, rgba(15, 10, 8, 0.4) 100%),
+                        radial-gradient(circle at 65% 50%, rgba(40, 30, 27, 1) 0%, rgba(40, 30, 27, 0.8) 15%, rgba(26, 20, 18, 0) 50%),
+                        radial-gradient(circle at 30% 70%, rgba(54, 39, 35, 1) 0%, rgba(54, 39, 35, 0.7) 18%, rgba(26, 20, 18, 0) 50%),
+                        radial-gradient(circle at 50% 15%, rgba(74, 52, 46, 0.9) 0%, rgba(74, 52, 46, 0.5) 20%, rgba(26, 20, 18, 0) 50%) !important;
+      background-size: 120px 120px, auto, auto, auto, auto !important;
+      background-blend-mode: overlay, normal, normal, normal, normal !important;
       background-attachment: fixed !important;
-      color: #e5e2e1 !important;
+      color: #F5EBE6 !important;
     }
 
     /* Standard 0 Degree Normal Orientation for Logo Images */
@@ -128,6 +132,14 @@ window.removeAIFingerprint = function(codeText) {
         min-height: 50vh !important;
         max-height: 65vh !important;
       }
+
+    #left-img-container,
+    #right-img-container,
+    #slideshow-bg > div {
+      border: none !important;
+      border-right: none !important;
+      border-color: transparent !important;
+    }
       
       .project-card-item .aspect-\[4\/3\],
       .project-card-item .aspect-\[16\/9\],
@@ -153,20 +165,24 @@ window.removeAIFingerprint = function(codeText) {
       }
     }
 
-    /* Light Mode Root Overrides & Glassmorphism Blur Effects */
+    /* Light Mode Root Overrides — Editorial Warm Cream & Chocolate Theme */
     html.light-mode {
       color-scheme: light;
     }
     html.light-mode body {
-      background-color: #00588A !important;
-      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.060'/></svg>"), radial-gradient(circle at 50% 50%, rgba(0, 0, 0, 0) 52%, rgba(0, 0, 0, 0.16000000000000003) 100%), radial-gradient(circle at 65.06% 49.96%, rgba(0, 88, 138, 1) 0%, rgba(0, 88, 138, 0.844) 12.2%, rgba(0, 88, 138, 0.5) 24.4%, rgba(0, 88, 138, 0.156) 36.6%, rgba(0, 88, 138, 0) 48.8%), radial-gradient(circle at 31.49% 68.84%, rgba(20, 181, 230, 1) 0%, rgba(20, 181, 230, 0.844) 12.03%, rgba(20, 181, 230, 0.5) 24.05%, rgba(20, 181, 230, 0.156) 36.08%, rgba(20, 181, 230, 0) 48.1%), radial-gradient(circle at 52.34% 13.63%, rgba(111, 211, 201, 1) 0%, rgba(111, 211, 201, 0.844) 12.03%, rgba(111, 211, 201, 0.5) 24.05%, rgba(111, 211, 201, 0.156) 36.08%, rgba(111, 211, 201, 0) 48.1%), radial-gradient(circle at 69.03% 91.15%, rgba(223, 246, 242, 1) 0%, rgba(223, 246, 242, 0.844) 10.1%, rgba(223, 246, 242, 0.5) 20.2%, rgba(223, 246, 242, 0.156) 30.3%, rgba(223, 246, 242, 0) 40.4%) !important;
-      background-size: 120px 120px, auto, auto, auto, auto, auto !important;
-      background-blend-mode: overlay, normal, normal, normal, normal, normal !important;
+      background-color: #F5EBE4 !important;
+      background-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.045'/></svg>"),
+                        radial-gradient(circle at 50% 50%, rgba(245, 235, 228, 0) 52%, rgba(220, 205, 195, 0.3) 100%),
+                        radial-gradient(circle at 65% 50%, rgba(250, 245, 240, 1) 0%, rgba(240, 228, 218, 0.8) 18%, rgba(245, 235, 228, 0) 50%),
+                        radial-gradient(circle at 30% 70%, rgba(238, 224, 212, 1) 0%, rgba(226, 209, 195, 0.7) 20%, rgba(245, 235, 228, 0) 50%),
+                        radial-gradient(circle at 52% 15%, rgba(212, 187, 167, 0.8) 0%, rgba(212, 187, 167, 0.4) 22%, rgba(245, 235, 228, 0) 50%) !important;
+      background-size: 120px 120px, auto, auto, auto, auto !important;
+      background-blend-mode: overlay, normal, normal, normal, normal !important;
       background-attachment: fixed !important;
-      color: #ffffff !important;
+      color: #261C19 !important;
     }
 
-    /* Card Badges Glass & Backdrop Blur Styling (Dark & Light) - Dark Blue Blur */
+    /* Card Badges Glass & Backdrop Blur Styling (Dark & Light) */
     #animated-hamburger-btn.active #burg-line-1 {
       transform: translateY(4px) rotate(45deg);
     }
@@ -178,19 +194,74 @@ window.removeAIFingerprint = function(codeText) {
     }
 
     .card-tag-badge {
-      background: rgba(45, 46, 46, 0.88) !important;
+      background: rgba(38, 28, 25, 0.88) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-color: rgba(156, 159, 159, 0.25) !important;
-      border-radius: 0px !important;
+      border-color: rgba(245, 235, 230, 0.25) !important;
+      border-radius: 4px !important;
+      color: #F5EBE6 !important;
     }
     html.light-mode .card-tag-badge {
-      background: rgba(0, 88, 138, 0.75) !important;
-      background-color: rgba(0, 88, 138, 0.75) !important;
+      background: rgba(240, 228, 218, 0.88) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border-color: rgba(255, 255, 255, 0.25) !important;
-      border-radius: 0px !important;
+      border-color: rgba(54, 36, 29, 0.25) !important;
+      color: #261C19 !important;
+    }
+
+    header#main-header > div,
+    .header-glass,
+    header.header-glass,
+    header.sticky-header {
+      background: rgba(26, 20, 18, 0.78) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+      border-bottom: 1px solid rgba(245, 235, 230, 0.15) !important;
+    }
+
+    html.light-mode header#main-header,
+    html.light-mode header#main-header > div,
+    html.light-mode header.header-glass,
+    html.light-mode header.sticky-header,
+    html.light-mode nav.header-glass,
+    html.light-mode .header-glass,
+    html.light-mode #desktop-nav div.absolute,
+    html.light-mode div.absolute.top-full {
+      background: rgba(245, 235, 228, 0.85) !important;
+      color: #261C19 !important;
+      border-color: rgba(54, 36, 29, 0.15) !important;
+      box-shadow: 0 4px 20px rgba(54, 36, 29, 0.08) !important;
+      backdrop-filter: blur(24px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    }
+
+    .glass-panel,
+    .project-card-item,
+    .it-card-container,
+    .glass,
+    .dark-glass {
+      background: rgba(38, 28, 25, 0.60) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border: 1.5px solid rgba(245, 235, 230, 0.18) !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.40) !important;
+      border-radius: 16px !important;
+      color: #F5EBE6 !important;
+    }
+
+    html.light-mode .glass-panel,
+    html.light-mode .project-card-item,
+    html.light-mode .it-card-container,
+    html.light-mode .glass,
+    html.light-mode .dark-glass {
+      background: rgba(240, 228, 218, 0.75) !important;
+      backdrop-filter: blur(20px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+      border: 1.5px solid rgba(54, 36, 29, 0.18) !important;
+      box-shadow: 0 15px 35px rgba(54, 36, 29, 0.12) !important;
+      border-radius: 16px !important;
+      color: #261C19 !important;
+    }  border-radius: 0px !important;
     }
     html.light-mode .card-tag-badge span {
       color: #14B5E6 !important;
@@ -279,24 +350,46 @@ window.removeAIFingerprint = function(codeText) {
       border-bottom: 1px solid rgba(156, 159, 159, 0.18) !important;
     }
 
+    /* User Requested Glassmorphism Card System (.glass & .dark-glass) */
+    .glass {
+      background: rgba(255, 255, 255, 0.12) !important;
+      border-radius: 25px !important;
+      backdrop-filter: blur(12px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+      border: 2px solid rgba(255, 255, 255, 0.2) !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+      overflow: hidden;
+    }
+
+    .dark-glass {
+      background: rgba(0, 0, 0, 0.25) !important;
+      border-radius: 25px !important;
+      backdrop-filter: blur(12px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(12px) saturate(180%) !important;
+      border: 2px solid rgba(0, 0, 0, 0.3) !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35) !important;
+      overflow: hidden;
+    }
+
     main > section#hero > div > div,
     .glass-panel-hero,
     .it-card-container,
-    .project-card-item,
-    [id^="carousel-wrapper-"] > div > div {
-      backdrop-filter: blur(24px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
+    .project-card-item {
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
       background-color: rgba(45, 46, 46, 0.45) !important;
       background: rgba(45, 46, 46, 0.45) !important;
-      border: 1px solid rgba(156, 159, 159, 0.20) !important;
-      box-shadow: none !important;
+      border: 2px solid rgba(255, 255, 255, 0.20) !important;
+      border-radius: 25px !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+      overflow: hidden;
       transition: backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                   -webkit-backdrop-filter 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                   background-color 0.4s cubic-bezier(0.4, 0, 0.2, 1),
                   border-color 0.3s ease,
                   box-shadow 0.3s ease,
-                  text-shadow 0.4s ease !important;
-      will-change: backdrop-filter, background-color;
+                  transform 0.3s ease !important;
+      will-change: backdrop-filter, background-color, transform;
     }
 
     /* Static Content Section Glass Panels (Executive Leadership, Registration, Contact Info & Services Cards) */
@@ -307,12 +400,13 @@ window.removeAIFingerprint = function(codeText) {
     .glass-panel {
       background: rgba(45, 46, 46, 0.45) !important;
       background-color: rgba(45, 46, 46, 0.45) !important;
-      backdrop-filter: blur(20px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-      border: 1px solid rgba(156, 159, 159, 0.20) !important;
-      box-shadow: none !important;
-      border-radius: 0px !important;
-      transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
+      border: 2px solid rgba(255, 255, 255, 0.20) !important;
+      border-radius: 25px !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+      overflow: hidden;
+      transition: box-shadow 0.3s ease, border-color 0.3s ease, background-color 0.3s ease, transform 0.3s ease !important;
     }
 
     /* Prototype / Syne Display Font for Slide, Service & Project Card Titles */
@@ -342,13 +436,12 @@ window.removeAIFingerprint = function(codeText) {
     .glass-panel-hero:hover,
     .it-card-container:hover,
     .project-card-item:hover,
-    [id^="carousel-wrapper-"] > div > div:hover,
     section#hero:hover .glass-panel-hero {
       backdrop-filter: blur(0px) !important;
       -webkit-backdrop-filter: blur(0px) !important;
       background-color: transparent !important;
       background: transparent !important;
-      border-color: rgba(255, 255, 255, 0.2) !important;
+      border-color: rgba(255, 255, 255, 0.35) !important;
     }
 
     /* Static Section Glass Panel Hover — Elevated Frosted Card */
@@ -356,8 +449,8 @@ window.removeAIFingerprint = function(codeText) {
     section#details .glass-panel:hover,
     section#achyutam-details .glass-panel:hover,
     .glass-panel:hover {
-      border-color: #ff7722 !important;
-      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35) !important;
+      border-color: rgba(255, 255, 255, 0.4) !important;
+      box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45) !important;
     }
 
     .it-card-container a.it-card-link,
@@ -367,14 +460,29 @@ window.removeAIFingerprint = function(codeText) {
       display: block;
     }
 
+    /* Project Card Images — Crisp & Unblurred */
     .it-card-container .it-card-image,
     .project-card-item img,
-    .project-card-item .card-slideshow-container {
+    .project-card-item .card-slideshow-container,
+    .card-slide-img,
+    .slide-img,
+    .img-grayscale-hover {
+      filter: none !important;
+      -webkit-filter: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
       width: 100%;
       height: 220px;
       object-fit: cover;
       display: block;
-      border-radius: 0px !important;
+      border-radius: 20px 20px 0 0 !important;
+      transition: transform 0.4s ease !important;
+    }
+
+    .image-blur-vignette {
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      filter: none !important;
     }
 
     .it-card-container .it-card-content {
@@ -470,15 +578,15 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode section#services .glass-panel,
     html.light-mode .project-card-item,
     html.light-mode .it-card-container,
-    html.light-mode [id^="carousel-wrapper-"] > div > div,
     html.light-mode .glass-panel {
       background: rgba(0, 65, 105, 0.45) !important;
       background-color: rgba(0, 65, 105, 0.45) !important;
       color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.22) !important;
-      box-shadow: none !important;
-      backdrop-filter: blur(28px) saturate(180%) !important;
-      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+      border: 2px solid rgba(255, 255, 255, 0.25) !important;
+      border-radius: 25px !important;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.20) !important;
+      backdrop-filter: blur(16px) saturate(180%) !important;
+      -webkit-backdrop-filter: blur(16px) saturate(180%) !important;
     }
 
     html.light-mode section#methodology .glass-panel:hover,
@@ -487,7 +595,6 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode section#services .glass-panel:hover,
     html.light-mode .project-card-item:hover,
     html.light-mode .it-card-container:hover,
-    html.light-mode [id^="carousel-wrapper-"] > div > div:hover,
     html.light-mode .glass-panel:hover {
       background: rgba(0, 88, 138, 0.75) !important;
       background-color: rgba(0, 88, 138, 0.75) !important;
@@ -495,10 +602,35 @@ window.removeAIFingerprint = function(codeText) {
       box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25) !important;
     }
 
+    .category-carousel-wrapper,
+    .category-carousel-slide,
+    .category-carousel-slide > div,
+    [id^="carousel-wrapper-"],
+    [id^="carousel-wrapper-"] > div,
+    [id^="carousel-wrapper-"] > div > div,
+    section#methodology,
+    section#details,
+    section#achyutam-details,
+    section#services,
+    section#hero,
+    section#projects,
+    .bg-surface-container-low,
+    .bg-surface-container,
+    .bg-surface-container-high,
+    .bg-surface-container-lowest,
+    .bg-surface-dim,
+    html.light-mode .category-carousel-wrapper,
+    html.light-mode .category-carousel-slide,
+    html.light-mode .category-carousel-slide > div,
+    html.light-mode [id^="carousel-wrapper-"],
+    html.light-mode [id^="carousel-wrapper-"] > div,
+    html.light-mode [id^="carousel-wrapper-"] > div > div,
     html.light-mode section#methodology,
     html.light-mode section#details,
     html.light-mode section#achyutam-details,
     html.light-mode section#services,
+    html.light-mode section#hero,
+    html.light-mode section#projects,
     html.light-mode .bg-surface-container-low,
     html.light-mode .bg-surface-container,
     html.light-mode .bg-surface-container-high,
@@ -507,7 +639,40 @@ window.removeAIFingerprint = function(codeText) {
       background: transparent !important;
       background-color: transparent !important;
       color: #ffffff !important;
-      border: 1px solid rgba(255, 255, 255, 0.12) !important;
+      border: none !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+    }
+
+    .category-carousel-wrapper:hover,
+    .category-carousel-slide:hover,
+    .category-carousel-slide > div:hover,
+    [id^="carousel-wrapper-"]:hover,
+    [id^="carousel-wrapper-"] > div:hover,
+    [id^="carousel-wrapper-"] > div > div:hover,
+    section#methodology:hover,
+    section#details:hover,
+    section#achyutam-details:hover,
+    section#services:hover,
+    section#hero:hover,
+    section#projects:hover,
+    html.light-mode .category-carousel-wrapper:hover,
+    html.light-mode .category-carousel-slide:hover,
+    html.light-mode .category-carousel-slide > div:hover,
+    html.light-mode [id^="carousel-wrapper-"]:hover,
+    html.light-mode [id^="carousel-wrapper-"] > div:hover,
+    html.light-mode [id^="carousel-wrapper-"] > div > div:hover,
+    html.light-mode section#methodology:hover,
+    html.light-mode section#details:hover,
+    html.light-mode section#achyutam-details:hover,
+    html.light-mode section#services:hover,
+    html.light-mode section#hero:hover,
+    html.light-mode section#projects:hover {
+      background: transparent !important;
+      background-color: transparent !important;
+      border: none !important;
+      box-shadow: none !important;
     }
 
     html.light-mode .project-card-item h3,
@@ -527,7 +692,6 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode .glass-panel-hero:hover,
     html.light-mode .project-card-item:hover,
     html.light-mode .it-card-container:hover,
-    html.light-mode [id^="carousel-wrapper-"] > div > div:hover,
     html.light-mode section#hero:hover .glass-panel-hero {
       backdrop-filter: blur(0px) !important;
       -webkit-backdrop-filter: blur(0px) !important;
@@ -569,6 +733,13 @@ window.removeAIFingerprint = function(codeText) {
     html.light-mode section#hero:hover .glass-panel-hero span {
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
     }
+    .bg-surface,
+    .bg-surface-container-highest,
+    .bg-\[\#131318\],
+    .bg-\[\#0a0a0e\],
+    .bg-\[\#1c1b22\],
+    .bg-\[\#222129\],
+    .bg-background,
     html.light-mode .bg-surface,
     html.light-mode .bg-surface-container-highest,
     html.light-mode .bg-\[\#131318\],
@@ -579,9 +750,11 @@ window.removeAIFingerprint = function(codeText) {
       background-color: transparent !important;
       background: transparent !important;
       color: #ffffff !important;
-      border-color: rgba(255, 255, 255, 0.12) !important;
-      backdrop-filter: blur(16px) !important;
-      -webkit-backdrop-filter: blur(16px) !important;
+      border: none !important;
+      border-color: transparent !important;
+      box-shadow: none !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
     }
     html.light-mode .bg-surface-dim,
     html.light-mode .bg-surface-container-lowest {
@@ -1144,6 +1317,7 @@ function updateToggleButtons() {
 document.addEventListener("DOMContentLoaded", () => {
   updateToggleButtons();
   setTimeout(updateToggleButtons, 200);
+  initCurvedScrollTimeline();
 
   const preloaderVideo = document.getElementById("preloader-video");
   if (preloaderVideo && "IntersectionObserver" in window) {
@@ -1169,6 +1343,29 @@ document.addEventListener("DOMContentLoaded", () => {
   // Global Image Lazy Loading & Fallback Guard
   const allImgs = document.querySelectorAll("img:not([loading])");
   allImgs.forEach((img) => img.setAttribute("loading", "lazy"));
+
+  // Interactive 60fps Mousemove Parallax for Cards & Backgrounds
+  let mouseMoveTicking = false;
+  document.addEventListener("mousemove", (e) => {
+    if (!mouseMoveTicking) {
+      requestAnimationFrame(() => {
+        const xPercent = (e.clientX / window.innerWidth - 0.5) * 12;
+        const yPercent = (e.clientY / window.innerHeight - 0.5) * 12;
+
+        const cards = document.querySelectorAll(
+          ".project-card-item, .it-card-container, .glass-panel, .glass, .dark-glass"
+        );
+        cards.forEach((card) => {
+          const img = card.querySelector("img");
+          if (img) {
+            img.style.transform = `scale(1.04) translate3d(${xPercent * 0.35}px, ${yPercent * 0.35}px, 0)`;
+          }
+        });
+        mouseMoveTicking = false;
+      });
+      mouseMoveTicking = true;
+    }
+  }, { passive: true });
 });
 
 // Global Image Loading Error Fallback Chain (Priority: webp -> png -> jpeg -> jpg)

@@ -277,8 +277,14 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
     };
   }
 
+  // Check if valid Master Admin Key is supplied
+  const hasValidMasterKey =
+    verifyAdminMasterKey(adminKey) ||
+    verifyAdminMasterKey(password) ||
+    (isAdmin && (password === ADMIN_MASTER_KEY || adminKey === ADMIN_MASTER_KEY));
+
   if (isAdmin && adminKey) {
-    if (adminKey.trim() !== ADMIN_MASTER_KEY) {
+    if (!verifyAdminMasterKey(adminKey) && !verifyAdminMasterKey(password)) {
       return {
         success: false,
         error: "Invalid Admin Key! Access denied. Please enter the valid 16-digit Admin Key.",
@@ -287,7 +293,8 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
   }
 
   try {
-    let user;
+    let user = null;
+
     try {
       const userCredential = await signInWithEmailAndPassword(
         auth,
@@ -299,17 +306,21 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
       console.warn("Firebase Auth password attempt failed:", authError.code, authError.message);
       
       // If user does not exist in Firebase Auth yet, attempt initial setup ONLY if password is valid
-      if (isAdmin && (authError.code === "auth/user-not-found" || authError.code === "auth/invalid-credential")) {
+      if (isAdmin && (hasValidMasterKey || authError.code === "auth/user-not-found" || authError.code === "auth/invalid-credential")) {
         try {
           const createCred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
           user = createCred.user;
         } catch (createErr) {
-          // Password check failed or user already exists with different password! Reject login!
-          return {
-            success: false,
-            error: "Incorrect Password or Invalid Credentials! Access Denied.",
-            code: authError.code
-          };
+          // If Master Admin Key is verified, grant master admin access
+          if (hasValidMasterKey) {
+            console.log("🔑 Master Admin Key verified for", cleanEmail, "— Granting Master Admin access.");
+          } else {
+            return {
+              success: false,
+              error: "Incorrect Password or Invalid Credentials! Access Denied.",
+              code: authError.code
+            };
+          }
         }
       } else {
         return {
@@ -321,7 +332,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
     }
 
     // SECURITY CHECK: Enforce email verification for non-admin accounts
-    if (!user.emailVerified && !isAdmin) {
+    if (user && !user.emailVerified && !isAdmin) {
       console.warn("🔒 Sign In Blocked: Email not verified for", cleanEmail);
 
       try {
@@ -342,7 +353,7 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
       };
     }
 
-    if (user.uid) {
+    if (user?.uid) {
       await saveUserProfileData(
         user,
         user.displayName || (isAdmin ? "Ankit Jangir (Admin)" : ""),
@@ -353,12 +364,12 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
     }
 
     const userData = {
-      uid: user.uid,
+      uid: user?.uid || "admin-master-uid",
       email: cleanEmail,
       identity: cleanEmail,
       emailVerified: true,
       displayName:
-        user.displayName ||
+        user?.displayName ||
         (isAdmin ? "Ankit Jangir (Admin)" : cleanEmail.split("@")[0]),
       role: isAdmin ? "admin" : "client",
       isAdmin,
@@ -849,7 +860,11 @@ export async function sendPasswordlessEmailLink(email) {
     };
   } catch (error) {
     console.error("🔥 Error sending passwordless link:", error);
-    return { success: false, error: error.message };
+    let friendlyError = error.message;
+    if (error.code === "auth/unauthorized-continue-uri" || error.code === "auth/unauthorized-domain") {
+      friendlyError = "Domain not authorized in Firebase Console! Please add your Vercel domain to Firebase Console -> Authentication -> Settings -> Authorized Domains.";
+    }
+    return { success: false, error: friendlyError, code: error.code };
   }
 }
 
@@ -903,6 +918,71 @@ if (typeof window !== "undefined") {
   });
 }
 
+/**
+ * 12. Save Career Job Application to Firestore ('careers' collection)
+ */
+export async function saveCareerApplicationToFirebase(appData) {
+  const newDoc = {
+    name: appData.name || "",
+    phone: appData.phone || "",
+    email: (appData.email || "").toLowerCase().trim(),
+    role: appData.role || "Architectural Candidate",
+    portfolio: appData.portfolio || "",
+    status: "Pending Review",
+    createdAtIso: new Date().toISOString(),
+    date: new Date().toLocaleString(),
+  };
+
+  try {
+    const docRef = await addDoc(collection(db, "careers"), newDoc);
+    console.log("🔥 Career Job Application saved to Firestore:", docRef.id);
+    return { success: true, id: docRef.id };
+  } catch (error) {
+    console.error("🔥 Error saving career application to Firestore:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * 13. Fetch Career Applications for Admin
+ */
+export async function getCareerApplicationsForAdmin() {
+  try {
+    const snap = await getDocs(collection(db, "careers")).catch(() => null);
+    const applications = [];
+    if (snap) {
+      snap.forEach((docSnap) => {
+        applications.push({
+          id: docSnap.id,
+          ...docSnap.data(),
+        });
+      });
+    }
+    applications.sort(
+      (a, b) => new Date(b.createdAtIso || 0) - new Date(a.createdAtIso || 0)
+    );
+    return { success: true, applications };
+  } catch (error) {
+    console.error("🔥 Error fetching career applications:", error);
+    return { success: false, applications: [], error: error.message };
+  }
+}
+
+/**
+ * 14. Delete Career Application by Admin
+ */
+export async function deleteCareerApplicationByAdmin(docId) {
+  try {
+    const { deleteDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
+    await deleteDoc(doc(db, "careers", docId));
+    console.log("🔥 Career application deleted from Firestore:", docId);
+    return { success: true };
+  } catch (error) {
+    console.error("🔥 Error deleting career application:", error);
+    return { success: false, error: error.message };
+  }
+}
+
 // Aliases for compatibility
 export const saveBookingToFirebase = saveEnquiryToFirebase;
 export const getUserBookings = getUserEnquiries;
@@ -927,6 +1007,9 @@ window.AchyutamFirebase = {
   handleEmailLinkSignInRedirect,
   signOutUser,
   saveEnquiryToFirebase,
+  saveCareerApplicationToFirebase,
+  getCareerApplicationsForAdmin,
+  deleteCareerApplicationByAdmin,
   getUserEnquiries,
   getRecentEnquiriesForAdmin,
   updateEnquiryByAdmin,
@@ -937,5 +1020,6 @@ window.AchyutamFirebase = {
 };
 
 console.log(
-  "🔥 Achyutam Hardened Firebase Auth System Active [Admin: ankitjangir529@gmail.com | Verification & Passwordless Links Enforced]",
+  "🔥 Achyutam Hardened Firebase Auth System Active [Admin: ankitjangir529@gmail.com | Careers & Enquiries Cloud Firestore Active]",
 );
+
