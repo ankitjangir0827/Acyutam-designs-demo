@@ -1298,17 +1298,11 @@ window.addEventListener(
   { passive: true },
 );
 
-// Initializer: Ensure Dark Mode is default on page load unless user set light
+// Initializer: Enforce Dark Architectural Theme as default across entire website
 (function initTheme() {
-  const saved = localStorage.getItem("acyutam_theme");
-  if (saved === "light") {
-    document.documentElement.classList.add("light-mode");
-    document.documentElement.classList.remove("dark");
-  } else {
-    document.documentElement.classList.remove("light-mode");
-    document.documentElement.classList.add("dark");
-    localStorage.setItem("acyutam_theme", "dark");
-  }
+  document.documentElement.classList.remove("light-mode");
+  document.documentElement.classList.add("dark");
+  localStorage.setItem("acyutam_theme", "dark");
 })();
 
 // Global Theme Toggle Handler
