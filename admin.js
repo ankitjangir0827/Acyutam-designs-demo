@@ -367,17 +367,19 @@ async function initAdminPortal() {
     }
   }
 
+  // Priority 1: Cloud Firestore live database
   if (cloudProjects.length > 0) {
     allProjects = cloudProjects;
-  } else if (!allProjects || allProjects.length === 0) {
-    allProjects = fileProjects.length > 0 ? fileProjects : [...FALLBACK_SEED_PROJECTS];
+    console.log(`🔥 Active Admin Master Dataset set to ${allProjects.length} Cloud Firestore projects`);
+  } else if (allProjects && allProjects.length > 0) {
+    // Priority 2: Browser localStorage
+    console.log(`📦 Active Admin Master Dataset set to ${allProjects.length} localStorage projects`);
   } else if (fileProjects.length > 0) {
-    // Merge any missing master projects from projects.json into allProjects
-    fileProjects.forEach((fp) => {
-      if (!allProjects.some((p) => p.id === fp.id || p.title === fp.title)) {
-        allProjects.push(fp);
-      }
-    });
+    // Priority 3: Fallback seed projects.json
+    allProjects = [...fileProjects];
+    console.log(`📁 Active Admin Master Dataset initialized from projects.json (${allProjects.length} projects)`);
+  } else {
+    allProjects = [...FALLBACK_SEED_PROJECTS];
   }
 
   saveProjectsToLocalStorage();

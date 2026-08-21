@@ -342,8 +342,7 @@
     else if (isCommercial) targetGridId = "commercial-grid";
     else if (isAssembly) targetGridId = "assembly-grid";
 
-    if (!targetGridId) return;
-    const grid = document.getElementById(targetGridId);
+    const grid = document.getElementById(targetGridId) || (isUpcoming ? document.getElementById("projects-grid") : null);
     if (!grid) return;
 
     // Collect valid project IDs for this page context

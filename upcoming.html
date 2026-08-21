@@ -532,7 +532,7 @@
 
   <!-- Project Grid Container -->
   <main class="flex-grow px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto w-full pb-24">
-    <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <div id="upcoming-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
       <!-- Dynamically Rendered from projects.json -->
       <div class="col-span-full py-20 text-center text-on-surface-variant font-mono">
         <span class="material-symbols-outlined text-4xl text-primary animate-spin mb-3">progress_activity</span>
@@ -678,34 +678,26 @@
     let sortOption = 'newest';
 
     async function loadUpcomingProjects() {
-      const grid = document.getElementById('projects-grid');
+      const grid = document.getElementById('upcoming-grid') || document.getElementById('projects-grid');
       let allProjects = [];
 
-      // 1. Try loading from localStorage cache first for instantaneous admin previews
-      const cached = localStorage.getItem('achyutam_static_projects') || localStorage.getItem('achyutam_projects_cache');
-      if (cached) {
-        try { 
-          allProjects = JSON.parse(cached); 
-        } catch(e) {
-          console.warn("Failed to parse cached projects:", e);
-        }
-      }
-
-      // 2. Fallback / Fetch from Cloudinary API route /api/projects if no cache or empty
-      if (!allProjects || allProjects.length === 0) {
-        try {
-          const cldProjects = window.AchyutamCloudinary
-            ? await window.AchyutamCloudinary.fetchCloudinaryProjects()
-            : await fetch('/api/projects').then((r) => r.json()).catch(() => []);
-
-          if (Array.isArray(cldProjects) && cldProjects.length > 0) {
-            allProjects = cldProjects;
-            try {
-              localStorage.setItem('achyutam_static_projects', JSON.stringify(allProjects));
-            } catch(e) {}
+      // 1. Try Cloud Firestore first for live real-time admin sync
+      try {
+        if (window.AchyutamFirebase && typeof window.AchyutamFirebase.getProjectsFromFirebase === 'function') {
+          const cloudRes = await window.AchyutamFirebase.getProjectsFromFirebase();
+          if (cloudRes && cloudRes.success && Array.isArray(cloudRes.projects) && cloudRes.projects.length > 0) {
+            allProjects = cloudRes.projects;
           }
-        } catch(e) {
-          console.warn("Fetch /api/projects notice:", e);
+        }
+      } catch(e) {}
+
+      // 2. Fallback to localStorage cache
+      if (!allProjects || allProjects.length === 0) {
+        const cached = localStorage.getItem('achyutam_static_projects') || localStorage.getItem('achyutam_projects_cache');
+        if (cached) {
+          try { 
+            allProjects = JSON.parse(cached); 
+          } catch(e) {}
         }
       }
 
@@ -738,7 +730,7 @@
     }
 
     function renderFilteredProjects() {
-      const grid = document.getElementById('projects-grid');
+      const grid = document.getElementById('upcoming-grid') || document.getElementById('projects-grid');
       if (!grid) return;
 
       let filtered = [...allUpcomingProjects];
