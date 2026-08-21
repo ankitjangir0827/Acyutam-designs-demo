@@ -570,17 +570,24 @@
 
   <!-- Modal Controller JavaScript -->
   <script>
-    function openProjectModal(name, badge, ctc, loc, det, img1, img2) {
+    function openProjectModal(name, badge, ctc, loc, det, ...imgs) {
+      if (typeof window.openProjectModal === 'function' && window.openProjectModal !== openProjectModal) {
+        window.openProjectModal(name, badge, ctc, loc, det, ...imgs);
+        return;
+      }
       document.getElementById('modal-name').textContent = name;
       document.getElementById('modal-badge').textContent = badge;
       document.getElementById('modal-ctc').textContent = ctc;
       document.getElementById('modal-loc').textContent = loc;
       document.getElementById('modal-det').textContent = det;
-      document.getElementById('modal-img').src = img1;
+      document.getElementById('modal-img').src = imgs[0];
       document.getElementById('project-modal').classList.remove('hidden');
     }
 
     function closeProjectModal() {
+      if (typeof window.closeProjectModal === 'function' && window.closeProjectModal !== closeProjectModal) {
+        window.closeProjectModal();
+      }
       const modal = document.getElementById('project-modal');
       if (modal) modal.classList.add('hidden');
     }

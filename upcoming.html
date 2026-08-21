@@ -874,6 +874,17 @@
       const p = allUpcomingProjects.find(item => item.id === id);
       if (!p) return;
 
+      if (typeof window.openProjectModal === 'function') {
+        const imgs = [];
+        if (Array.isArray(p.images)) imgs.push(...p.images);
+        if (p.image1) imgs.push(p.image1);
+        if (p.image2) imgs.push(p.image2);
+        if (p.image3) imgs.push(p.image3);
+        if (p.image4) imgs.push(p.image4);
+        window.openProjectModal(p.title, `UPCOMING / ${(p.category || 'Residential').toUpperCase()}`, p.cost || 'CUSTOM ESTIMATE', p.location || 'Rajasthan / U.P.', p.description, ...imgs);
+        return;
+      }
+
       document.getElementById('modal-project-title').textContent = p.title || 'Untitled Project';
       document.getElementById('modal-project-client').textContent = p.clientName ? `Client: ${p.clientName}` : 'Private Architectural Client';
       document.getElementById('modal-location').textContent = p.location || 'Rajasthan / Uttar Pradesh';

@@ -925,7 +925,11 @@
       }
     }
 
-    function openProjectModal(title, category, cost, location, scope, img1, img2) {
+    function openProjectModal(title, category, cost, location, scope, ...imgs) {
+      if (typeof window.openProjectModal === 'function' && window.openProjectModal !== openProjectModal) {
+        window.openProjectModal(title, category, cost, location, scope, ...imgs);
+        return;
+      }
       const modal = document.getElementById('project-modal');
       const mTitle = document.getElementById('modal-title');
       const mTag = document.getElementById('modal-tag');
@@ -940,7 +944,7 @@
       if (mCost) mCost.textContent = cost;
       if (mLocation) mLocation.textContent = location;
       if (mScope) mScope.textContent = scope;
-      if (mImgMain) mImgMain.src = img1 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
+      if (mImgMain) mImgMain.src = imgs[0] || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
       if (mWaBtn) mWaBtn.href = `https://wa.me/919116400862?text=Hello%20Achyutam%20Builder,%20I%20want%20to%20inquire%20about%20the%20${encodeURIComponent(title)}%20project.`;
 
       if (modal) {
@@ -950,6 +954,9 @@
     }
 
     function closeProjectModal() {
+      if (typeof window.closeProjectModal === 'function' && window.closeProjectModal !== closeProjectModal) {
+        window.closeProjectModal();
+      }
       const modal = document.getElementById('project-modal');
       if (modal) {
         modal.classList.add('hidden');
