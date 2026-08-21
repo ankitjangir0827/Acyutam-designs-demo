@@ -661,64 +661,76 @@ function getCategoryBadge(category = "Residential") {
  * ============================================================================
  */
 
+let pendingLocalFilesMap = {};
+let pendingLocalDataUrlsMap = {};
+let extraImageCount = 4;
+
+export function addExtraImageInput(prefillUrl = '') {
+  extraImageCount++;
+  const num = extraImageCount;
+  const container = document.getElementById('dynamic-image-inputs-container');
+  if (!container) return;
+
+  const div = document.createElement('div');
+  div.id = `extra-image-box-${num}`;
+  div.className = 'flex flex-col gap-1.5';
+  div.innerHTML = `
+    <label class="block font-bold uppercase tracking-wider text-primary mb-1 flex items-center justify-between">
+      <span>Image ${num} (Gallery View ${num})</span>
+      <button type="button" onclick="document.getElementById('extra-image-box-${num}').remove(); window.AchyutamAdmin.updateImagePreviews();" class="text-red-400 hover:text-red-300 text-[10px] uppercase font-bold">&times; REMOVE</button>
+    </label>
+    <div class="flex items-center gap-2 mb-1">
+      <input type="file" id="file-input-image${num}" accept="image/*" class="hidden" onchange="window.AchyutamAdmin.handleLocalImageSelect(event, ${num})"/>
+      <button type="button" onclick="document.getElementById('file-input-image${num}').click()" class="flex-1 flex items-center justify-center gap-1 py-1.5 px-2 bg-surface-container hover:bg-surface-container-high border border-primary/50 rounded text-primary text-[11px] font-mono font-bold tracking-wider transition-all cursor-pointer shadow-sm">
+        <span class="material-symbols-outlined text-sm">upload_file</span>
+        <span id="file-label-image${num}">PHOTO ${num}</span>
+      </button>
+    </div>
+    <input type="url" id="project-image${num}" value="${prefillUrl}" oninput="window.AchyutamAdmin.updateImagePreviews()" placeholder="Or paste image ${num} URL..." class="w-full bg-surface border border-outline-variant/40 rounded-lg p-2 text-xs text-on-surface focus:border-primary focus:outline-none font-sans"/>
+    <div class="mt-1 h-20 rounded-lg border border-outline-variant/30 overflow-hidden bg-surface-container-low flex items-center justify-center text-on-surface-variant/40 text-[10px] relative">
+      <img id="preview-image-${num}" src="${prefillUrl}" alt="Preview ${num}" class="${prefillUrl ? '' : 'hidden'} w-full h-full object-cover" onerror="this.classList.add('hidden')"/>
+      <span id="placeholder-image-${num}" class="${prefillUrl ? 'hidden' : ''} preview-placeholder flex items-center gap-1"><span class="material-symbols-outlined text-sm">image</span> Live Preview ${num}</span>
+    </div>
+  `;
+  container.appendChild(div);
+  updateImagePreviews();
+}
+
 export function handleLocalImageSelect(event, num) {
   const file = event.target.files && event.target.files[0];
   if (!file) return;
 
-  if (num === 1) {
-    pendingLocalFile1 = file;
-    const label = document.getElementById("file-label-image1");
-    if (label) label.textContent = `SELECTED: ${file.name.substring(0, 18)}`;
-  } else if (num === 2) {
-    pendingLocalFile2 = file;
-    const label = document.getElementById("file-label-image2");
-    if (label) label.textContent = `SELECTED: ${file.name.substring(0, 18)}`;
-  }
+  pendingLocalFilesMap[num] = file;
+  const label = document.getElementById(`file-label-image${num}`);
+  if (label) label.textContent = `SELECTED: ${file.name.substring(0, 14)}`;
 
   const reader = new FileReader();
   reader.onload = (e) => {
-    const dataUrl = e.target.result;
-    if (num === 1) pendingLocalFile1DataUrl = dataUrl;
-    if (num === 2) pendingLocalFile2DataUrl = dataUrl;
+    pendingLocalDataUrlsMap[num] = e.target.result;
     updateImagePreviews();
   };
   reader.readAsDataURL(file);
 }
 
 export function updateImagePreviews() {
-  const img1Input = document.getElementById("project-image1")?.value.trim();
-  const img2Input = document.getElementById("project-image2")?.value.trim();
+  const totalInputs = Math.max(4, extraImageCount);
+  for (let i = 1; i <= totalInputs; i++) {
+    const inputVal = document.getElementById(`project-image${i}`)?.value.trim();
+    const src = pendingLocalDataUrlsMap[i] || inputVal;
 
-  const src1 = pendingLocalFile1DataUrl || img1Input;
-  const src2 = pendingLocalFile2DataUrl || img2Input;
+    const p = document.getElementById(`preview-image-${i}`);
+    const ph = document.getElementById(`placeholder-image-${i}`);
 
-  const p1 = document.getElementById("preview-image-1");
-  const ph1 = document.getElementById("placeholder-image-1");
-
-  if (p1) {
-    if (src1) {
-      p1.src = src1;
-      p1.classList.remove("hidden");
-      if (ph1) ph1.classList.add("hidden");
-    } else {
-      p1.src = "";
-      p1.classList.add("hidden");
-      if (ph1) ph1.classList.remove("hidden");
-    }
-  }
-
-  const p2 = document.getElementById("preview-image-2");
-  const ph2 = document.getElementById("placeholder-image-2");
-
-  if (p2) {
-    if (src2) {
-      p2.src = src2;
-      p2.classList.remove("hidden");
-      if (ph2) ph2.classList.add("hidden");
-    } else {
-      p2.src = "";
-      p2.classList.add("hidden");
-      if (ph2) ph2.classList.remove("hidden");
+    if (p) {
+      if (src) {
+        p.src = src;
+        p.classList.remove("hidden");
+        if (ph) ph.classList.add("hidden");
+      } else {
+        p.src = "";
+        p.classList.add("hidden");
+        if (ph) ph.classList.remove("hidden");
+      }
     }
   }
 }
@@ -727,109 +739,71 @@ export async function handleProjectFormSubmit(event) {
   event.preventDefault();
 
   const title = document.getElementById("project-title")?.value.trim();
-  const clientName =
-    document.getElementById("project-client")?.value.trim() || "Private Client";
-  const location =
-    document.getElementById("project-location")?.value.trim() ||
-    "Rajasthan, India";
-  const area =
-    document.getElementById("project-area")?.value.trim() || "Bespoke Scale";
-  const category =
-    document.getElementById("project-category")?.value || "Residential";
+  const clientName = document.getElementById("project-client")?.value.trim() || "Private Client";
+  const location = document.getElementById("project-location")?.value.trim() || "Rajasthan, India";
+  const area = document.getElementById("project-area")?.value.trim() || "Bespoke Scale";
+  const category = document.getElementById("project-category")?.value || "Residential";
   const status = document.getElementById("project-status")?.value || "Ongoing";
-  const description =
-    document.getElementById("project-description")?.value.trim() || "";
+  const description = document.getElementById("project-description")?.value.trim() || "";
 
   if (!title) {
     showToast("⚠️ Please enter a project title", true);
     return;
   }
 
-  let image1 = document.getElementById("project-image1")?.value.trim() || "";
-  let image2 = document.getElementById("project-image2")?.value.trim() || "";
-
   // Cloudinary target folder path
   const folderPath = window.AchyutamCloudinary
     ? window.AchyutamCloudinary.buildCloudinaryFolderPath(status, category, title)
     : `achyutam_projects/${status}/${category}/${title.replace(/[^\w-]/g, '_')}`;
 
-  if (pendingLocalFile1 || pendingLocalFile2) {
+  const hasLocalUploads = Object.keys(pendingLocalFilesMap).length > 0;
+  if (hasLocalUploads) {
     showToast("☁️ Uploading local photo(s) to Cloudinary...");
   }
 
-  if (pendingLocalFile1) {
-    try {
-      if (window.AchyutamCloudinary?.uploadImageToCloudinary) {
-        const res = await window.AchyutamCloudinary.uploadImageToCloudinary(pendingLocalFile1, folderPath, {
-          title, clientName, category, status
-        });
-        if (res && res.secure_url) {
-          image1 = res.secure_url;
+  let finalImages = [];
+  const totalInputs = Math.max(4, extraImageCount);
+
+  for (let i = 1; i <= totalInputs; i++) {
+    let imgUrl = document.getElementById(`project-image${i}`)?.value.trim() || "";
+    const localFile = pendingLocalFilesMap[i];
+    const dataUrl = pendingLocalDataUrlsMap[i];
+
+    if (localFile) {
+      try {
+        if (window.AchyutamCloudinary?.uploadImageToCloudinary) {
+          const res = await window.AchyutamCloudinary.uploadImageToCloudinary(localFile, folderPath, {
+            title, clientName, category, status, imageIndex: i
+          });
+          if (res && res.secure_url) {
+            imgUrl = res.secure_url;
+          }
         }
+      } catch (err) {
+        console.warn(`Upload local photo ${i} error:`, err);
       }
-    } catch (err) {
-      console.warn("Upload local photo 1 error:", err);
-    }
-    if (!image1 && pendingLocalFile1DataUrl) {
-      image1 = pendingLocalFile1DataUrl;
-    }
-  }
-
-  if (pendingLocalFile2) {
-    try {
-      if (window.AchyutamCloudinary?.uploadImageToCloudinary) {
-        const res = await window.AchyutamCloudinary.uploadImageToCloudinary(pendingLocalFile2, folderPath, {
-          title, clientName, category, status
-        });
-        if (res && res.secure_url) {
-          image2 = res.secure_url;
-        }
+      if (!imgUrl && dataUrl) {
+        imgUrl = dataUrl;
       }
-    } catch (err) {
-      console.warn("Upload local photo 2 error:", err);
     }
-    if (!image2 && pendingLocalFile2DataUrl) {
-      image2 = pendingLocalFile2DataUrl;
+    if (!imgUrl && dataUrl) imgUrl = dataUrl;
+
+    if (imgUrl) {
+      if (imgUrl.includes("res.cloudinary.com") && !imgUrl.includes("f_auto")) {
+        imgUrl = imgUrl.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
+      }
+      finalImages.push(imgUrl);
     }
   }
 
-  if (!image1 && pendingLocalFile1DataUrl) image1 = pendingLocalFile1DataUrl;
-  if (!image2 && pendingLocalFile2DataUrl) image2 = pendingLocalFile2DataUrl;
-
-  if (!image1) {
-    image1 = "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80";
-  }
-  if (!image2) {
-    image2 = image1;
+  if (finalImages.length === 0) {
+    finalImages.push("https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80");
   }
 
-  // Ensure f_auto,q_auto transformations
-  if (image1.includes("res.cloudinary.com") && !image1.includes("f_auto")) {
-    image1 = image1.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
-  }
-  if (image2.includes("res.cloudinary.com") && !image2.includes("f_auto")) {
-    image2 = image2.replace("/image/upload/", "/image/upload/f_auto,q_auto/");
-  }
-
-  // Trigger POST /api/admin/projects/upload to register context metadata & searchable tags on Cloudinary
-  try {
-    if (window.AchyutamCloudinary?.uploadProjectToApi) {
-      await window.AchyutamCloudinary.uploadProjectToApi({
-        project_title: title,
-        status: status,
-        category: category,
-        projectName: title,
-        description: description,
-        location: location,
-        client_name: clientName,
-        completion_year: "2026",
-        image1: image1,
-        image2: image2
-      });
-    }
-  } catch (apiErr) {
-    console.warn("Cloudinary upload controller notice:", apiErr);
-  }
+  const image1 = finalImages[0] || "";
+  const image2 = finalImages[1] || image1;
+  const image3 = finalImages[2] || image1;
+  const image4 = finalImages[3] || image1;
 
   if (editingProjectId) {
     // Update existing project
@@ -844,6 +818,9 @@ export async function handleProjectFormSubmit(event) {
         category,
         image1,
         image2,
+        image3,
+        image4,
+        images: finalImages,
         status,
         description,
         updatedAt: new Date().toISOString(),
@@ -862,6 +839,9 @@ export async function handleProjectFormSubmit(event) {
       category,
       image1,
       image2,
+      image3,
+      image4,
+      images: finalImages,
       status,
       description,
       featured: false,
@@ -883,21 +863,41 @@ export function editProject(id) {
 
   editingProjectId = id;
 
-  // Populate form fields
+  // Populate basic form fields
   document.getElementById("project-title").value = project.title || "";
   document.getElementById("project-client").value = project.clientName || "";
   document.getElementById("project-location").value = project.location || "";
   document.getElementById("project-area").value = project.area || "";
-  document.getElementById("project-category").value =
-    project.category || "Residential";
-  document.getElementById("project-image1").value = project.image1 || "";
-  document.getElementById("project-image2").value = project.image2 || "";
+  document.getElementById("project-category").value = project.category || "Residential";
   document.getElementById("project-status").value = project.status || "Ongoing";
-  document.getElementById("project-description").value =
-    project.description || "";
+  document.getElementById("project-description").value = project.description || "";
 
-  pendingLocalFile1 = null;
-  pendingLocalFile2 = null;
+  // Collect all images from project
+  const imgs = [];
+  if (Array.isArray(project.images)) imgs.push(...project.images);
+  if (project.image1) imgs.push(project.image1);
+  if (project.image2) imgs.push(project.image2);
+  if (project.image3) imgs.push(project.image3);
+  if (project.image4) imgs.push(project.image4);
+  
+  const uniqueImgs = Array.from(new Set(imgs.filter(i => typeof i === 'string' && i.length > 5)));
+
+  document.getElementById("project-image1").value = uniqueImgs[0] || "";
+  document.getElementById("project-image2").value = uniqueImgs[1] || "";
+  document.getElementById("project-image3").value = uniqueImgs[2] || "";
+  document.getElementById("project-image4").value = uniqueImgs[3] || "";
+
+  // Clear extra inputs container and prefill extra images if any (> 4)
+  const container = document.getElementById('dynamic-image-inputs-container');
+  if (container) container.innerHTML = '';
+  extraImageCount = 4;
+
+  for (let k = 4; k < uniqueImgs.length; k++) {
+    addExtraImageInput(uniqueImgs[k]);
+  }
+
+  pendingLocalFilesMap = {};
+  pendingLocalDataUrlsMap = {};
 
   // Update form header and submit button
   const heading = document.getElementById("form-heading");
@@ -931,18 +931,20 @@ export function editProject(id) {
 
 export function resetProjectForm() {
   editingProjectId = null;
-  pendingLocalFile1 = null;
-  pendingLocalFile2 = null;
-  pendingLocalFile1DataUrl = null;
-  pendingLocalFile2DataUrl = null;
+  pendingLocalFilesMap = {};
+  pendingLocalDataUrlsMap = {};
+  extraImageCount = 4;
 
   const form = document.getElementById("project-form");
   if (form) form.reset();
 
-  const l1 = document.getElementById("file-label-image1");
-  const l2 = document.getElementById("file-label-image2");
-  if (l1) l1.textContent = "CHOOSE LOCAL PHOTO 1";
-  if (l2) l2.textContent = "CHOOSE LOCAL PHOTO 2";
+  const container = document.getElementById('dynamic-image-inputs-container');
+  if (container) container.innerHTML = '';
+
+  for (let i = 1; i <= 4; i++) {
+    const l = document.getElementById(`file-label-image${i}`);
+    if (l) l.textContent = `CHOOSE LOCAL PHOTO ${i}`;
+  }
 
   const heading = document.getElementById("form-heading");
   const subHeading = document.getElementById("form-subheading");
@@ -1329,6 +1331,7 @@ function setupEventListeners() {
 window.AchyutamAdmin = {
   handleProjectFormSubmit,
   handleLocalImageSelect,
+  addExtraImageInput,
   editProject,
   resetProjectForm,
   promptDeleteProject,

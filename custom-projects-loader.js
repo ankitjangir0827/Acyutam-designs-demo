@@ -6,18 +6,48 @@
 (function () {
   'use strict';
 
-  // Helper to open project modal with gallery preview thumbnails
-  window.openProjectModal = function (name, tag, ctc, loc, specs, img1, img2, img3, img4) {
+  // Helper to open project modal with gallery preview thumbnails (Supports 1 to 20+ images dynamically)
+  window.openProjectModal = function (name, tag, ctc, loc, specs, ...imgParams) {
     let modal = document.getElementById('project-detail-modal');
     if (modal) modal.remove();
 
-    const mainImage = img1 || 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80';
-    const imageList = [
-      mainImage,
-      img2 || 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
-      img3 || 'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
-      img4 || 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
-    ];
+    let rawImages = [];
+    imgParams.forEach(param => {
+      if (Array.isArray(param)) {
+        rawImages.push(...param);
+      } else if (typeof param === 'string' && param.trim() !== '') {
+        try {
+          if (param.startsWith('[') && param.endsWith(']')) {
+            const parsed = JSON.parse(param);
+            if (Array.isArray(parsed)) rawImages.push(...parsed);
+          } else {
+            rawImages.push(param.trim());
+          }
+        } catch(e) {
+          rawImages.push(param.trim());
+        }
+      } else if (typeof param === 'object' && param !== null) {
+        if (Array.isArray(param.images)) rawImages.push(...param.images);
+        if (param.image1) rawImages.push(param.image1);
+        if (param.image2) rawImages.push(param.image2);
+        if (param.image3) rawImages.push(param.image3);
+        if (param.image4) rawImages.push(param.image4);
+        if (param.image5) rawImages.push(param.image5);
+      }
+    });
+
+    let imageList = Array.from(new Set(rawImages.filter(img => typeof img === 'string' && img.length > 5)));
+
+    if (imageList.length === 0) {
+      imageList = [
+        'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&w=1200&q=80',
+        'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1200&q=80'
+      ];
+    }
+
+    const mainImage = imageList[0];
 
     modal = document.createElement('div');
     modal.id = 'project-detail-modal';
@@ -36,8 +66,9 @@
           <div class="md:col-span-7 flex flex-col gap-3">
             <div class="relative w-full h-64 sm:h-80 md:h-96 rounded-xl overflow-hidden border border-outline-variant/40 bg-black/40 shadow-inner group">
               <img id="pm-main-img" src="${mainImage}" alt="${name || 'Project View'}" class="w-full h-full object-cover transition-all duration-300 group-hover:scale-105"/>
-              <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-md text-[11px] font-mono text-primary border border-primary/30 uppercase tracking-widest">
-                ARCHITECTURAL PREVIEW VIEW
+              <div class="absolute bottom-3 left-3 bg-black/70 backdrop-blur-md px-3 py-1 rounded-md text-[11px] font-mono text-primary border border-primary/30 uppercase tracking-widest flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-primary animate-pulse"></span>
+                <span>ARCHITECTURAL PREVIEW VIEW</span>
               </div>
             </div>
           </div>
@@ -67,12 +98,13 @@
               <p id="pm-specs" class="font-sans text-xs opacity-90">${specs || 'Turnkey architectural design, structural engineering, and high-end construction execution by ACHYUTAM BUILDER®.'}</p>
             </div>
 
-            <!-- Preview Image Gallery Thumbnails (Screenshot 1 Style) -->
+            <!-- Preview Image Gallery Thumbnails (Dynamic Grid for Unlimited Admin Uploads) -->
             <div>
-              <label class="block font-mono text-[10px] text-on-surface-variant uppercase tracking-widest mb-2 font-bold">
-                Project Image Previews (Click to Switch View):
+              <label class="block font-mono text-[10px] text-on-surface-variant uppercase tracking-widest mb-2 font-bold flex items-center justify-between">
+                <span>PROJECT GALLERY PREVIEWS (${imageList.length} VIEWS):</span>
+                <span class="text-primary font-normal">CLICK THUMBNAIL TO SWITCH</span>
               </label>
-              <div class="grid grid-cols-4 gap-2" id="pm-thumbnails">
+              <div class="grid grid-cols-4 sm:grid-cols-5 gap-2 max-h-44 overflow-y-auto custom-scrollbar p-1" id="pm-thumbnails">
                 ${imageList.map((img, idx) => `
                   <div onclick="switchProjectPreviewImage('${img}', this)" class="thumbnail-item relative aspect-square rounded-lg overflow-hidden border-2 ${idx === 0 ? 'border-primary shadow-md' : 'border-outline-variant/40 opacity-70'} hover:opacity-100 hover:border-primary transition-all cursor-pointer bg-black/40">
                     <img src="${img}" alt="Preview ${idx + 1}" class="w-full h-full object-cover"/>
@@ -167,11 +199,23 @@
     const location = p.location || "Sikar, Rajasthan";
     const specs = p.description || p.area || "Custom architectural project";
     const cost = p.cost || p.ctc || "₹80+ Lakh CTC";
-    const img1 = p.image1 || p.image || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80";
-    const img2 = p.image2 || img1;
+    
+    // Collect all available image URLs into an array
+    const imgArray = [];
+    if (Array.isArray(p.images)) imgArray.push(...p.images);
+    if (p.image1) imgArray.push(p.image1);
+    if (p.image2) imgArray.push(p.image2);
+    if (p.image3) imgArray.push(p.image3);
+    if (p.image4) imgArray.push(p.image4);
+    if (p.image5) imgArray.push(p.image5);
+    if (p.image) imgArray.push(p.image);
+    
+    const uniqueImgs = Array.from(new Set(imgArray.filter(i => typeof i === 'string' && i.length > 5)));
+    const img1 = uniqueImgs[0] || "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80";
+    const imgsArg = JSON.stringify(uniqueImgs).replace(/"/g, '&quot;');
 
     return `
-      <div onclick="openProjectModal('${title.replace(/'/g, "\\'")}', '${tag.replace(/'/g, "\\'")}', '${cost.replace(/'/g, "\\'")}', '${location.replace(/'/g, "\\'")}', '${specs.replace(/'/g, "\\'")}', '${img1}', '${img2}')" class="project-card-item custom-dynamic-card flex flex-col group cursor-pointer border border-primary/50 p-4 bg-surface-container-low hover:border-primary transition-all rounded-sm shadow-xl relative">
+      <div onclick="openProjectModal('${title.replace(/'/g, "\\'")}', '${tag.replace(/'/g, "\\'")}', '${cost.replace(/'/g, "\\'")}', '${location.replace(/'/g, "\\'")}', '${specs.replace(/'/g, "\\'")}', ${imgsArg})" class="project-card-item custom-dynamic-card flex flex-col group cursor-pointer border border-primary/50 p-4 bg-surface-container-low hover:border-primary transition-all rounded-sm shadow-xl relative">
         <div class="absolute top-2 left-2 bg-primary text-background font-label-caps text-[9px] font-bold px-2 py-0.5 rounded z-30 uppercase tracking-widest shadow">
           PROJECT showcase
         </div>
