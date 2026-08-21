@@ -31,6 +31,7 @@ import {
   addDoc,
   collection,
   doc,
+  getDoc,
   getDocs,
   getFirestore,
   setDoc,
@@ -969,6 +970,45 @@ export async function deleteCareerApplicationByAdmin(docId) {
   }
 }
 
+/**
+ * 15. Save / Sync Complete Projects List to Firestore ('site_data/projects_list' document)
+ */
+export async function saveProjectsToFirebase(projectsArray) {
+  if (!Array.isArray(projectsArray)) return { success: false, error: "Invalid projects array" };
+  try {
+    await setDoc(doc(db, "site_data", "projects_list"), {
+      projects: projectsArray,
+      updatedAtIso: new Date().toISOString()
+    }, { merge: true });
+    
+    console.log("🔥 Projects synced to Cloud Firestore successfully:", projectsArray.length);
+    return { success: true };
+  } catch (error) {
+    console.error("🔥 Error syncing projects to Cloud Firestore:", error);
+    return { success: false, error: error.message };
+  }
+}
+
+/**
+ * 16. Fetch Projects List from Cloud Firestore
+ */
+export async function getProjectsFromFirebase() {
+  try {
+    const docSnap = await getDoc(doc(db, "site_data", "projects_list")).catch(() => null);
+    if (docSnap && docSnap.exists()) {
+      const data = docSnap.data();
+      if (Array.isArray(data.projects) && data.projects.length > 0) {
+        console.log(`🔥 Fetched ${data.projects.length} live projects from Cloud Firestore`);
+        return { success: true, projects: data.projects };
+      }
+    }
+    return { success: false, projects: [] };
+  } catch (error) {
+    console.error("🔥 Error fetching projects from Cloud Firestore:", error);
+    return { success: false, projects: [], error: error.message };
+  }
+}
+
 // Aliases for compatibility
 export const saveBookingToFirebase = saveEnquiryToFirebase;
 export const getUserBookings = getUserEnquiries;
@@ -1002,6 +1042,8 @@ window.AchyutamFirebase = {
   sendPasswordResetLink,
   saveBookingToFirebase,
   getUserBookings,
+  saveProjectsToFirebase,
+  getProjectsFromFirebase,
   onAuthStateChanged,
 };
 

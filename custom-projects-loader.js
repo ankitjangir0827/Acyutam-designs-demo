@@ -1,6 +1,7 @@
 /**
  * ACHYUTAM BUILDER® — CUSTOM PROJECTS DYNAMIC LOADER
- * Automatically loads user-created projects from localStorage & Firebase into page grids.
+ * Automatically loads user-created and updated projects from Cloud Firestore, localStorage & JSON into page grids.
+ * Real-Time Cross-Browser Synchronization Active.
  */
 
 (function () {
@@ -161,6 +162,24 @@
 
   async function getStoredProjects() {
     let projects = [];
+
+    // Try fetching from Cloud Firestore first if available
+    try {
+      if (window.AchyutamFirebase && window.AchyutamFirebase.getProjectsFromFirebase) {
+        const cloudRes = await window.AchyutamFirebase.getProjectsFromFirebase();
+        if (cloudRes.success && Array.isArray(cloudRes.projects) && cloudRes.projects.length > 0) {
+          projects = cloudRes.projects;
+          try {
+            localStorage.setItem("achyutam_static_projects", JSON.stringify(projects));
+            localStorage.setItem("achyutam_projects_cache", JSON.stringify(projects));
+          } catch(e) {}
+          return projects;
+        }
+      }
+    } catch(err) {
+      console.warn("Firestore getProjects error:", err);
+    }
+
     try {
       const p1 = localStorage.getItem("achyutam_static_projects");
       const p2 = localStorage.getItem("achyutam_projects_cache");
@@ -217,7 +236,7 @@
     return `
       <div onclick="openProjectModal('${title.replace(/'/g, "\\'")}', '${tag.replace(/'/g, "\\'")}', '${cost.replace(/'/g, "\\'")}', '${location.replace(/'/g, "\\'")}', '${specs.replace(/'/g, "\\'")}', ${imgsArg})" class="project-card-item custom-dynamic-card flex flex-col group cursor-pointer border border-primary/50 p-4 bg-surface-container-low hover:border-primary transition-all rounded-sm shadow-xl relative">
         <div class="absolute top-2 left-2 bg-primary text-background font-label-caps text-[9px] font-bold px-2 py-0.5 rounded z-30 uppercase tracking-widest shadow">
-          PROJECT showcase
+          PROJECT SHOWCASE
         </div>
         <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
           <div class="image-blur-vignette pointer-events-none"></div>
@@ -247,8 +266,53 @@
 
     // Detect page context
     const path = window.location.pathname.toLowerCase();
-    const isHome = path.endsWith("/") || path.includes("index.html");
-    if (isHome) return; // Keep Home Page in its exact original state
+    const isHome = path.endsWith("/") || path.includes("index.html") || path === "";
+
+    if (isHome) {
+      // Inject updated projects into Home Page category slide grids
+      const categories = ['upcoming', 'ongoing', 'completed', 'residential', 'industrial', 'commercial', 'assembly'];
+      categories.forEach((catKey) => {
+        const wrapper = document.getElementById(`carousel-wrapper-${catKey}`);
+        if (!wrapper) return;
+
+        const firstSlideGrid = wrapper.querySelector('.category-carousel-slide[data-slide-index="0"] .grid');
+        if (!firstSlideGrid) return;
+
+        // Filter projects matching catKey
+        const matchingProjects = projects.filter((p) => {
+          const pCat = (p.category || "").toLowerCase();
+          const pStatus = (p.status || "").toLowerCase();
+          if (catKey === 'upcoming') return pStatus.includes('upcom') || pStatus.includes('draft');
+          if (catKey === 'ongoing') return pStatus.includes('ongoi') || pStatus.includes('active');
+          if (catKey === 'completed') return pStatus.includes('complet') || pStatus.includes('done');
+          if (catKey === 'residential') return pCat.includes('residen') || pCat.includes('home') || pCat.includes('villa');
+          if (catKey === 'industrial') return pCat.includes('indust');
+          if (catKey === 'commercial') return pCat.includes('commer') || pCat.includes('retail');
+          if (catKey === 'assembly') return pCat.includes('assembl') || pCat.includes('temple') || pCat.includes('cultur');
+          return false;
+        });
+
+        matchingProjects.forEach((p) => {
+          const cardId = p.id || ("custom-prj-" + (p.title || "").replace(/\s+/g, '-'));
+          let existingContainer = firstSlideGrid.querySelector(`[data-project-id="${cardId}"]`);
+          
+          if (existingContainer) {
+            existingContainer.innerHTML = createProjectCardHTML(p);
+          } else {
+            const tempDiv = document.createElement("div");
+            tempDiv.setAttribute("data-project-id", cardId);
+            tempDiv.className = "contents";
+            tempDiv.innerHTML = createProjectCardHTML(p);
+            if (firstSlideGrid.firstChild) {
+              firstSlideGrid.insertBefore(tempDiv, firstSlideGrid.firstChild);
+            } else {
+              firstSlideGrid.appendChild(tempDiv);
+            }
+          }
+        });
+      });
+      return;
+    }
 
     const isResidential = path.includes("residential");
     const isIndustrial = path.includes("industrial");
@@ -258,7 +322,7 @@
     const isCompleted = path.includes("completed");
     const isUpcoming = path.includes("upcoming");
 
-    // Strictly find ONLY the specific grid element for the active page
+    // Find the specific grid element for dedicated category pages
     let targetGridId = null;
     if (isCompleted) targetGridId = "completed-grid";
     else if (isOngoing) targetGridId = "ongoing-grid";
@@ -271,6 +335,9 @@
     if (!targetGridId) return;
     const grid = document.getElementById(targetGridId);
     if (!grid) return;
+
+    // Collect valid project IDs for this page context
+    const activeProjectIds = new Set();
 
     projects.forEach((p) => {
       const pCat = (p.category || "").toLowerCase();
@@ -297,8 +364,13 @@
 
       if (shouldShow) {
         const cardId = p.id || ("custom-prj-" + (p.title || "").replace(/\s+/g, '-'));
-        const existing = grid.querySelector(`[data-project-id="${cardId}"]`);
-        if (!existing) {
+        activeProjectIds.add(cardId);
+
+        let existingContainer = grid.querySelector(`[data-project-id="${cardId}"]`);
+        if (existingContainer) {
+          // Re-render updated project content
+          existingContainer.innerHTML = createProjectCardHTML(p);
+        } else {
           const tempDiv = document.createElement("div");
           tempDiv.setAttribute("data-project-id", cardId);
           tempDiv.innerHTML = createProjectCardHTML(p);
@@ -310,8 +382,18 @@
         }
       }
     });
+
+    // Remove deleted or non-matching dynamic project cards from grid
+    const dynamicCards = grid.querySelectorAll("[data-project-id]");
+    dynamicCards.forEach((c) => {
+      const cid = c.getAttribute("data-project-id");
+      if (cid && cid.startsWith("proj-") && !activeProjectIds.has(cid)) {
+        c.remove();
+      }
+    });
   }
 
   document.addEventListener("DOMContentLoaded", injectProjectsIntoPage);
   window.addEventListener("load", injectProjectsIntoPage);
+  window.addEventListener("achyutam-projects-updated", injectProjectsIntoPage);
 })();

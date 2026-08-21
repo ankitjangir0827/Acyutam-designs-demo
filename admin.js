@@ -330,6 +330,20 @@ async function initAdminPortal() {
     );
   }
 
+  // Fetch projects from Cloud Firestore first if available
+  let cloudProjects = [];
+  try {
+    if (window.AchyutamFirebase?.getProjectsFromFirebase) {
+      const cloudRes = await window.AchyutamFirebase.getProjectsFromFirebase();
+      if (cloudRes.success && Array.isArray(cloudRes.projects) && cloudRes.projects.length > 0) {
+        cloudProjects = cloudRes.projects;
+        console.log(`🔥 Loaded ${cloudProjects.length} live projects from Cloud Firestore`);
+      }
+    }
+  } catch (err) {
+    console.warn("Firestore projects fetch failed:", err);
+  }
+
   // Fetch master project dataset from projects.json
   let fileProjects = [];
   try {
@@ -353,7 +367,9 @@ async function initAdminPortal() {
     }
   }
 
-  if (!allProjects || allProjects.length === 0) {
+  if (cloudProjects.length > 0) {
+    allProjects = cloudProjects;
+  } else if (!allProjects || allProjects.length === 0) {
     allProjects = fileProjects.length > 0 ? fileProjects : [...FALLBACK_SEED_PROJECTS];
   } else if (fileProjects.length > 0) {
     // Merge any missing master projects from projects.json into allProjects
@@ -374,7 +390,7 @@ async function initAdminPortal() {
 }
 
 /**
- * Persist current state to localStorage
+ * Persist current state to localStorage and Cloud Firestore
  */
 function saveProjectsToLocalStorage() {
   try {
@@ -384,8 +400,20 @@ function saveProjectsToLocalStorage() {
       "achyutam_projects_cache",
       JSON.stringify(allProjects),
     );
+
+    // Sync to Cloud Firestore for global real-time cross-browser updates
+    if (window.AchyutamFirebase?.saveProjectsToFirebase) {
+      window.AchyutamFirebase.saveProjectsToFirebase(allProjects).then(res => {
+        if (res.success) {
+          console.log("🔥 Admin changes synced live to Cloud Firestore");
+        }
+      });
+    }
+
+    // Broadcast live event across active browser windows/tabs
+    window.dispatchEvent(new CustomEvent('achyutam-projects-updated', { detail: allProjects }));
   } catch (err) {
-    console.error("Failed to save to localStorage:", err);
+    console.error("Failed to save projects:", err);
   }
 }
 
