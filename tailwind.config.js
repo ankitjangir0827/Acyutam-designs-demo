@@ -3,7 +3,9 @@ export default {
   darkMode: "class",
   content: [
     "./*.html",
+    "./*.js",
     "./public/*.html",
+    "./public/*.js",
     "./app/**/*.{js,ts,jsx,tsx}",
     "./pages/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
