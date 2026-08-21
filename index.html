@@ -472,23 +472,17 @@
         <!-- Day / Night Theme Toggle Switch (Hyperframer Style) -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
 
-        <!-- Sign In / Account Button (Clean borderless with enlarged icon) -->
-        <button onclick="openAuthModal()" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-primary hover:text-primary-container transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 p-1 border-0 bg-transparent" title="Sign In / Client Account" aria-label="Sign In">
-          <svg class="w-6 h-6 sm:w-7 sm:h-7 fill-current text-primary hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></svg>
-          <span id="auth-btn-text" class="hidden sm:inline">SIGN IN</span>
+        <!-- Sign In / Account Button (Clean user name display) -->
+        <button onclick="openAuthModal()" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-on-surface hover:text-primary transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 px-2.5 py-1.5 border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low/60 rounded-sm shadow-sm" title="Sign In / Client Account" aria-label="Sign In">
+          <svg class="w-5 h-5 fill-current text-primary hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></svg>
+          <span id="auth-btn-text" class="hidden sm:inline font-bold">SIGN IN</span>
         </button>
 
-        <!-- My Enquiries Header Status Button -->
-        <a href="contact.html" id="header-my-enquiries-btn" class="hidden flex items-center gap-1.5 border border-primary/60 text-primary p-2 sm:px-3 sm:py-1.5 hover:bg-primary hover:text-background transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0">
-          <span class="material-symbols-outlined text-base">task_alt</span>
-          <span id="my-enquiries-label" class="hidden md:inline">MY MESSAGES</span>
-          <span id="my-enquiries-badge" class="hidden bg-emerald-400 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">0</span>
-        </a>
-
-        <!-- Golden Bordered CONTACT US Button -->
-        <a href="contact.html" id="header-enquire-btn" class="border border-primary/60 text-on-surface p-1.5 sm:px-4 sm:py-2 hover:border-primary hover:text-primary hover:bg-primary/10 transition-all font-label-caps text-xs tracking-widest uppercase shrink-0 flex items-center justify-center gap-1 rounded-sm" title="Contact Us Directly">
-          <svg class="w-5 h-5 fill-current text-primary shrink-0 sm:hidden" viewBox="0 0 24 24"><path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/></svg>
-          <span class="enquire-text-label hidden sm:inline">CONTACT US</span>
+        <!-- My Enquiries / Admin Portal Header Status Button -->
+        <a href="contact.html" id="header-my-enquiries-btn" class="hidden flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm">
+          <span class="material-symbols-outlined text-base text-primary">task_alt</span>
+          <span id="my-enquiries-label" class="hidden md:inline font-semibold">MY MESSAGES</span>
+          <span id="my-enquiries-badge" class="hidden bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">0</span>
         </a>
 
         <!-- Animated Circular Hamburger Button (VISIBLE ALWAYS ON MOBILE & TABLET: lg:hidden) -->
@@ -4100,32 +4094,36 @@
       const badge = document.getElementById('my-enquiries-badge');
       const enquireBtn = document.getElementById('header-enquire-btn');
       
+      // Always remove extra duplicate right-side button so ONLY 1 CONTACT US remains in header
+      if (enquireBtn) enquireBtn.style.display = 'none';
+
       if (userStr && authBtnText) {
         try {
           const user = JSON.parse(userStr);
           const userEmail = (user.email || user.identity || '').toLowerCase().trim();
-          const isAdmin = userEmail === 'ankitjangir529@gmail.com';
-          const displayName = user.displayName || user.name || (isAdmin ? 'ANKITJANGIR' : userEmail.split('@')[0]);
+          const isAdmin = userEmail === 'ankitjangir529@gmail.com' || user.role === 'admin' || user.isAdmin === true;
+          
+          let rawName = user.displayName || user.name || userEmail.split('@')[0] || 'USER';
+          rawName = rawName.replace(/\(Admin\)/gi, '').trim();
+          let firstName = rawName.split(/[\s._]+/)[0].toUpperCase();
+          if (!firstName || firstName.length === 0) firstName = 'USER';
 
-          authBtnText.textContent = displayName.length > 12 ? displayName.substring(0, 10) + '...' : displayName;
+          authBtnText.textContent = firstName;
           if (authHeaderBtn) {
-            authHeaderBtn.classList.add('bg-primary/20', 'border-primary');
+            authHeaderBtn.className = 'flex items-center justify-center gap-1.5 text-on-surface hover:text-primary transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 px-2.5 py-1.5 border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low/60 rounded-sm shadow-sm';
           }
 
           if (isAdmin) {
-            // 1. Remove/Hide 'ENQUIRE' button for Admin
-            if (enquireBtn) enquireBtn.style.display = 'none';
-
-            // 2. Replace button text with 'ADMIN PORTAL' and direct link to admin-dashboard.html
             if (headerMyEnquiriesBtn) {
               headerMyEnquiriesBtn.classList.remove('hidden');
               headerMyEnquiriesBtn.href = 'admin-dashboard.html';
+              headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shadow-sm';
             }
             if (labelSpan) {
               labelSpan.textContent = 'ADMIN PORTAL';
+              labelSpan.className = 'text-on-surface font-semibold tracking-widest';
             }
 
-            // 3. Dynamic Notification Styling (0 queries = Gold; 1+ queries = Bright Neon-Green + Glow)
             let pendingCount = 0;
             if (window.AchyutamFirebase) {
               if (typeof window.AchyutamFirebase.getRecentEnquiriesForAdmin === 'function') {
@@ -4133,52 +4131,30 @@
                 if (res.success && res.data) {
                   pendingCount = res.data.length;
                 }
-              } else if (typeof window.AchyutamFirebase.getUserEnquiries === 'function') {
-                const res = await window.AchyutamFirebase.getUserEnquiries();
-                if (res.success && res.enquiries) {
-                  pendingCount = res.enquiries.filter(e => e.status === 'Pending' || e.status === 'Received').length;
-                }
               }
             }
 
-            if (badge) badge.textContent = pendingCount.toString();
-
-            if (pendingCount > 0) {
-              // Alert State (>0 Enquiries): Bright Neon-Green Text, Green Tint, Glow & Count Badge
-              if (headerMyEnquiriesBtn) {
-                headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 bg-emerald-950/40 border border-emerald-500 text-emerald-400 px-3 py-1.5 hover:bg-emerald-500 hover:text-black transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shadow-[0_0_15px_rgba(16,185,129,0.4)]';
-              }
-              if (labelSpan) labelSpan.className = 'text-emerald-400 font-bold tracking-widest animate-pulse';
-              if (badge) {
+            if (badge) {
+              badge.textContent = pendingCount.toString();
+              if (pendingCount > 0) {
                 badge.classList.remove('hidden');
                 badge.style.display = 'inline-block';
-                badge.textContent = pendingCount.toString();
-                badge.className = 'bg-emerald-400 text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5 animate-bounce';
-              }
-            } else {
-              // Default State (0 Enquiries): Inherit exact gold profile button style (transparent bg, gold border & text, NO badge)
-              if (headerMyEnquiriesBtn) {
-                headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-primary/60 text-primary px-3 py-1.5 hover:bg-primary hover:text-background transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer';
-              }
-              if (labelSpan) labelSpan.className = 'text-primary font-medium tracking-widest';
-              if (badge) {
+                badge.className = 'bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5';
+              } else {
                 badge.classList.add('hidden');
                 badge.style.display = 'none';
-                badge.textContent = '0';
               }
             }
-
           } else {
             // Client State
-            if (enquireBtn) enquireBtn.style.display = '';
             if (headerMyEnquiriesBtn) {
               headerMyEnquiriesBtn.classList.remove('hidden');
-              headerMyEnquiriesBtn.href = 'enquire.html';
-              headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 bg-emerald-500/20 border border-emerald-500/60 text-emerald-300 px-3 py-1.5 hover:bg-emerald-500 hover:text-background transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shadow';
+              headerMyEnquiriesBtn.href = 'contact.html';
+              headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shadow-sm';
             }
             if (labelSpan) {
-              labelSpan.textContent = 'MY ENQUIRIES';
-              labelSpan.className = '';
+              labelSpan.textContent = 'MY MESSAGES';
+              labelSpan.className = 'text-on-surface font-semibold tracking-widest';
             }
 
             if (window.AchyutamFirebase?.getUserEnquiries) {
@@ -4186,12 +4162,20 @@
               const list = res.enquiries || res.bookings || [];
               if (badge && res.success) {
                 badge.textContent = list.length.toString();
+                if (list.length > 0) {
+                  badge.classList.remove('hidden');
+                  badge.style.display = 'inline-block';
+                  badge.className = 'bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5';
+                }
               }
             }
           }
         } catch(e) {
           console.error("updateAuthUI error:", e);
         }
+      } else {
+        if (authBtnText) authBtnText.textContent = 'SIGN IN';
+        if (headerMyEnquiriesBtn) headerMyEnquiriesBtn.classList.add('hidden');
       }
     }
 

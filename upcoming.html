@@ -212,15 +212,17 @@
         <!-- Day / Night Theme Toggle Switch -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
 
-        <!-- Sign In / Login Button -->
-        <a href="admin.html" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-primary hover:text-primary-container transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 p-1 border-0 bg-transparent" title="Admin & Management Portal">
-          <span class="material-symbols-outlined text-2xl sm:text-[26px] leading-none font-light hover:scale-110 transition-transform">admin_panel_settings</span>
-          <span id="auth-btn-text" class="hidden sm:inline text-[10px]">PORTAL</span>
-        </a>
+        <!-- Sign In -->
+        <button onclick="openAuthModal()" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-on-surface hover:text-primary transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 px-2.5 py-1.5 border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low/60 rounded-sm shadow-sm" title="Sign In / Client Account">
+          <svg class="w-5 h-5 fill-current text-primary hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></svg>
+          <span id="auth-btn-text" class="hidden sm:inline font-bold">SIGN IN</span>
+        </button>
 
-        <!-- CONTACT US CTA Button -->
-        <a href="contact.html" id="header-enquire-btn" class="hidden lg:inline-block px-4 py-2 border border-primary/50 text-primary font-label-caps text-[11px] font-bold uppercase tracking-wider hover:bg-primary hover:text-background transition-all shrink-0">
-          CONTACT US
+        <!-- My Enquiries / Admin Portal Header Status Button -->
+        <a href="contact.html" id="header-my-enquiries-btn" class="hidden flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm">
+          <span class="material-symbols-outlined text-base text-primary">task_alt</span>
+          <span id="my-enquiries-label" class="hidden md:inline font-semibold">MY MESSAGES</span>
+          <span id="my-enquiries-badge" class="hidden bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">0</span>
         </a>
 
         <!-- Animated Circular Hamburger Button -->

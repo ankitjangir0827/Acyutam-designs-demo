@@ -938,18 +938,19 @@ window.removeAIFingerprint = function(codeText) {
     }
 
     html.light-mode #header-enquire-btn,
-    html.light-mode #header-my-enquiries-btn {
-      background-color: rgba(217, 119, 6, 0.08) !important;
-      border-color: rgba(217, 119, 6, 0.6) !important;
-      color: #d97706 !important;
+    html.light-mode #header-my-enquiries-btn,
+    html.light-mode #auth-header-btn {
+      background-color: rgba(255, 255, 255, 0.88) !important;
+      border: 1px solid rgba(15, 23, 42, 0.25) !important;
+      color: #0f172a !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06) !important;
     }
 
-    html.light-mode #auth-header-btn {
-      background: transparent !important;
-      background-color: transparent !important;
-      border: none !important;
+    html.light-mode #header-my-enquiries-btn:hover,
+    html.light-mode #auth-header-btn:hover {
+      background-color: #ffffff !important;
+      border-color: #d97706 !important;
       color: #d97706 !important;
-      box-shadow: none !important;
     }
 
     html.light-mode #auth-modal,
