@@ -163,23 +163,32 @@
   async function getStoredProjects() {
     let projects = [];
 
-    // Try fetching from Cloud Firestore first if available
-    try {
-      if (window.AchyutamFirebase && window.AchyutamFirebase.getProjectsFromFirebase) {
+    // Helper to attempt Cloud Firestore fetch
+    const fetchCloud = async () => {
+      if (window.AchyutamFirebase && typeof window.AchyutamFirebase.getProjectsFromFirebase === 'function') {
         const cloudRes = await window.AchyutamFirebase.getProjectsFromFirebase();
-        if (cloudRes.success && Array.isArray(cloudRes.projects) && cloudRes.projects.length > 0) {
-          projects = cloudRes.projects;
-          try {
-            localStorage.setItem("achyutam_static_projects", JSON.stringify(projects));
-            localStorage.setItem("achyutam_projects_cache", JSON.stringify(projects));
-          } catch(e) {}
-          return projects;
+        if (cloudRes && cloudRes.success && Array.isArray(cloudRes.projects) && cloudRes.projects.length > 0) {
+          return cloudRes.projects;
         }
+      }
+      return null;
+    };
+
+    // 1. Try Cloud Firestore first
+    try {
+      const cloudProjects = await fetchCloud();
+      if (cloudProjects) {
+        try {
+          localStorage.setItem("achyutam_static_projects", JSON.stringify(cloudProjects));
+          localStorage.setItem("achyutam_projects_cache", JSON.stringify(cloudProjects));
+        } catch(e) {}
+        return cloudProjects;
       }
     } catch(err) {
       console.warn("Firestore getProjects error:", err);
     }
 
+    // 2. Local storage fallback
     try {
       const p1 = localStorage.getItem("achyutam_static_projects");
       const p2 = localStorage.getItem("achyutam_projects_cache");
@@ -191,6 +200,7 @@
       console.warn("Could not read projects from localStorage:", e);
     }
 
+    // 3. Static JSON fallback
     if (!projects || projects.length === 0) {
       try {
         let res = await fetch("./projects.json").catch(() => null);
@@ -393,15 +403,25 @@
     });
   }
 
-  document.addEventListener("DOMContentLoaded", injectProjectsIntoPage);
+  document.addEventListener("DOMContentLoaded", () => {
+    injectProjectsIntoPage();
+    // Retry 1.5 seconds later after Firebase ES module finishes loading
+    setTimeout(injectProjectsIntoPage, 1500);
+  });
   window.addEventListener("load", injectProjectsIntoPage);
   window.addEventListener("achyutam-projects-updated", injectProjectsIntoPage);
+  window.addEventListener("focus", injectProjectsIntoPage);
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === 'visible') {
+      injectProjectsIntoPage();
+    }
+  });
   window.addEventListener("storage", (e) => {
     if (e.key === "achyutam_static_projects" || e.key === "achyutam_projects_cache" || e.key === "achyutam_all_projects") {
       injectProjectsIntoPage();
     }
   });
 
-  // Auto-refresh project grids every 5 seconds for live cloud sync
+  // Auto-refresh project grids every 5 seconds for live cloud sync across all devices
   setInterval(injectProjectsIntoPage, 5000);
 })();
