@@ -4104,51 +4104,6 @@
       }
     }
 
-      try {
-        if (window.AchyutamFirebase && window.AchyutamFirebase.signUpWithEmailPassword) {
-          const res = await window.AchyutamFirebase.signUpWithEmailPassword(email, password, name);
-          if (res.success && res.needsVerification) {
-            // Show verification success banner & switch to signin tab
-            const toast = document.createElement('div');
-            toast.className = 'fixed top-20 right-6 z-[120] max-w-md bg-surface-container border border-primary text-on-surface px-5 py-4 rounded-xl shadow-2xl font-body text-xs flex flex-col gap-2 animate-bounce';
-            toast.innerHTML = `
-              <div class="flex items-center gap-2 text-primary font-bold text-sm">
-                <span class="material-symbols-outlined text-primary">mark_email_unread</span>
-                <span>Verification Email Sent!</span>
-              </div>
-              <p class="text-on-surface-variant leading-relaxed">
-                We've sent a verification link to <strong class="text-primary">${email}</strong>. Please check your inbox (and spam folder), click the link, and then sign in.
-              </p>
-            `;
-            document.body.appendChild(toast);
-            setTimeout(() => { toast.remove(); }, 8000);
-
-            // Switch to Sign In tab with helpful message
-            switchAuthTab('signin');
-            const signinEmail = document.getElementById('signin-email');
-            if (signinEmail) signinEmail.value = email;
-            const signinErr = document.getElementById('auth-signin-error');
-            if (signinErr) {
-              signinErr.innerHTML = `📧 <strong>Verification link sent to ${email}</strong><br>Please verify your email via the link sent to your inbox before signing in.`;
-              signinErr.classList.remove('hidden');
-            }
-            return;
-          } else if (errEl) {
-            errEl.textContent = '⚠️ ' + (res.error || 'Sign up failed');
-            errEl.classList.remove('hidden');
-            return;
-          }
-        }
-      } catch(err) {
-        if (errEl) { errEl.textContent = '⚠️ ' + (err.message || 'An error occurred during sign up.'); errEl.classList.remove('hidden'); }
-      } finally {
-        if (btnSubmit) {
-          btnSubmit.disabled = false;
-          btnSubmit.innerHTML = `<span>Create Account</span> <span class="material-symbols-outlined text-sm">arrow_forward</span>`;
-        }
-      }
-    }
-
     async function handleEmailSignIn(e) {
       e.preventDefault();
       const errEl = document.getElementById('auth-signin-error');

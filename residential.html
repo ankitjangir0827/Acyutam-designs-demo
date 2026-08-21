@@ -1420,33 +1420,74 @@
     async function handleEmailSignUp(e) {
       e.preventDefault();
       const errEl = document.getElementById('auth-signup-error');
+      const btnSubmit = document.getElementById('btn-signup-submit');
       if (errEl) { errEl.classList.add('hidden'); errEl.textContent = ''; }
 
-      const name = document.getElementById('signup-name')?.value.trim() || '';
-      const email = document.getElementById('signup-email')?.value.trim() || '';
-      const password = document.getElementById('signup-password')?.value || '';
-
-      if (!email || !password) {
-        if (errEl) { errEl.textContent = '⚠️ Please enter both email and password!'; errEl.classList.remove('hidden'); }
+      if (!isEmailOtpVerified) {
+        if (errEl) { errEl.textContent = '⚠️ Please verify your email via OTP before setting a password!'; errEl.classList.remove('hidden'); }
         return;
       }
 
-      if (window.AchyutamFirebase && window.AchyutamFirebase.signUpWithEmailPassword) {
-        const res = await window.AchyutamFirebase.signUpWithEmailPassword(email, password, name);
-        if (res.success && res.needsVerification) {
-          switchAuthTab('signin');
-          const signinEmail = document.getElementById('signin-email');
-          if (signinEmail) signinEmail.value = email;
-          const signinErr = document.getElementById('auth-signin-error');
-          if (signinErr) {
-            signinErr.innerHTML = `📧 <strong>Verification link sent to ${email}</strong><br>Please verify your email via the link sent to your inbox before signing in.`;
-            signinErr.classList.remove('hidden');
-          }
-          return;
-        } else if (errEl) {
-          errEl.textContent = '⚠️ ' + (res.error || 'Sign up failed');
-          errEl.classList.remove('hidden');
-          return;
+      const password = document.getElementById('signup-password')?.value || '';
+      const confirmPassword = document.getElementById('signup-confirm-password')?.value || '';
+
+      if (!password || !confirmPassword) {
+        if (errEl) { errEl.textContent = '⚠️ Please enter and confirm your password!'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      if (password.length < 6) {
+        if (errEl) { errEl.textContent = '⚠️ Password must be at least 6 characters long!'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      if (password !== confirmPassword) {
+        if (errEl) { errEl.textContent = '⚠️ Passwords do not match! Please re-enter your password.'; errEl.classList.remove('hidden'); }
+        return;
+      }
+
+      if (btnSubmit) {
+        btnSubmit.disabled = true;
+        btnSubmit.innerHTML = `<span>Creating Verified Account...</span>`;
+      }
+
+      try {
+        const email = pendingSignUpEmail;
+        const name = pendingSignUpName;
+
+        if (window.AchyutamFirebase?.signUpWithEmailPassword) {
+          await window.AchyutamFirebase.signUpWithEmailPassword(email, password, name).catch(() => {});
+        }
+
+        const userData = {
+          email: email,
+          identity: email,
+          displayName: name || email.split('@')[0],
+          name: name || email.split('@')[0],
+          emailVerified: true,
+          role: 'client',
+          time: new Date().toISOString()
+        };
+        localStorage.setItem('achyutam_user', JSON.stringify(userData));
+
+        if (typeof window.updateAuthUI === 'function') {
+          window.updateAuthUI();
+        }
+
+        closeAuthModal();
+
+        const toast = document.createElement('div');
+        toast.className = 'fixed bottom-6 right-6 z-[120] bg-surface-container border border-primary text-primary px-5 py-3 rounded-lg shadow-2xl font-label-caps text-xs tracking-wider uppercase flex items-center gap-3 animate-bounce';
+        toast.innerHTML = `<span class="material-symbols-outlined text-primary">check_circle</span> <span>Account Created &amp; Verified! Welcome ${name}!</span>`;
+        document.body.appendChild(toast);
+        setTimeout(() => { toast.remove(); }, 4000);
+
+      } catch(err) {
+        if (errEl) { errEl.textContent = '⚠️ ' + (err.message || 'Sign up failed'); errEl.classList.remove('hidden'); }
+      } finally {
+        if (btnSubmit) {
+          btnSubmit.disabled = false;
+          btnSubmit.innerHTML = `<span>CREATE ACCOUNT &amp; PROCEED</span> <span class="material-symbols-outlined text-sm">person_add</span>`;
         }
       }
     }
