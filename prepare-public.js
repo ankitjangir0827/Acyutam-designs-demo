@@ -9,9 +9,15 @@ const rootDir = __dirname;
 const publicDir = path.join(rootDir, 'public');
 
 if (fs.existsSync(publicDir)) {
-  fs.rmSync(publicDir, { recursive: true, force: true });
+  try {
+    fs.rmSync(publicDir, { recursive: true, force: true });
+  } catch (err) {
+    console.warn("Notice: public directory rmSync skipped, overwriting assets directly.");
+  }
 }
-fs.mkdirSync(publicDir, { recursive: true });
+if (!fs.existsSync(publicDir)) {
+  fs.mkdirSync(publicDir, { recursive: true });
+}
 
 function copyRecursiveSync(src, dest) {
   const exists = fs.existsSync(src);

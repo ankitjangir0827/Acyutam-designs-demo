@@ -3,25 +3,29 @@
 @tailwind utilities;
 
 @layer utilities {
-  /* Architectural Sharp Edges Enforcement for Cards, Modals, Badges, and Buttons */
+  /* Universal Architectural Sharp Edges Enforcement for Cards, Images, Badges & Modals */
   .project-card-item,
+  .project-card-item *,
+  .project-card-item img,
   .custom-dynamic-card,
+  .custom-dynamic-card *,
+  .custom-dynamic-card img,
   .glass-panel,
   .glass-panel-hero,
   .it-card-container,
+  .it-card-container *,
   .card-tag-badge,
   .card-slideshow-container,
-  #project-detail-modal > div,
-  #auth-modal > div,
+  .card-slideshow-container *,
+  #project-detail-modal div,
+  #auth-modal div,
   .thumbnail-item,
   .image-container,
   .aspect-\[4\/3\],
+  .aspect-\[4\/3\] *,
   .aspect-\[16\/9\],
-  .aspect-square,
-  button,
-  input,
-  select,
-  .btn {
+  .aspect-\[16\/9\] *,
+  .aspect-square {
     border-radius: 0px !important;
   }
 

@@ -73,6 +73,31 @@ window.removeAIFingerprint = function(codeText) {
       font-weight: 400 !important;
     }
 
+    /* Universal Architectural Sharp Edges Enforcement */
+    .project-card-item,
+    .project-card-item *,
+    .project-card-item img,
+    .custom-dynamic-card,
+    .custom-dynamic-card *,
+    .custom-dynamic-card img,
+    .glass-panel,
+    .glass-panel-hero,
+    .it-card-container,
+    .it-card-container *,
+    .card-tag-badge,
+    .card-slideshow-container,
+    .card-slideshow-container *,
+    #project-detail-modal div,
+    #auth-modal div,
+    .thumbnail-item,
+    .image-container,
+    .aspect-\[4\/3\],
+    .aspect-\[4\/3\] *,
+    .aspect-\[16\/9\],
+    .aspect-\[16\/9\] * {
+      border-radius: 0px !important;
+    }
+
     /* Hardware Acceleration & Smooth 60 FPS Rendering */
     .glass-panel,
     .glass-panel-hero,
