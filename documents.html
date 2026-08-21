@@ -142,42 +142,62 @@
       <!-- Header Navigation Bar -->
       <nav class="hidden lg:flex items-center gap-8 text-[11px] font-medium tracking-widest">
         <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html">HOME</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="about.html">ABOUT US</a>
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="index.html#services">SERVICES</a>
         
         <!-- Category Dropdown -->
         <div class="relative group cursor-pointer py-2">
-          <a class="text-primary font-bold border-b-2 border-primary pb-0.5 transition-all duration-300 flex items-center gap-1" href="index.html#portfolio">
+          <a class="text-on-surface hover:text-primary transition-all duration-300 flex items-center gap-1" href="index.html#portfolio">
             PROJECTS <span class="material-symbols-outlined text-xs">expand_more</span>
           </a>
-          <div class="absolute top-full left-0 w-56 bg-surface-container-low border border-outline-variant/40 p-2 shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all rounded-sm flex flex-col gap-1 z-50">
+          <div class="absolute top-full left-0 w-60 bg-surface-container-low border border-outline-variant/40 p-2 shadow-2xl opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition-all rounded-sm flex flex-col gap-1 z-50">
+            <a href="ongoing.html" class="p-2 hover:bg-primary/10 text-primary hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center justify-between">
+              <span>Ongoing Projects</span>
+              <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">12</span>
+            </a>
+            <a href="completed.html" class="p-2 hover:bg-primary/10 text-primary hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center justify-between">
+              <span>Completed Projects</span>
+              <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">20</span>
+            </a>
+            <a href="upcoming.html" class="p-2 hover:bg-primary/10 text-primary hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold flex items-center justify-between">
+              <span>Upcoming Projects</span>
+              <span class="bg-primary/20 text-primary text-[10px] px-1.5 py-0.5 rounded font-mono">6</span>
+            </a>
+            <div class="border-t border-outline-variant/30 my-1"></div>
             <a href="residential.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Residential Projects (25)</a>
             <a href="industrial.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Industrial Projects (2)</a>
             <a href="commercial.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Commercial Complexes (2)</a>
             <a href="assembly.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm">Assembly &amp; Temples (3)</a>
-            <div class="border-t border-outline-variant/30 my-1"></div>
-            <a href="upcoming.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Upcoming Projects (6)</a>
-            <a href="ongoing.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Ongoing Projects (12)</a>
-            <a href="completed.html" class="p-2 hover:bg-primary/10 hover:text-primary text-xs tracking-wider transition-colors rounded-sm font-bold">Completed Projects (20)</a>
           </div>
         </div>
 
+        <a class="text-on-surface hover:text-primary transition-all duration-300" href="about.html">ABOUT US</a>
         <a class="text-on-surface hover:text-primary transition-all duration-300" href="careers.html">CAREERS</a>
-        <a class="text-on-surface hover:text-primary transition-all duration-300" href="contact.html">CONTACT US</a>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+        <!-- 1. Theme Toggle -->
         <button id="theme-toggle-btn" onclick="toggleTheme()" class="theme-toggle-btn hf-dn-switch cursor-pointer shrink-0" title="Toggle Day and Night Theme" aria-label="Toggle Day and Night Theme"></button>
+        
+        <!-- 2. Sign In / Account Box -->
         <button onclick="openAuthModal()" id="auth-header-btn" class="flex items-center justify-center gap-1.5 text-on-surface hover:text-primary transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 px-2.5 py-1.5 border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low/60 rounded-sm shadow-sm" title="Sign In / Client Account">
           <svg class="w-5 h-5 fill-current text-primary hover:scale-110 transition-transform shrink-0" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.03 0-4.43-.82-6.14-2.88C7.55 15.8 9.68 15 12 15s4.45.8 6.14 2.12C16.43 19.18 14.03 20 12 20z"/></svg>
           <span id="auth-btn-text" class="hidden sm:inline font-bold">SIGN IN</span>
         </button>
 
-        <!-- My Enquiries / Admin Portal Header Status Button -->
+        <!-- 3. My Enquiries / Admin Portal Header Status Button -->
         <a href="contact.html" id="header-my-enquiries-btn" class="hidden flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm">
           <span class="material-symbols-outlined text-base text-primary">task_alt</span>
           <span id="my-enquiries-label" class="hidden md:inline font-semibold">MY MESSAGES</span>
           <span id="my-enquiries-badge" class="hidden bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5">0</span>
         </a>
+
+        <!-- 4. CONTACT US Button Box in Right Corner of Header -->
+        <a href="contact.html" id="header-enquire-btn" class="border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3.5 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm font-bold flex items-center justify-center gap-1" title="Contact Us Directly">
+          <span class="material-symbols-outlined text-sm text-primary">mail</span>
+          <span>CONTACT US</span>
+        </a>
+
+        <!-- Mobile Hamburger -->
         <button id="animated-hamburger-btn" onclick="toggleMainNavigation()" class="lg:hidden relative shrink-0 w-10 h-10 flex flex-col justify-center items-center gap-1.5 p-2 focus:outline-none z-50 group border border-outline-variant/40 rounded-full hover:border-primary/50 transition-colors bg-surface-container/40 cursor-pointer" aria-label="Toggle Navigation Menu">
           <span class="w-5 h-0.5 bg-primary rounded-full transition-all duration-300 transform origin-center" id="burg-line-1"></span>
           <span class="w-5 h-0.5 bg-on-surface rounded-full transition-all duration-300" id="burg-line-2"></span>

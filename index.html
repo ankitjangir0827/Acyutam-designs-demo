@@ -4097,10 +4097,11 @@
       const headerMyEnquiriesBtn = document.getElementById('header-my-enquiries-btn');
       const labelSpan = document.getElementById('my-enquiries-label');
       const badge = document.getElementById('my-enquiries-badge');
-      const enquireBtn = document.getElementById('header-enquire-btn');
-      
-      // Always remove extra duplicate right-side button so ONLY 1 CONTACT US remains in header
-      if (enquireBtn) enquireBtn.style.display = 'none';
+      // Always keep CONTACT US button visible in header right side
+      if (enquireBtn) {
+        enquireBtn.classList.remove('hidden');
+        enquireBtn.style.display = 'inline-flex';
+      }
 
       if (userStr && authBtnText) {
         try {

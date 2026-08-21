@@ -1362,10 +1362,117 @@ function updateToggleButtons() {
   }
 }
 
+// Global Unified Header Auth UI Controller
+window.updateAuthUI = async function () {
+  const userStr = localStorage.getItem('achyutam_user');
+  const authBtnText = document.getElementById('auth-btn-text');
+  const authHeaderBtn = document.getElementById('auth-header-btn');
+  const headerMyEnquiriesBtn = document.getElementById('header-my-enquiries-btn');
+  const labelSpan = document.getElementById('my-enquiries-label');
+  const badge = document.getElementById('my-enquiries-badge');
+  const enquireBtn = document.getElementById('header-enquire-btn');
+
+  // Always keep CONTACT US button box visible in the right corner
+  if (enquireBtn) {
+    enquireBtn.classList.remove('hidden');
+    enquireBtn.style.display = 'inline-flex';
+  }
+
+  if (userStr && authBtnText) {
+    try {
+      const user = JSON.parse(userStr);
+      const userEmail = (user.email || user.identity || '').toLowerCase().trim();
+      const isAdmin = userEmail === 'ankitjangir529@gmail.com' || user.role === 'admin' || user.isAdmin === true;
+      
+      let rawName = user.displayName || user.name || userEmail.split('@')[0] || 'USER';
+      rawName = rawName.replace(/\(Admin\)/gi, '').trim();
+      let firstName = rawName.split(/[\s._]+/)[0].toUpperCase();
+      if (!firstName || firstName.length === 0) firstName = 'USER';
+
+      authBtnText.textContent = firstName;
+      if (authHeaderBtn) {
+        authHeaderBtn.className = 'flex items-center justify-center gap-1.5 text-on-surface hover:text-primary transition-all font-label-caps text-xs tracking-widest uppercase cursor-pointer shrink-0 px-2.5 py-1.5 border border-outline-variant/40 hover:border-primary/60 bg-surface-container-low/60 rounded-sm shadow-sm';
+      }
+
+      if (isAdmin) {
+        if (headerMyEnquiriesBtn) {
+          headerMyEnquiriesBtn.classList.remove('hidden');
+          headerMyEnquiriesBtn.style.display = 'inline-flex';
+          headerMyEnquiriesBtn.href = 'admin-dashboard.html';
+          headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm';
+        }
+        if (labelSpan) {
+          labelSpan.textContent = 'ADMIN PORTAL';
+          labelSpan.className = 'text-on-surface font-semibold tracking-widest';
+        }
+
+        let pendingCount = 0;
+        if (window.AchyutamFirebase) {
+          if (typeof window.AchyutamFirebase.getRecentEnquiriesForAdmin === 'function') {
+            const res = await window.AchyutamFirebase.getRecentEnquiriesForAdmin();
+            if (res.success && res.data) {
+              pendingCount = res.data.length;
+            }
+          }
+        }
+
+        if (badge) {
+          badge.textContent = pendingCount.toString();
+          if (pendingCount > 0) {
+            badge.classList.remove('hidden');
+            badge.style.display = 'inline-block';
+            badge.className = 'bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5';
+          } else {
+            badge.classList.add('hidden');
+            badge.style.display = 'none';
+          }
+        }
+      } else {
+        // Logged in Client State
+        if (headerMyEnquiriesBtn) {
+          headerMyEnquiriesBtn.classList.remove('hidden');
+          headerMyEnquiriesBtn.style.display = 'inline-flex';
+          headerMyEnquiriesBtn.href = 'contact.html';
+          headerMyEnquiriesBtn.className = 'flex items-center gap-1.5 border border-outline-variant/60 bg-surface-container-low/80 hover:bg-surface text-on-surface hover:text-primary px-3 py-1.5 transition-all font-label-caps text-xs tracking-widest uppercase rounded-sm cursor-pointer shrink-0 shadow-sm';
+        }
+        if (labelSpan) {
+          labelSpan.textContent = 'MY MESSAGES';
+          labelSpan.className = 'text-on-surface font-semibold tracking-widest';
+        }
+
+        if (window.AchyutamFirebase?.getUserEnquiries) {
+          const res = await window.AchyutamFirebase.getUserEnquiries();
+          const list = res.enquiries || res.bookings || [];
+          if (badge && res.success) {
+            badge.textContent = list.length.toString();
+            if (list.length > 0) {
+              badge.classList.remove('hidden');
+              badge.style.display = 'inline-block';
+              badge.className = 'bg-primary text-black text-[10px] font-bold px-1.5 py-0.5 rounded-full ml-0.5';
+            }
+          }
+        }
+      }
+    } catch(e) {
+      console.error("updateAuthUI error:", e);
+    }
+  } else {
+    // Logged Out State
+    if (authBtnText) authBtnText.textContent = 'SIGN IN';
+    if (headerMyEnquiriesBtn) {
+      headerMyEnquiriesBtn.classList.add('hidden');
+      headerMyEnquiriesBtn.style.display = 'none';
+    }
+  }
+};
+
 // Auto Initialize & Video Visibility Guard
 document.addEventListener("DOMContentLoaded", () => {
   updateToggleButtons();
   setTimeout(updateToggleButtons, 200);
+  if (typeof window.updateAuthUI === "function") {
+    window.updateAuthUI();
+  }
   initCurvedScrollTimeline();
 
   const preloaderVideo = document.getElementById("preloader-video");
