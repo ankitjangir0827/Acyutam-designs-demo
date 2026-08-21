@@ -952,28 +952,6 @@ window.removeAIFingerprint = function(codeText) {
       color: #d97706 !important;
     }
 
-    /* GLOBAL HEADER ENHANCEMENT: MIDDLE & RIGHT PORTION FONT SIZES */
-    header nav,
-    header #desktop-nav,
-    header nav a,
-    header #desktop-nav a {
-      font-size: 0.875rem !important; /* 14px vs 11px */
-      font-weight: 700 !important;
-      letter-spacing: 0.1em !important;
-    }
-
-    #auth-header-btn,
-    #header-my-enquiries-btn,
-    #header-enquire-btn {
-      font-size: 0.8125rem !important; /* 13px vs 10px */
-      font-weight: 800 !important;
-      letter-spacing: 0.1em !important;
-      padding-top: 0.45rem !important;
-      padding-bottom: 0.45rem !important;
-      padding-left: 0.85rem !important;
-      padding-right: 0.85rem !important;
-    }
-
     html.light-mode #auth-modal,
     html.light-mode #project-modal {
       background: rgba(15, 23, 42, 0.4) !important;
