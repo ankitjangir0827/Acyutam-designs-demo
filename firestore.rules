@@ -70,6 +70,13 @@ service cloud.firestore {
       allow read, update, delete: if isAdmin();
     }
 
+    // 7. Email OTPs Collection: /email_otps/{emailId}
+    // Allow creation, reading & updating for OTP verification during Sign Up
+    match /email_otps/{emailId} {
+      allow create, read, update: if true;
+      allow delete: if isAdmin();
+    }
+
     // Default deny all unlisted paths
     match /{document=**} {
       allow read, write: if false;
