@@ -1,1 +1,0 @@
-import './scripts/migrateToAcyutamPremo.js';
