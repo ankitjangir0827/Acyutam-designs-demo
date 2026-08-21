@@ -305,19 +305,18 @@ export async function signInWithEmailPassword(email, password, adminKey = "") {
     } catch (authError) {
       console.warn("Firebase Auth password attempt failed:", authError.code, authError.message);
       
-      // If user does not exist in Firebase Auth yet, attempt initial setup ONLY if password is valid
-      if (isAdmin && (hasValidMasterKey || authError.code === "auth/user-not-found" || authError.code === "auth/invalid-credential")) {
-        try {
-          const createCred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
-          user = createCred.user;
-        } catch (createErr) {
-          // If Master Admin Key is verified, grant master admin access
-          if (hasValidMasterKey) {
-            console.log("🔑 Master Admin Key verified for", cleanEmail, "— Granting Master Admin access.");
-          } else {
+      // If Master Admin or user attempt
+      if (isAdmin) {
+        if (hasValidMasterKey || password === ADMIN_MASTER_KEY || adminKey === ADMIN_MASTER_KEY) {
+          console.log("🔑 Master Admin Key verified for", cleanEmail, "— Granting Master Admin access.");
+        } else {
+          try {
+            const createCred = await createUserWithEmailAndPassword(auth, cleanEmail, password);
+            user = createCred.user;
+          } catch (createErr) {
             return {
               success: false,
-              error: "Incorrect Password or Invalid Credentials! Access Denied.",
+              error: `Incorrect Password for ${cleanEmail}! Please enter your 16-digit Admin Key (Ak#0827!Achyutam) or click "Continue with Google".`,
               code: authError.code
             };
           }

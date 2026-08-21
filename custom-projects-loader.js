@@ -66,15 +66,18 @@
 
     if (!projects || projects.length === 0) {
       try {
-        const res = await fetch("./projects.json");
-        if (res.ok) {
+        let res = await fetch("./projects.json").catch(() => null);
+        if (!res || !res.ok) {
+          res = await fetch("/projects.json").catch(() => null);
+        }
+        if (res && res.ok) {
           projects = await res.json();
           try {
             localStorage.setItem("achyutam_projects_cache", JSON.stringify(projects));
           } catch(e) {}
         }
       } catch (err) {
-        console.warn("Fetch ./projects.json error:", err);
+        console.warn("Fetch projects.json error:", err);
       }
     }
     return projects || [];
