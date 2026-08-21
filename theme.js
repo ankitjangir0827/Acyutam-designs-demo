@@ -209,14 +209,42 @@ window.removeAIFingerprint = function(codeText) {
       color: #261C19 !important;
     }
 
-    header#main-header > div,
+    /* Header Full Width Edge-to-Edge Guarantee */
+    header,
+    header#main-header,
     .header-glass,
     header.header-glass,
     header.sticky-header {
-      background: rgba(26, 20, 18, 0.78) !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      background: rgba(26, 20, 18, 0.92) !important;
       backdrop-filter: blur(24px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(24px) saturate(180%) !important;
       border-bottom: 1px solid rgba(245, 235, 230, 0.15) !important;
+    }
+
+    header > div,
+    header#main-header > div,
+    .header-glass > div {
+      width: 100% !important;
+      max-width: 100% !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      padding-left: 1.5rem !important;
+      padding-right: 1.5rem !important;
+    }
+
+    @media (min-width: 768px) {
+      header > div,
+      header#main-header > div,
+      .header-glass > div {
+        padding-left: 2.5rem !important;
+        padding-right: 2.5rem !important;
+      }
     }
 
     html.light-mode header#main-header,
@@ -340,11 +368,19 @@ window.removeAIFingerprint = function(codeText) {
     }
 
     /* Global Glass & Backdrop Blur Styling */
-    header#main-header > div,
+    /* Global Glass & Backdrop Blur Styling */
+    header,
+    header#main-header,
     .header-glass,
     header.header-glass,
     header.sticky-header {
-      background: rgba(45, 46, 46, 0.65) !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      left: 0 !important;
+      right: 0 !important;
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      background: rgba(26, 20, 18, 0.92) !important;
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
       border-bottom: 1px solid rgba(156, 159, 159, 0.18) !important;
