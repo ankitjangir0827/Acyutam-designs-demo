@@ -198,7 +198,7 @@ window.removeAIFingerprint = function(codeText) {
       backdrop-filter: blur(20px) saturate(180%) !important;
       -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
       border-color: rgba(245, 235, 230, 0.25) !important;
-      border-radius: 4px !important;
+      border-radius: 0px !important;
       color: #F5EBE6 !important;
     }
     html.light-mode .card-tag-badge {

@@ -244,17 +244,17 @@
     const imgsArg = JSON.stringify(uniqueImgs).replace(/"/g, '&quot;');
 
     return `
-      <div onclick="openProjectModal('${title.replace(/'/g, "\\'")}', '${tag.replace(/'/g, "\\'")}', '${cost.replace(/'/g, "\\'")}', '${location.replace(/'/g, "\\'")}', '${specs.replace(/'/g, "\\'")}', ${imgsArg})" class="project-card-item custom-dynamic-card flex flex-col group cursor-pointer border border-primary/50 p-4 bg-surface-container-low hover:border-primary transition-all rounded-sm shadow-xl relative">
-        <div class="absolute top-2 left-2 bg-primary text-background font-label-caps text-[9px] font-bold px-2 py-0.5 rounded z-30 uppercase tracking-widest shadow">
+      <div onclick="openProjectModal('${title.replace(/'/g, "\\'")}', '${tag.replace(/'/g, "\\'")}', '${cost.replace(/'/g, "\\'")}', '${location.replace(/'/g, "\\'")}', '${specs.replace(/'/g, "\\'")}', ${imgsArg})" class="project-card-item custom-dynamic-card flex flex-col group cursor-pointer border border-primary/50 p-4 bg-surface-container-low hover:border-primary transition-all rounded-none shadow-xl relative">
+        <div class="absolute top-2 left-2 bg-primary text-background font-label-caps text-[9px] font-bold px-2 py-0.5 rounded-none z-30 uppercase tracking-widest shadow">
           PROJECT SHOWCASE
         </div>
-        <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4">
+        <div class="aspect-[4/3] w-full overflow-hidden border border-outline-variant/30 relative mb-4 rounded-none">
           <div class="image-blur-vignette pointer-events-none"></div>
           <img alt="${title}" class="w-full h-full object-cover img-grayscale-hover" src="${img1}" onerror="this.src='https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80'"/>
-          <div class="absolute bottom-0 left-0 card-tag-badge border-t border-r border-outline-variant/30 px-3 py-1.5 z-20">
+          <div class="absolute bottom-0 left-0 card-tag-badge border-t border-r border-outline-variant/30 px-3 py-1.5 z-20 rounded-none">
             <span class="font-label-caps text-[10px] text-primary font-bold">${tag}</span>
           </div>
-          <div class="absolute top-3 right-3 bg-primary text-background font-label-caps text-[10px] font-bold px-3 py-1 rounded-full shadow-lg z-20">
+          <div class="absolute top-3 right-3 bg-primary text-background font-label-caps text-[10px] font-bold px-3 py-1 rounded-none shadow-lg z-20">
             ${cost}
           </div>
         </div>
