@@ -370,7 +370,31 @@
     </div>
   </footer>
 
+  <script type="module" src="firebase-config.js"></script>
   <script>
+    function autoFillCareerForm() {
+      const raw = localStorage.getItem('achyutam_user');
+      if (!raw) return;
+      try {
+        const user = JSON.parse(raw);
+        const nameInput = document.getElementById("app-name");
+        const emailInput = document.getElementById("app-email");
+        const phoneInput = document.getElementById("app-phone");
+
+        if (user) {
+          if (nameInput && !nameInput.value && (user.displayName || user.name)) {
+            nameInput.value = user.displayName || user.name;
+          }
+          if (emailInput && !emailInput.value && user.email) {
+            emailInput.value = user.email;
+          }
+          if (phoneInput && !phoneInput.value && user.phone) {
+            phoneInput.value = user.phone;
+          }
+        }
+      } catch(e) {}
+    }
+
     async function submitCareerApplication(e) {
       e.preventDefault();
       const name = document.getElementById("app-name").value.trim();
@@ -414,13 +438,15 @@
         console.error("Save application error:", err);
       }
 
-      alert(`✅ Thank you ${name}! Your application for "${role}" has been submitted to ACHYUTAM BUILDER® HR Board.`);
+      alert(`✅ Thank you ${name}! Your application for "${role}" has been submitted to ACHYUTAM BUILDER®. Redirecting to Home Page...`);
       document.getElementById("career-job-form").reset();
-      if (btn) {
-        btn.disabled = false;
-        btn.innerHTML = `SUBMIT APPLICATION →`;
-      }
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1200);
     }
+
+    document.addEventListener("DOMContentLoaded", autoFillCareerForm);
+    window.addEventListener("load", autoFillCareerForm);
   </script>
 
 </body>

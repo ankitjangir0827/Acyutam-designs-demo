@@ -306,7 +306,7 @@
           <span class="material-symbols-outlined text-primary text-2xl">mark_email_read</span>
         </div>
 
-        <form id="contact-form" onsubmit="event.preventDefault(); alert('Thank you! Your message has been sent successfully to ACHYUTAM BUILDER. Our team will contact you shortly.');">
+        <form id="contact-form" onsubmit="handleContactSubmit(event)">
           <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
             <div>
               <label for="user-name" class="block font-label-caps text-xs text-on-surface-variant uppercase mb-2 flex items-center gap-1.5 font-bold">
@@ -349,7 +349,7 @@
             <textarea required id="user-message" rows="4" placeholder="Tell us about your plot size, location, estimated budget, or structural design requirements..." class="w-full bg-surface-container-lowest border border-outline-variant/50 focus:border-primary text-on-surface p-4 font-body-md text-sm outline-none transition-all rounded-md"></textarea>
           </div>
 
-          <button type="submit" class="w-full py-4 bg-primary text-background font-bold tracking-widest uppercase hover:bg-primary-container transition-all cursor-pointer shadow-xl text-xs flex items-center justify-center gap-2 rounded-md">
+          <button type="submit" id="contact-submit-btn" class="w-full py-4 bg-primary text-background font-bold tracking-widest uppercase hover:bg-primary-container transition-all cursor-pointer shadow-xl text-xs flex items-center justify-center gap-2 rounded-md">
             <span class="material-symbols-outlined text-base">send</span> SEND MESSAGE TO ACHYUTAM BUILDER®
           </button>
         </form>
@@ -471,7 +471,63 @@
       </div>
       <p class="text-center md:text-right text-[11px] opacity-70">© 2026 ACHYUTAM BUILDER®. All Rights Reserved.</p>
     </div>
-  </footer>
+  <script type="module" src="firebase-config.js"></script>
+  <script>
+    function autoFillUserData() {
+      const raw = localStorage.getItem('achyutam_user');
+      if (!raw) return;
+      try {
+        const user = JSON.parse(raw);
+        const nameInput = document.getElementById('user-name');
+        const emailInput = document.getElementById('user-email');
+        const phoneInput = document.getElementById('user-phone');
 
+        if (user) {
+          if (nameInput && !nameInput.value && (user.displayName || user.name)) {
+            nameInput.value = user.displayName || user.name;
+          }
+          if (emailInput && !emailInput.value && user.email) {
+            emailInput.value = user.email;
+          }
+          if (phoneInput && !phoneInput.value && user.phone) {
+            phoneInput.value = user.phone;
+          }
+        }
+      } catch(e) {}
+    }
+
+    async function handleContactSubmit(e) {
+      e.preventDefault();
+      const btn = document.getElementById('contact-submit-btn');
+      const name = document.getElementById('user-name')?.value.trim() || '';
+      const phone = document.getElementById('user-phone')?.value.trim() || '';
+      const email = document.getElementById('user-email')?.value.trim() || '';
+      const typology = document.getElementById('user-typology')?.value || 'Architectural Design';
+      const message = document.getElementById('user-message')?.value.trim() || '';
+
+      if (btn) {
+        btn.disabled = true;
+        btn.innerHTML = `<span class="material-symbols-outlined text-base animate-spin">sync</span> SENDING INQUIRY TO FIRESTORE...`;
+      }
+
+      try {
+        const payload = { name, phone, email, typology, message };
+        if (window.AchyutamFirebase && window.AchyutamFirebase.saveEnquiryToFirebase) {
+          const res = await window.AchyutamFirebase.saveEnquiryToFirebase(payload);
+          console.log("🔥 Contact enquiry save result:", res);
+        }
+      } catch(err) {
+        console.warn("Save enquiry error:", err);
+      }
+
+      alert('✅ Thank you ' + (name || 'Client') + '! Your project proposal has been sent successfully to ACHYUTAM BUILDER®. Redirecting to Home Page...');
+      setTimeout(() => {
+        window.location.href = "index.html";
+      }, 1200);
+    }
+
+    document.addEventListener('DOMContentLoaded', autoFillUserData);
+    window.addEventListener('load', autoFillUserData);
+  </script>
 </body>
 </html>
