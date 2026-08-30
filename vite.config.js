@@ -6,7 +6,7 @@ function copyStaticFoldersPlugin() {
   return {
     name: 'copy-static-folders',
     closeBundle() {
-      const folders = ['home', 'fonts', 'icons'];
+      const folders = ['home', 'fonts', 'icons', 'media'];
       folders.forEach(folder => {
         const src = resolve(__dirname, folder);
         const dest = resolve(__dirname, 'dist', folder);

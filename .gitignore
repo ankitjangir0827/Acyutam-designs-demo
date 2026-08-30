@@ -4,3 +4,4 @@ dist-ssr/
 .vercel/
 .DS_Store
 *.log
+gemini-code-*.html
