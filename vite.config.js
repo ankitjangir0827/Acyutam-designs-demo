@@ -41,7 +41,6 @@ export default defineConfig({
         commercial: resolve(__dirname, 'commercial.html'),
         assembly: resolve(__dirname, 'assembly.html'),
         careers: resolve(__dirname, 'careers.html'),
-        achyutam: resolve(__dirname, 'achyutam.html'),
         business: resolve(__dirname, 'business.html'),
       },
     },

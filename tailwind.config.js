@@ -2,7 +2,6 @@
 export default {
   content: [
     "./index.html",
-    "./achyutam.html",
     "./residential.html",
     "./commercial.html",
     "./industrial.html",
