@@ -49,6 +49,9 @@ function copyStaticFoldersPlugin() {
 export default defineConfig({
   root: './',
   plugins: [copyStaticFoldersPlugin()],
+  css: {
+    postcss: false,
+  },
   build: {
     outDir: 'dist',
     rollupOptions: {
@@ -66,5 +69,8 @@ export default defineConfig({
   server: {
     port: 3000,
     open: true,
+    hmr: {
+      overlay: false,
+    },
   },
 });

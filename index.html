@@ -719,239 +719,192 @@
         <!-- ========================================================================= -->
         <!-- 01. SECTION 01: HERO SECTION (SLIDESHOW WITH DUAL-SPLIT CURTAIN)          -->
         <!-- ========================================================================= -->
-        <section id="hero" class="relative min-h-[140vh] w-full overflow-hidden bg-[#24301e] select-none">
+        <section id="hero" class="relative min-h-screen w-full overflow-hidden bg-[#EDE5DC] text-[#2D241E] select-none flex flex-col justify-between pt-24 sm:pt-28 md:pt-32 pb-6 px-4 sm:px-8 md:px-12 lg:px-16">
             <!-- ID Badge -->
-            <span class="element-id-badge absolute top-28 left-8 z-30">#SEC-01-HERO</span>
+            <span class="element-id-badge absolute top-28 left-8 z-30 opacity-70">#SEC-01-HERO</span>
 
-            <!-- Hero Split Container (Dual Left/Right Symmetrical Panels Dividing from the Middle) -->
-            <div id="hero-split-container" class="sticky top-0 h-screen w-full overflow-hidden z-20 will-change-transform">
+            <!-- ================================================================= -->
+            <!-- ORGANIC CANYON / TERRACOTTA CURVED SHAPE ACCENTS (REFERENCE ART)  -->
+            <!-- ================================================================= -->
+            <!-- Top Right Organic Curved Terracotta Blob -->
+            <div class="absolute -top-16 -right-16 w-[360px] sm:w-[480px] md:w-[620px] h-[340px] sm:h-[460px] md:h-[580px] bg-[#B87352] rounded-[48%_52%_62%_38%_/_54%_45%_55%_46%] pointer-events-none z-0 opacity-95 transition-all duration-700"></div>
+
+            <!-- Bottom Left Organic Curved Terracotta Blob -->
+            <div class="absolute -bottom-20 -left-20 w-[380px] sm:w-[500px] md:w-[660px] h-[360px] sm:h-[480px] md:h-[620px] bg-[#C48265] rounded-[58%_42%_48%_52%_/_42%_58%_42%_58%] pointer-events-none z-0 opacity-90 transition-all duration-700"></div>
+
+            <!-- Subtle Warm Ambient Glow Filter -->
+            <div class="absolute inset-0 bg-radial-gradient from-transparent via-[#EDE5DC]/40 to-[#EDE5DC] pointer-events-none z-0"></div>
+
+            <!-- ================================================================= -->
+            <!-- MAIN HERO CANYON ARCHITECTURAL CARD DECK & FLOATING GLASS CONTROLS -->
+            <!-- ================================================================= -->
+            <div class="relative z-10 w-full max-w-[1580px] mx-auto flex-1 flex flex-col justify-center my-auto">
                 
-                <!-- Left Half Panel Slideshow -->
-                <div id="hero-split-left" class="absolute top-0 left-0 h-full w-1/2 overflow-hidden will-change-transform z-10">
-                    <div id="hero-slides-left" class="relative w-full h-full">
-                        <!-- Slide 1 (Active) -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100 z-10">
-                            <img src="./media/hero/herobg.jpg" alt="Achyutam Hero 1" class="hero-slide-img absolute top-0 left-0 h-full w-[100vw] max-w-none object-cover object-left will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg2.jpeg" alt="Achyutam Hero 2" class="hero-slide-img absolute top-0 left-0 h-full w-[100vw] max-w-none object-cover object-left will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg3.jpeg" alt="Achyutam Hero 3" class="hero-slide-img absolute top-0 left-0 h-full w-[100vw] max-w-none object-cover object-left will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 4 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg4.jpeg" alt="Achyutam Hero 4" class="hero-slide-img absolute top-0 left-0 h-full w-[100vw] max-w-none object-cover object-left will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 5 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg5.jpeg" alt="Achyutam Hero 5" class="hero-slide-img absolute top-0 left-0 h-full w-[100vw] max-w-none object-cover object-left will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 6 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg6.jpeg" alt="Achyutam Hero 6" class="hero-slide-img absolute top-0 left-0 h-full w-[100vw] max-w-none object-cover object-left will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Right Half Panel Slideshow -->
-                <div id="hero-split-right" class="absolute top-0 right-0 h-full w-1/2 overflow-hidden will-change-transform z-10">
-                    <div id="hero-slides-right" class="relative w-full h-full">
-                        <!-- Slide 1 (Active) -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100 z-10">
-                            <img src="./media/hero/herobg.jpg" alt="Achyutam Hero 1" class="hero-slide-img absolute top-0 right-0 h-full w-[100vw] max-w-none object-cover object-right will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 2 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg2.jpeg" alt="Achyutam Hero 2" class="hero-slide-img absolute top-0 right-0 h-full w-[100vw] max-w-none object-cover object-right will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 3 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg3.jpeg" alt="Achyutam Hero 3" class="hero-slide-img absolute top-0 right-0 h-full w-[100vw] max-w-none object-cover object-right will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 4 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg4.jpeg" alt="Achyutam Hero 4" class="hero-slide-img absolute top-0 right-0 h-full w-[100vw] max-w-none object-cover object-right will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 5 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg5.jpeg" alt="Achyutam Hero 5" class="hero-slide-img absolute top-0 right-0 h-full w-[100vw] max-w-none object-cover object-right will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                        <!-- Slide 6 -->
-                        <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
-                            <img src="./media/hero/herobg6.jpeg" alt="Achyutam Hero 6" class="hero-slide-img absolute top-0 right-0 h-full w-[100vw] max-w-none object-cover object-right will-change-transform scale-105">
-                            <div class="absolute inset-0 bg-gradient-to-b from-black/75 via-black/20 to-black/85 pointer-events-none"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Center Divider Subtle Accent Line -->
-                <div id="hero-mid-divider" class="absolute top-0 left-1/2 -translate-x-1/2 h-full w-[1px] bg-gradient-to-b from-transparent via-golden/30 to-transparent z-20 pointer-events-none transition-opacity duration-300"></div>
-
-                <!-- ============================================================= -->
-                <!-- HERO UI OVERLAY: DIV 1 (LEFT TEXT) & DIV 3 (RIGHT PREVIEWS)   -->
-                <!-- (DIV 2 CENTER HAS ZERO TEXT TO KEEP ARCHITECTURE FLAWLESS)    -->
-                <!-- ============================================================= -->
-                <div id="hero-ui-overlay" class="absolute inset-0 z-30 pointer-events-none flex flex-col justify-end p-6 sm:p-10 md:p-12 lg:p-14 pb-8 sm:pb-12">
+                <!-- Central Showcase Container -->
+                <div class="relative w-full aspect-[16/10] sm:aspect-[16/9] lg:aspect-[21/10] max-h-[70vh] rounded-[28px] sm:rounded-[36px] md:rounded-[46px] shadow-[0_25px_70px_rgba(75,45,30,0.18)] overflow-visible">
                     
-                    <div class="w-full flex flex-col lg:flex-row items-end justify-between gap-8 lg:gap-12">
+                    <!-- Peeking Right Stack Card (Depth Layer) -->
+                    <div class="absolute -right-4 sm:-right-8 md:-right-12 top-4 bottom-4 w-16 sm:w-24 md:w-32 bg-[#A05C3E]/80 rounded-[28px] sm:rounded-[36px] md:rounded-[46px] shadow-xl overflow-hidden pointer-events-none hidden sm:block transform scale-95 opacity-85 z-0">
+                        <img id="hero-peeker-img" src="./media/hero/herobg2.jpeg" alt="Next Project" class="w-full h-full object-cover opacity-60 filter blur-[1px]">
+                    </div>
+
+                    <!-- Main Active Rounded Architecture Card Canvas -->
+                    <div class="relative w-full h-full rounded-[28px] sm:rounded-[36px] md:rounded-[46px] overflow-hidden bg-[#2D241E] z-10 shadow-[0_20px_50px_rgba(0,0,0,0.25)] border border-white/40">
                         
-                        <!-- ========================================================= -->
-                        <!-- [DIV 1] LEFT SIDE: DYNAMIC ANIMATED TEXT & HOLO TYPOGRAPHY -->
-                        <!-- ========================================================= -->
-                        <div id="hero-left-box" class="pointer-events-auto max-w-xl lg:max-w-2xl space-y-2 sm:space-y-3 z-30">
-                            
-                            <!-- Holo / Outlined Stylish Category Kicker -->
-                            <div class="overflow-hidden">
-                                <div id="hero-holo-kicker" class="text-stroke-gold font-grotesk text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold uppercase tracking-wider leading-none select-none transition-all duration-500">
-                                    RESIDENTIAL
+                        <!-- Slide Images Container -->
+                        <div id="hero-split-container" class="relative w-full h-full">
+                            <div id="hero-slides-left" class="relative w-full h-full">
+                                <!-- Slide 0: Residence -->
+                                <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-100 z-10">
+                                    <img src="./media/hero/herobg.jpg" alt="Residential Luxury Estate" class="w-full h-full object-cover will-change-transform scale-100 transition-transform duration-1000">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/40 pointer-events-none"></div>
+                                </div>
+                                <!-- Slide 1: Commercial -->
+                                <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
+                                    <img src="./media/hero/herobg2.jpeg" alt="Commercial Plaza" class="w-full h-full object-cover will-change-transform scale-100 transition-transform duration-1000">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/40 pointer-events-none"></div>
+                                </div>
+                                <!-- Slide 2: Industrial -->
+                                <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
+                                    <img src="./media/hero/herobg3.jpeg" alt="Industrial Complex" class="w-full h-full object-cover will-change-transform scale-100 transition-transform duration-1000">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/40 pointer-events-none"></div>
+                                </div>
+                                <!-- Slide 3: Temples -->
+                                <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
+                                    <img src="./media/hero/herobg4.jpeg" alt="Temples & Sacred" class="w-full h-full object-cover will-change-transform scale-100 transition-transform duration-1000">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/40 pointer-events-none"></div>
+                                </div>
+                                <!-- Slide 4: BIM -->
+                                <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
+                                    <img src="./media/hero/herobg5.jpeg" alt="3D BIM Engineering" class="w-full h-full object-cover will-change-transform scale-100 transition-transform duration-1000">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/40 pointer-events-none"></div>
+                                </div>
+                                <!-- Slide 5: Assembly -->
+                                <div class="hero-slide-item absolute inset-0 w-full h-full transition-opacity duration-1000 opacity-0 z-0">
+                                    <img src="./media/hero/herobg6.jpeg" alt="Civic Auditorium" class="w-full h-full object-cover will-change-transform scale-100 transition-transform duration-1000">
+                                    <div class="absolute inset-0 bg-gradient-to-r from-black/60 via-black/20 to-black/40 pointer-events-none"></div>
                                 </div>
                             </div>
+                            <!-- Hidden compat element for right split -->
+                            <div id="hero-slides-right" class="hidden"></div>
+                        </div>
 
-                            <!-- Stylish Main Title (PPEditorialOld / Italiana) -->
-                            <div class="overflow-hidden">
-                                <h2 id="hero-main-title" class="font-editorial text-2xl sm:text-3xl md:text-4xl lg:text-[2.8rem] font-normal text-white leading-[1.12] tracking-tight transition-all duration-500 drop-shadow-[0_4px_20px_rgba(0,0,0,0.8)]">
-                                    Radhakund Luxury Estate &amp; Palatial Manor
-                                </h2>
+                        <!-- Top-Right Luxury Project Meta Badge Inside Card -->
+                        <div class="absolute top-4 sm:top-6 right-4 sm:right-8 z-30 pointer-events-auto">
+                            <div class="backdrop-blur-md bg-black/40 border border-white/20 rounded-full px-4 py-1.5 flex items-center gap-2 shadow-lg">
+                                <span class="w-2 h-2 rounded-full bg-[#E5B887] animate-pulse"></span>
+                                <span id="hero-main-meta" class="font-mono text-[10px] sm:text-xs text-white/90 uppercase tracking-widest">
+                                    Vrindavan &bull; Ongoing 2026 &bull; 36,000 SQFT
+                                </span>
                             </div>
+                        </div>
 
-                            <!-- Meta Specifications -->
-                            <p id="hero-main-meta" class="font-mono text-xs sm:text-sm text-sand/85 uppercase tracking-widest transition-all duration-500 flex items-center gap-2">
-                                <span class="w-1.5 h-1.5 rounded-full bg-golden inline-block animate-pulse"></span>
-                                <span>Vrindavan &bull; Ongoing 2026 &bull; 36,000 SQFT (3,340 m²)</span>
-                            </p>
-
-                            <!-- CTA Button -->
-                            <div class="pt-2 sm:pt-3">
-                                <a id="hero-main-cta" href="residential.html" class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-golden/20 hover:bg-golden text-golden hover:text-black border border-golden/40 hover:border-golden font-mono text-xs uppercase tracking-widest font-semibold backdrop-blur-md transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg group">
-                                    <span>Explore Residence</span>
-                                    <span class="group-hover:translate-x-1 transition-transform">&rarr;</span>
+                        <!-- Bottom Left Architecture Title Overlay -->
+                        <div class="absolute bottom-6 sm:bottom-8 md:bottom-10 left-6 sm:left-10 md:left-12 z-30 max-w-lg lg:max-w-xl pointer-events-auto">
+                            <div class="overflow-hidden mb-1">
+                                <span id="hero-holo-kicker" class="font-mono text-[10px] sm:text-xs tracking-[0.25em] text-[#E5B887] uppercase font-bold block drop-shadow-md">
+                                    RESIDENTIAL MANOR
+                                </span>
+                            </div>
+                            <h2 id="hero-main-title" class="font-editorial text-2xl sm:text-3xl md:text-4xl text-white font-normal leading-tight tracking-tight drop-shadow-[0_4px_16px_rgba(0,0,0,0.8)]">
+                                Radhakund Luxury Estate &amp; Palatial Manor
+                            </h2>
+                            <div class="pt-3">
+                                <a id="hero-main-cta" href="residential.html" class="inline-flex items-center gap-2.5 px-5 py-2 rounded-full bg-white/20 hover:bg-white text-white hover:text-[#2D241E] border border-white/40 hover:border-white font-mono text-[11px] uppercase tracking-wider font-semibold backdrop-blur-md transition-all duration-300 transform hover:scale-105 shadow-md">
+                                    <span>Explore Project</span>
+                                    <span>&rarr;</span>
                                 </a>
                             </div>
                         </div>
 
-                        <!-- ========================================================= -->
-                        <!-- [DIV 3] RIGHT SIDE: FLOATING IMAGES PREVIEW THUMBNAILS DOCK -->
-                        <!-- ========================================================= -->
-                        <div id="hero-right-box" class="pointer-events-auto flex flex-col items-end gap-2.5 z-30">
-                            
-                            <!-- Glassmorphism Dock Container -->
-                            <div class="flex items-center gap-2 sm:gap-2.5 bg-black/60 backdrop-blur-xl border border-white/15 rounded-2xl p-2 sm:p-2.5 shadow-[0_20px_60px_rgba(0,0,0,0.8)]">
+                        <!-- ============================================================= -->
+                        <!-- [REFERENCE ART ELEMENT 1] FLOATING FROSTED GLASS PILL MENU    -->
+                        <!-- ============================================================= -->
+                        <div id="hero-left-box" class="absolute top-1/2 -translate-y-1/2 left-4 sm:left-8 md:left-10 z-40 pointer-events-auto">
+                            <div class="backdrop-blur-2xl bg-white/30 border border-white/45 shadow-[0_20px_60px_rgba(0,0,0,0.25)] rounded-[26px] sm:rounded-[32px] p-2.5 sm:p-4 flex flex-col gap-2 sm:gap-2.5 w-[165px] sm:w-[210px] md:w-[230px]">
                                 
-                                <!-- Dock Left Mini Arrow -->
-                                <button id="hero-dock-prev" class="w-8 h-8 rounded-full bg-white/10 hover:bg-golden/30 text-white hover:text-golden flex items-center justify-center transition-all cursor-pointer flex-shrink-0" aria-label="Previous Project">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                                <!-- Pill 0: Residential (Olive Taupe) -->
+                                <button class="hero-preview-thumb group relative w-full py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-full bg-[#8E7964] text-white text-left transition-all duration-300 transform hover:scale-[1.03] active:scale-95 shadow-md cursor-pointer flex items-center justify-between" data-slide="0">
+                                    <span class="font-sans-clean text-xs sm:text-sm font-medium tracking-wide">Residential</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white opacity-80 group-hover:scale-125 transition-transform"></span>
                                 </button>
 
-                                <!-- Thumbnails Row -->
-                                <div id="hero-dock-thumbs" class="flex items-center gap-2 overflow-x-auto no-scrollbar py-0.5 max-w-[55vw] sm:max-w-md">
-                                    <!-- Dynamic Thumb 0 -->
-                                    <button class="hero-preview-thumb group relative flex-shrink-0 w-16 sm:w-20 md:w-24 rounded-lg overflow-hidden border-2 border-golden bg-golden/10 scale-105 shadow-[0_0_15px_rgba(194,165,120,0.4)] transition-all duration-300 cursor-pointer" data-slide="0">
-                                        <div class="aspect-[16/10] w-full overflow-hidden">
-                                            <img src="./media/hero/herobg.jpg" alt="Residential" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                        </div>
-                                        <div class="py-0.5 px-1 text-center bg-black/85">
-                                            <span class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-golden font-bold block truncate">RESIDENCE</span>
-                                        </div>
-                                    </button>
+                                <!-- Pill 1: Commercial (Light Ivory Cream) -->
+                                <button class="hero-preview-thumb group relative w-full py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-full bg-[#EDE5DC] text-[#2D241E] text-left transition-all duration-300 transform hover:scale-[1.03] active:scale-95 shadow-sm cursor-pointer flex items-center justify-between" data-slide="1">
+                                    <span class="font-sans-clean text-xs sm:text-sm font-medium tracking-wide">Commercial</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#2D241E] opacity-60 group-hover:scale-125 transition-transform"></span>
+                                </button>
 
-                                    <!-- Dynamic Thumb 1 -->
-                                    <button class="hero-preview-thumb group relative flex-shrink-0 w-16 sm:w-20 md:w-24 rounded-lg overflow-hidden border border-white/15 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-pointer" data-slide="1">
-                                        <div class="aspect-[16/10] w-full overflow-hidden">
-                                            <img src="./media/hero/herobg2.jpeg" alt="Commercial" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                        </div>
-                                        <div class="py-0.5 px-1 text-center bg-black/85">
-                                            <span class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white/90 font-medium block truncate">COMMERCIAL</span>
-                                        </div>
-                                    </button>
+                                <!-- Pill 2: Industrial (Terracotta Canyon) -->
+                                <button class="hero-preview-thumb group relative w-full py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-full bg-[#B87352] text-white text-left transition-all duration-300 transform hover:scale-[1.03] active:scale-95 shadow-md cursor-pointer flex items-center justify-between" data-slide="2">
+                                    <span class="font-sans-clean text-xs sm:text-sm font-medium tracking-wide">Industrial</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white opacity-80 group-hover:scale-125 transition-transform"></span>
+                                </button>
 
-                                    <!-- Dynamic Thumb 2 -->
-                                    <button class="hero-preview-thumb group relative flex-shrink-0 w-16 sm:w-20 md:w-24 rounded-lg overflow-hidden border border-white/15 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-pointer" data-slide="2">
-                                        <div class="aspect-[16/10] w-full overflow-hidden">
-                                            <img src="./media/hero/herobg3.jpeg" alt="Industrial" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                        </div>
-                                        <div class="py-0.5 px-1 text-center bg-black/85">
-                                            <span class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white/90 font-medium block truncate">INDUSTRIAL</span>
-                                        </div>
-                                    </button>
+                                <!-- Pill 3: Temples (Warm Clay Rose) -->
+                                <button class="hero-preview-thumb group relative w-full py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-full bg-[#C28B75] text-white text-left transition-all duration-300 transform hover:scale-[1.03] active:scale-95 shadow-sm cursor-pointer flex items-center justify-between" data-slide="3">
+                                    <span class="font-sans-clean text-xs sm:text-sm font-medium tracking-wide">Temples &amp; Vastu</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white opacity-80 group-hover:scale-125 transition-transform"></span>
+                                </button>
 
-                                    <!-- Dynamic Thumb 3 -->
-                                    <button class="hero-preview-thumb group relative flex-shrink-0 w-16 sm:w-20 md:w-24 rounded-lg overflow-hidden border border-white/15 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-pointer" data-slide="3">
-                                        <div class="aspect-[16/10] w-full overflow-hidden">
-                                            <img src="./media/hero/herobg4.jpeg" alt="Temples" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                        </div>
-                                        <div class="py-0.5 px-1 text-center bg-black/85">
-                                            <span class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white/90 font-medium block truncate">TEMPLES</span>
-                                        </div>
-                                    </button>
+                                <!-- Pill 4: 3D BIM & MEPS (Desert Sand) -->
+                                <button class="hero-preview-thumb group relative w-full py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-full bg-[#A38771] text-white text-left transition-all duration-300 transform hover:scale-[1.03] active:scale-95 shadow-sm cursor-pointer flex items-center justify-between hidden sm:flex" data-slide="4">
+                                    <span class="font-sans-clean text-xs sm:text-sm font-medium tracking-wide">3D BIM Infra</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white opacity-80 group-hover:scale-125 transition-transform"></span>
+                                </button>
 
-                                    <!-- Dynamic Thumb 4 -->
-                                    <button class="hero-preview-thumb group relative flex-shrink-0 w-16 sm:w-20 md:w-24 rounded-lg overflow-hidden border border-white/15 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-pointer" data-slide="4">
-                                        <div class="aspect-[16/10] w-full overflow-hidden">
-                                            <img src="./media/hero/herobg5.jpeg" alt="Engineering" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                        </div>
-                                        <div class="py-0.5 px-1 text-center bg-black/85">
-                                            <span class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white/90 font-medium block truncate">3D BIM</span>
-                                        </div>
-                                    </button>
-
-                                    <!-- Dynamic Thumb 5 -->
-                                    <button class="hero-preview-thumb group relative flex-shrink-0 w-16 sm:w-20 md:w-24 rounded-lg overflow-hidden border border-white/15 opacity-60 hover:opacity-100 hover:scale-105 transition-all duration-300 cursor-pointer" data-slide="5">
-                                        <div class="aspect-[16/10] w-full overflow-hidden">
-                                            <img src="./media/hero/herobg6.jpeg" alt="Assembly" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
-                                        </div>
-                                        <div class="py-0.5 px-1 text-center bg-black/85">
-                                            <span class="font-mono text-[8.5px] sm:text-[9.5px] uppercase tracking-wider text-white/90 font-medium block truncate">ASSEMBLY</span>
-                                        </div>
-                                    </button>
-                                </div>
-
-                                <!-- Dock Right Mini Arrow -->
-                                <button id="hero-dock-next" class="w-8 h-8 rounded-full bg-white/10 hover:bg-golden/30 text-white hover:text-golden flex items-center justify-center transition-all cursor-pointer flex-shrink-0" aria-label="Next Project">
-                                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                                <!-- Pill 5: Civic & Assembly (Slate Sand) -->
+                                <button class="hero-preview-thumb group relative w-full py-2.5 sm:py-3 px-3.5 sm:px-5 rounded-full bg-[#7D6B5A] text-white text-left transition-all duration-300 transform hover:scale-[1.03] active:scale-95 shadow-sm cursor-pointer flex items-center justify-between hidden sm:flex" data-slide="5">
+                                    <span class="font-sans-clean text-xs sm:text-sm font-medium tracking-wide">Civic Arenas</span>
+                                    <span class="w-1.5 h-1.5 rounded-full bg-white opacity-80 group-hover:scale-125 transition-transform"></span>
                                 </button>
                             </div>
+                        </div>
 
-                            <!-- Bottom Mini Controls & Progress Indicator Dots -->
-                            <div class="flex items-center justify-between w-full px-2 text-white/80 font-mono text-[11px]">
-                                <div class="flex items-center gap-2">
-                                    <span id="hero-slide-num" class="text-golden font-bold">01</span>
-                                    <span class="text-white/30">/</span>
-                                    <span class="text-white/60">06</span>
-                                </div>
-
-                                <!-- Mini Indicator Dots Underneath -->
-                                <div id="hero-mini-dots" class="flex items-center gap-1.5">
-                                    <span class="hero-dot-indicator w-2 h-2 rounded-full bg-golden transition-all duration-300 scale-125"></span>
-                                    <span class="hero-dot-indicator w-1.5 h-1.5 rounded-full bg-white/30 transition-all duration-300"></span>
-                                    <span class="hero-dot-indicator w-1.5 h-1.5 rounded-full bg-white/30 transition-all duration-300"></span>
-                                    <span class="hero-dot-indicator w-1.5 h-1.5 rounded-full bg-white/30 transition-all duration-300"></span>
-                                    <span class="hero-dot-indicator w-1.5 h-1.5 rounded-full bg-white/30 transition-all duration-300"></span>
-                                    <span class="hero-dot-indicator w-1.5 h-1.5 rounded-full bg-white/30 transition-all duration-300"></span>
-                                </div>
-
-                                <div class="flex items-center gap-2 text-white/60">
-                                    <button id="hero-arrow-prev" class="hover:text-golden transition p-0.5 cursor-pointer" aria-label="Prev Slide">&larr;</button>
-                                    <button id="hero-arrow-next" class="hover:text-golden transition p-0.5 cursor-pointer" aria-label="Next Slide">&rarr;</button>
-                                </div>
+                        <!-- ============================================================= -->
+                        <!-- [REFERENCE ART ELEMENT 2] RIGHT VERTICAL GLASS SLIDER PILL    -->
+                        <!-- ============================================================= -->
+                        <div class="absolute top-1/2 -translate-y-1/2 right-4 sm:right-6 md:right-8 z-40 pointer-events-auto">
+                            <div class="backdrop-blur-xl bg-white/25 border border-white/40 shadow-[0_15px_35px_rgba(0,0,0,0.2)] rounded-full py-4 sm:py-6 px-2.5 sm:px-3 flex flex-col items-center gap-3 sm:gap-4">
+                                <!-- Dot 0 -->
+                                <button class="hero-dot-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.9)] scale-125 transition-all duration-300 cursor-pointer" data-slide="0" aria-label="Slide 1"></button>
+                                <!-- Dot 1 -->
+                                <button class="hero-dot-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer" data-slide="1" aria-label="Slide 2"></button>
+                                <!-- Dot 2 -->
+                                <button class="hero-dot-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer" data-slide="2" aria-label="Slide 3"></button>
+                                <!-- Dot 3 -->
+                                <button class="hero-dot-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer" data-slide="3" aria-label="Slide 4"></button>
+                                <!-- Dot 4 -->
+                                <button class="hero-dot-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer" data-slide="4" aria-label="Slide 5"></button>
+                                <!-- Dot 5 -->
+                                <button class="hero-dot-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer" data-slide="5" aria-label="Slide 6"></button>
                             </div>
-
                         </div>
 
                     </div>
+                </div>
+
+                <!-- ============================================================= -->
+                <!-- [REFERENCE ART ELEMENT 3] BOTTOM CANYON ARCH THUMBNAILS ROW   -->
+                <!-- ============================================================= -->
+                <div class="w-full flex items-end justify-center sm:justify-end gap-4 sm:gap-6 pt-4 sm:pt-6 z-20 overflow-visible">
+                    <!-- Arch Thumbnail 1 -->
+                    <button class="hero-arch-thumb group relative w-24 sm:w-32 md:w-40 aspect-[4/3] rounded-t-[32px] sm:rounded-t-[48px] overflow-hidden border-2 border-white/60 shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-[#2D241E]" data-slide="0">
+                        <img src="./media/hero/herobg.jpg" alt="Poolside Manor" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </button>
+
+                    <!-- Arch Thumbnail 2 -->
+                    <button class="hero-arch-thumb group relative w-24 sm:w-32 md:w-40 aspect-[4/3] rounded-t-[32px] sm:rounded-t-[48px] overflow-hidden border-2 border-white/60 shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-[#2D241E]" data-slide="1">
+                        <img src="./media/hero/herobg2.jpeg" alt="Canyon Views" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </button>
+
+                    <!-- Arch Thumbnail 3 -->
+                    <button class="hero-arch-thumb group relative w-24 sm:w-32 md:w-40 aspect-[4/3] rounded-t-[32px] sm:rounded-t-[48px] overflow-hidden border-2 border-white/60 shadow-lg transition-all duration-300 hover:-translate-y-1 cursor-pointer bg-[#2D241E] hidden sm:block" data-slide="2">
+                        <img src="./media/hero/herobg3.jpeg" alt="Industrial Complex" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                    </button>
                 </div>
 
             </div>
@@ -2732,57 +2685,61 @@
         // =========================================================================
         const heroSlidesData = [
             {
-                holoKicker: "RESIDENTIAL",
+                holoKicker: "RESIDENTIAL ESTATE",
                 title: "Radhakund Luxury Estate &amp; Palatial Manor",
-                meta: "Vrindavan &bull; Ongoing 2026 &bull; 36,000 SQFT (3,340 m²)",
+                meta: "Vrindavan &bull; Ongoing 2026 &bull; 36,000 SQFT",
                 ctaLink: "residential.html",
-                ctaText: "Explore Residence"
+                ctaText: "Explore Residence",
+                nextImg: "./media/hero/herobg2.jpeg"
             },
             {
-                holoKicker: "COMMERCIAL",
-                title: "Achyutam Corporate Plaza &amp; Business Towers",
-                meta: "Nawalgarh / Sikar &bull; ₹30 Cr CTC &bull; Grade-A Complex",
+                holoKicker: "COMMERCIAL PLAZA",
+                title: "Grand City Commercial Plaza &amp; Retail Hub",
+                meta: "Sikar Bypass Junction &bull; 120,000 SQFT &bull; Delivered",
                 ctaLink: "commercial.html",
-                ctaText: "Explore Plaza"
+                ctaText: "Explore Plaza",
+                nextImg: "./media/hero/herobg3.jpeg"
             },
             {
-                holoKicker: "INDUSTRIAL",
+                holoKicker: "INDUSTRIAL COMPLEX",
                 title: "Heavy Engineering Plant &amp; Eco-Refinery",
-                meta: "Bhiwadi Industrial Corridor &bull; ₹42 Cr CTC &bull; Heavy Infra",
+                meta: "Bhiwadi Corridor &bull; ₹42 Cr CTC &bull; Heavy Infra",
                 ctaLink: "industrial.html",
-                ctaText: "Explore Project"
+                ctaText: "Explore Plant",
+                nextImg: "./media/hero/herobg4.jpeg"
             },
             {
                 holoKicker: "TEMPLES & VASTU",
                 title: "Radha Rani Vedic Grand Resort &amp; Retreat",
-                meta: "Vrindavan Holy Enclave &bull; ₹25 Cr Landmark &bull; Sacred Stone",
+                meta: "Vrindavan Enclave &bull; Sacred Stone Architecture",
                 ctaLink: "assembly.html",
-                ctaText: "Explore Heritage"
+                ctaText: "Explore Heritage",
+                nextImg: "./media/hero/herobg5.jpeg"
             },
             {
                 holoKicker: "3D BIM & MEPS",
                 title: "Precision Turnkey Engineering &amp; QA/QC",
-                meta: "Pan-Rajasthan Execution &bull; 100% Clash-Free &bull; Zero-Defect",
+                meta: "Pan-Rajasthan Execution &bull; 100% Clash-Free",
                 ctaLink: "#Around",
-                ctaText: "Explore Services"
+                ctaText: "Explore Services",
+                nextImg: "./media/hero/herobg6.jpeg"
             },
             {
-                holoKicker: "CIVIC PAVILION",
+                holoKicker: "CIVIC ARENA",
                 title: "Surya Horizon Auditorium &amp; Civic Center",
-                meta: "Sikar Central &bull; ₹12 Cr &bull; Acoustically Engineered Halls",
+                meta: "Sikar Central &bull; ₹12 Cr &bull; Acoustically Engineered",
                 ctaLink: "assembly.html",
-                ctaText: "Explore Pavilion"
+                ctaText: "Explore Pavilion",
+                nextImg: "./media/hero/herobg.jpg"
             }
         ];
 
         const leftHeroSlides = document.querySelectorAll('#hero-slides-left .hero-slide-item');
-        const rightHeroSlides = document.querySelectorAll('#hero-slides-right .hero-slide-item');
-        const heroPreviewThumbs = document.querySelectorAll('.hero-preview-thumb');
-        const heroDockThumbsContainer = document.getElementById('hero-dock-thumbs');
+        const heroPillButtons = document.querySelectorAll('.hero-preview-thumb');
         const heroDotIndicators = document.querySelectorAll('.hero-dot-indicator');
-        const heroSlideNumEl = document.getElementById('hero-slide-num');
+        const heroArchThumbs = document.querySelectorAll('.hero-arch-thumb');
+        const heroPeekerImg = document.getElementById('hero-peeker-img');
 
-        // Div 1 dynamic elements
         const heroHoloKicker = document.getElementById('hero-holo-kicker');
         const heroMainTitle = document.getElementById('hero-main-title');
         const heroMainMeta = document.getElementById('hero-main-meta');
@@ -2803,7 +2760,7 @@
             currentHeroSlide = index;
             const slideData = heroSlidesData[currentHeroSlide];
 
-            // 1. Update Left & Right Background Slides
+            // 1. Update Background Slides
             leftHeroSlides.forEach((slide, i) => {
                 const img = slide.querySelector('img');
                 if (i === currentHeroSlide) {
@@ -2811,8 +2768,8 @@
                     slide.classList.add('opacity-100', 'z-10');
                     if (img) {
                         gsap.fromTo(img,
-                            { scale: 1.08 },
-                            { scale: 1.05, duration: 1.4, ease: 'power2.out' }
+                            { scale: 1.06 },
+                            { scale: 1.0, duration: 1.2, ease: 'power2.out' }
                         );
                     }
                 } else {
@@ -2821,24 +2778,41 @@
                 }
             });
 
-            rightHeroSlides.forEach((slide, i) => {
-                const img = slide.querySelector('img');
+            // 2. Update Peeker Image
+            if (heroPeekerImg && slideData.nextImg) {
+                heroPeekerImg.src = slideData.nextImg;
+            }
+
+            // 3. Update Pill Buttons Highlight
+            heroPillButtons.forEach((pill, i) => {
                 if (i === currentHeroSlide) {
-                    slide.classList.remove('opacity-0', 'z-0');
-                    slide.classList.add('opacity-100', 'z-10');
-                    if (img) {
-                        gsap.fromTo(img,
-                            { scale: 1.08 },
-                            { scale: 1.05, duration: 1.4, ease: 'power2.out' }
-                        );
-                    }
+                    pill.classList.add('ring-2', 'ring-white', 'scale-[1.04]', 'shadow-xl');
+                    pill.style.opacity = '1';
                 } else {
-                    slide.classList.remove('opacity-100', 'z-10');
-                    slide.classList.add('opacity-0', 'z-0');
+                    pill.classList.remove('ring-2', 'ring-white', 'scale-[1.04]', 'shadow-xl');
+                    pill.style.opacity = '0.85';
                 }
             });
 
-            // 2. Animate Div 1 Dynamic Text Elements
+            // 4. Update Vertical Dot Indicators
+            heroDotIndicators.forEach((dot, i) => {
+                if (i === currentHeroSlide) {
+                    dot.className = 'hero-dot-indicator w-3 h-3 sm:w-3.5 sm:h-3.5 rounded-full bg-white shadow-[0_0_12px_rgba(255,255,255,1)] scale-125 transition-all duration-300 cursor-pointer';
+                } else {
+                    dot.className = 'hero-dot-indicator w-2.5 h-2.5 sm:w-3 sm:h-3 rounded-full bg-white/40 hover:bg-white/80 transition-all duration-300 cursor-pointer';
+                }
+            });
+
+            // 5. Update Bottom Arch Thumbs
+            heroArchThumbs.forEach((arch, i) => {
+                if (i === currentHeroSlide) {
+                    arch.classList.add('ring-4', 'ring-[#B87352]', '-translate-y-2');
+                } else {
+                    arch.classList.remove('ring-4', 'ring-[#B87352]', '-translate-y-2');
+                }
+            });
+
+            // 6. Animate Dynamic Title, Meta & CTA
             if (slideData) {
                 if (animate) {
                     const textTl = gsap.timeline({
@@ -2847,15 +2821,15 @@
 
                     textTl
                         .to([heroHoloKicker, heroMainTitle, heroMainMeta, heroMainCta], {
-                            y: -12,
+                            y: -8,
                             opacity: 0,
-                            duration: 0.22,
+                            duration: 0.2,
                             ease: 'power2.in',
                             onComplete: () => {
                                 if (heroHoloKicker) heroHoloKicker.innerHTML = slideData.holoKicker;
                                 if (heroMainTitle) heroMainTitle.innerHTML = slideData.title;
                                 if (heroMainMeta) {
-                                    heroMainMeta.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-golden inline-block animate-pulse"></span><span>${slideData.meta}</span>`;
+                                    heroMainMeta.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-[#E5B887] inline-block animate-pulse"></span><span>${slideData.meta}</span>`;
                                 }
                                 if (heroMainCta) {
                                     heroMainCta.setAttribute('href', slideData.ctaLink);
@@ -2865,24 +2839,24 @@
                             }
                         })
                         .fromTo(heroHoloKicker,
-                            { y: 22, opacity: 0 },
-                            { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out' }
+                            { y: 15, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' }
                         )
                         .fromTo(heroMainTitle,
-                            { y: 18, opacity: 0 },
-                            { y: 0, opacity: 1, duration: 0.45, ease: 'power3.out' },
-                            '-=0.3'
+                            { y: 12, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.4, ease: 'power3.out' },
+                            '-=0.25'
                         )
                         .fromTo([heroMainMeta, heroMainCta],
-                            { y: 14, opacity: 0 },
-                            { y: 0, opacity: 1, duration: 0.4, stagger: 0.08, ease: 'power3.out' },
-                            '-=0.25'
+                            { y: 10, opacity: 0 },
+                            { y: 0, opacity: 1, duration: 0.35, stagger: 0.08, ease: 'power3.out' },
+                            '-=0.2'
                         );
                 } else {
                     if (heroHoloKicker) heroHoloKicker.innerHTML = slideData.holoKicker;
                     if (heroMainTitle) heroMainTitle.innerHTML = slideData.title;
                     if (heroMainMeta) {
-                        heroMainMeta.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-golden inline-block animate-pulse"></span><span>${slideData.meta}</span>`;
+                        heroMainMeta.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-[#E5B887] inline-block animate-pulse"></span><span>${slideData.meta}</span>`;
                     }
                     if (heroMainCta) {
                         heroMainCta.setAttribute('href', slideData.ctaLink);
@@ -2892,55 +2866,13 @@
                     isHeroSlideAnimating = false;
                 }
             }
-
-            // 3. Update Div 3 Preview Thumbnails Active State
-            heroPreviewThumbs.forEach((thumb, i) => {
-                const label = thumb.querySelector('span');
-                if (i === currentHeroSlide) {
-                    thumb.classList.remove('border-white/15', 'opacity-60');
-                    thumb.classList.add('border-2', 'border-golden', 'bg-golden/10', 'scale-105', 'shadow-[0_0_15px_rgba(194,165,120,0.4)]', 'opacity-100');
-                    if (label) {
-                        label.classList.remove('text-white/90', 'font-medium');
-                        label.classList.add('text-golden', 'font-bold');
-                    }
-                    // Auto scroll into center of dock
-                    if (heroDockThumbsContainer) {
-                        const thumbLeft = thumb.offsetLeft - heroDockThumbsContainer.offsetLeft;
-                        const scrollPos = thumbLeft - (heroDockThumbsContainer.clientWidth / 2) + (thumb.clientWidth / 2);
-                        heroDockThumbsContainer.scrollTo({ left: scrollPos, behavior: 'smooth' });
-                    }
-                } else {
-                    thumb.classList.remove('border-2', 'border-golden', 'bg-golden/10', 'scale-105', 'shadow-[0_0_15px_rgba(194,165,120,0.4)]', 'opacity-100');
-                    thumb.classList.add('border-white/15', 'opacity-60');
-                    if (label) {
-                        label.classList.remove('text-golden', 'font-bold');
-                        label.classList.add('text-white/90', 'font-medium');
-                    }
-                }
-            });
-
-            // 4. Update Number Counter
-            if (heroSlideNumEl) {
-                heroSlideNumEl.innerText = (currentHeroSlide + 1) < 10 ? `0${currentHeroSlide + 1}` : `${currentHeroSlide + 1}`;
-            }
-
-            // 5. Update Mini Progress Indicator Dots
-            heroDotIndicators.forEach((dot, i) => {
-                if (i === currentHeroSlide) {
-                    dot.classList.remove('bg-white/30', 'w-1.5', 'h-1.5');
-                    dot.classList.add('bg-golden', 'w-2', 'h-2', 'scale-125');
-                } else {
-                    dot.classList.remove('bg-golden', 'w-2', 'h-2', 'scale-125');
-                    dot.classList.add('bg-white/30', 'w-1.5', 'h-1.5');
-                }
-            });
         }
 
         function startHeroSlideTimer() {
             stopHeroSlideTimer();
             heroSlideInterval = setInterval(() => {
                 goToHeroSlide(currentHeroSlide + 1);
-            }, 5000);
+            }, 5500);
         }
 
         function stopHeroSlideTimer() {
@@ -2950,57 +2882,48 @@
         if (totalHeroSlides > 0) {
             startHeroSlideTimer();
 
-            // Dock navigation buttons
-            const heroDockPrev = document.getElementById('hero-dock-prev');
-            const heroDockNext = document.getElementById('hero-dock-next');
-            if (heroDockPrev) {
-                heroDockPrev.addEventListener('click', (e) => {
+            // Pill buttons click handlers
+            heroPillButtons.forEach((btn, i) => {
+                btn.addEventListener('click', (e) => {
                     e.stopPropagation();
-                    goToHeroSlide(currentHeroSlide - 1);
-                    startHeroSlideTimer();
-                });
-            }
-            if (heroDockNext) {
-                heroDockNext.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    goToHeroSlide(currentHeroSlide + 1);
-                    startHeroSlideTimer();
-                });
-            }
-
-            // Bottom mini arrows
-            const heroArrowPrev = document.getElementById('hero-arrow-prev');
-            const heroArrowNext = document.getElementById('hero-arrow-next');
-            if (heroArrowPrev) {
-                heroArrowPrev.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    goToHeroSlide(currentHeroSlide - 1);
-                    startHeroSlideTimer();
-                });
-            }
-            if (heroArrowNext) {
-                heroArrowNext.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    goToHeroSlide(currentHeroSlide + 1);
-                    startHeroSlideTimer();
-                });
-            }
-
-            // Thumbnail click events
-            heroPreviewThumbs.forEach((thumb, i) => {
-                thumb.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    goToHeroSlide(i);
-                    startHeroSlideTimer();
+                    const idx = parseInt(btn.getAttribute('data-slide'), 10);
+                    if (!isNaN(idx)) {
+                        goToHeroSlide(idx);
+                        startHeroSlideTimer();
+                    }
                 });
             });
 
-            // Keyboard navigation when near hero section
+            // Vertical dot indicators click handlers
+            heroDotIndicators.forEach((dot, i) => {
+                dot.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const idx = parseInt(dot.getAttribute('data-slide'), 10);
+                    if (!isNaN(idx)) {
+                        goToHeroSlide(idx);
+                        startHeroSlideTimer();
+                    }
+                });
+            });
+
+            // Bottom arch thumbnails click handlers
+            heroArchThumbs.forEach((arch, i) => {
+                arch.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    const idx = parseInt(arch.getAttribute('data-slide'), 10);
+                    if (!isNaN(idx)) {
+                        goToHeroSlide(idx);
+                        startHeroSlideTimer();
+                    }
+                });
+            });
+
+            // Keyboard Arrow keys navigation
             window.addEventListener('keydown', (e) => {
                 const heroEl = document.getElementById('hero');
                 if (heroEl) {
                     const rect = heroEl.getBoundingClientRect();
-                    if (rect.top <= 100 && rect.bottom >= 200) {
+                    if (rect.top <= 150 && rect.bottom >= 150) {
                         if (e.key === 'ArrowLeft') {
                             goToHeroSlide(currentHeroSlide - 1);
                             startHeroSlideTimer();
@@ -3012,6 +2935,9 @@
                 }
             });
         }
+
+        // Initialize First Slide
+        goToHeroSlide(0, false);
 
         // =========================================================================
         // 4B. HERO CENTER-DIVIDE SPLIT TRANSITION (SECTION 1 TO SECTION 2)
