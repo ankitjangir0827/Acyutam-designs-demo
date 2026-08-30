@@ -6,24 +6,42 @@ function copyStaticFoldersPlugin() {
   return {
     name: 'copy-static-folders',
     closeBundle() {
+      const distDir = resolve(__dirname, 'dist');
+      if (!fs.existsSync(distDir)) {
+        fs.mkdirSync(distDir, { recursive: true });
+      }
+
       const folders = ['home', 'fonts', 'icons', 'media'];
       folders.forEach(folder => {
         const src = resolve(__dirname, folder);
-        const dest = resolve(__dirname, 'dist', folder);
+        const dest = resolve(distDir, folder);
         if (fs.existsSync(src)) {
-          fs.cpSync(src, dest, { recursive: true });
+          try {
+            fs.cpSync(src, dest, { recursive: true, force: true });
+          } catch (e) {
+            console.warn('Warning copying folder:', folder, e.message);
+          }
         }
       });
-      // Copy root media files
-      const rootFiles = fs.readdirSync(__dirname).filter(f => 
-        /\.(jpg|jpeg|png|webp|svg|ico|mp4|otf|woff2)$/i.test(f)
-      );
-      rootFiles.forEach(file => {
-        const src = resolve(__dirname, file);
-        const dest = resolve(__dirname, 'dist', file);
-        fs.copyFileSync(src, dest);
-      });
-      console.log('✅ Successfully copied all static media folders (home, fonts, icons, media) to dist/');
+
+      try {
+        const rootFiles = fs.readdirSync(__dirname).filter(f => 
+          /\.(jpg|jpeg|png|webp|svg|ico|mp4|otf|woff2)$/i.test(f)
+        );
+        rootFiles.forEach(file => {
+          const src = resolve(__dirname, file);
+          const dest = resolve(distDir, file);
+          try {
+            fs.copyFileSync(src, dest);
+          } catch (e) {
+            console.warn('Warning copying file:', file, e.message);
+          }
+        });
+      } catch (err) {
+        console.warn('Warning reading root files:', err.message);
+      }
+
+      console.log('✅ Successfully copied all static media folders to dist/');
     }
   };
 }
