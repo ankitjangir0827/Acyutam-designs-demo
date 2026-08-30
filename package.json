@@ -1,0 +1,22 @@
+{
+  "name": "belgrade-arbor",
+  "version": "1.0.0",
+  "description": "Belgrade Arbor - HTML, Tailwind CSS, Vanilla JS & GSAP Rebuild",
+  "main": "index.html",
+  "scripts": {
+    "dev": "serve . -l 3000",
+    "start": "serve . -l 3000",
+    "serve": "serve . -l 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.4"
+  },
+  "keywords": [
+    "belgrade-arbor",
+    "gsap",
+    "tailwind",
+    "html5"
+  ],
+  "author": "",
+  "license": "ISC"
+}

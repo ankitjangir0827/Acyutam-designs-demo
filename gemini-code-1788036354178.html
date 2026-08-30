@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" class="overflow-x-hidden">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Achyutam Builder — Multi-Font Kinetic Typography & Projects</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- GSAP, ScrollTrigger & Lenis -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+  
+  <!-- Multi-Font Architecture -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;800&family=Cormorant+Garamond:ital,wght@0,300;0,600;1,400&family=Italiana&family=Plus+Jakarta+Sans:wght@200;300;400;500;700&family=Space+Grotesk:wght@300;500;700&family=Space+Mono:ital,wght@0,400;1,400&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+
+  <style>
+    /* Font Family Definitions */
+    .font-cormorant { font-family: 'Cormorant Garamond', serif; }
+    .font-italiana { font-family: 'Italiana', serif; }
+    .font-cinzel { font-family: 'Cinzel', serif; }
+    .font-syne { font-family: 'Syne', sans-serif; }
+    .font-grotesk { font-family: 'Space Grotesk', sans-serif; }
+    .font-mono { font-family: 'Space Mono', monospace; }
+    .font-sans-clean { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+    /* Reveal Overflow Containers */
+    .text-mask {
+      overflow: hidden;
+      display: block;
+    }
+
+    /* Subtle Film Grain */
+    .bg-grain {
+      background-image: radial-gradient(rgba(217, 205, 184, 0.06) 1px, transparent 0);
+      background-size: 24px 24px;
+    }
+  </style>
+</head>
+<body class="bg-[#10140d] text-[#d9cdb8] antialiased selection:bg-[#c2a578] selection:text-[#10140d] bg-grain">
+
+  <!-- ================= FIXED HUD NAVIGATION ================= -->
+  <header class="fixed top-0 left-0 w-full z-50 px-8 py-6 flex justify-between items-center mix-blend-difference pointer-events-none">
+    <div class="pointer-events-auto">
+      <span class="font-syne text-sm uppercase tracking-[0.4em] text-[#c2a578] font-bold">ACHYUTAM</span>
+    </div>
+    
+    <div class="pointer-events-auto flex items-center space-x-6">
+      <span id="active-step-label" class="font-mono text-xs tracking-widest text-[#c2a578]">00 / INTRO</span>
+      <div class="w-24 h-[1px] bg-[#d9cdb8]/20 relative overflow-hidden">
+        <div id="text-progress-bar" class="absolute left-0 top-0 h-full w-0 bg-[#c2a578]"></div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ================= HERO SECTION ================= -->
+  <section class="h-screen w-full flex flex-col items-center justify-center text-center px-6 relative bg-gradient-to-b from-[#141a10] to-[#10140d]">
+    <div class="text-mask mb-4">
+      <span class="hero-sub font-mono text-xs uppercase tracking-[0.5em] text-[#c2a578] block translate-y-full opacity-0">
+        Kinetic Typography Experience
+      </span>
+    </div>
+
+    <div class="text-mask">
+      <h1 class="hero-title font-cinzel text-5xl md:text-9xl uppercase tracking-widest text-[#d9cdb8] leading-tight translate-y-full opacity-0">
+        ACHYUTAM
+      </h1>
+    </div>
+
+    <div class="text-mask mb-8">
+      <h2 class="hero-sub-title font-italiana text-4xl md:text-7xl text-[#c2a578] tracking-wide translate-y-full opacity-0">
+        Curated Spatial Redesign
+      </h2>
+    </div>
+
+    <div class="text-mask max-w-lg">
+      <p class="hero-desc font-sans-clean text-xs md:text-sm uppercase tracking-[0.25em] text-[#d9cdb8]/70 leading-relaxed translate-y-full opacity-0">
+        Scroll downward to trigger multi-axis kinetic typography and spatial project archives.
+      </p>
+    </div>
+  </section>
+
+  <!-- ================= MASTER PINNED SECTION ================= -->
+  <div id="master-pin-wrapper" class="relative w-full">
+    <div id="master-viewport" class="w-screen h-screen overflow-hidden relative">
+
+      <!-- ================= TRACK 1: HORIZONTAL (Overview -> [A] Residential) ================= -->
+      <div id="track-1" class="absolute top-0 left-0 flex flex-nowrap w-[200vw] h-full will-change-transform z-10">
+        
+        <!-- Panel 0: Horizontal Transition Explanation -->
+        <div class="w-screen h-full flex-shrink-0 flex items-center justify-center px-12 lg:px-32 bg-[#12170e] border-r border-[#424934]/30">
+          <div class="max-w-3xl text-center">
+            <span class="font-mono text-xs uppercase tracking-[0.4em] text-[#c2a578] block mb-4">AXIS SHIFT &bull; LATERAL DISPLACEMENT</span>
+            <h2 class="font-syne text-4xl md:text-7xl uppercase text-[#d9cdb8] font-bold leading-tight mb-6">
+              TRANSITIONING <br/><span class="font-italiana italic text-[#c2a578] font-normal">HORIZONTALLY</span>
+            </h2>
+            <p class="font-grotesk text-sm md:text-base text-[#d9cdb8]/60 max-w-md mx-auto leading-relaxed">
+              Directional displacement synchronised with vertical wheel rotation.
+            </p>
+          </div>
+        </div>
+
+        <!-- Panel 1: [A] RESIDENTIAL (2 Projects Added) -->
+        <div class="w-screen h-full flex-shrink-0 flex items-center justify-center px-8 lg:px-16 bg-[#161d12] relative overflow-hidden">
+          <div class="w-full max-w-7xl">
+            <!-- Header Block -->
+            <div class="flex items-center justify-between border-b border-[#424934]/40 pb-4 mb-6">
+              <div class="flex items-center space-x-4">
+                <span class="font-mono text-3xl md:text-5xl text-[#c2a578]">[A]</span>
+                <div class="h-[1px] w-16 bg-[#c2a578]/40"></div>
+                <span class="font-mono text-xs uppercase tracking-[0.3em] text-[#c2a578]">01 &mdash; RESIDENTIAL SANCTUARY</span>
+              </div>
+              <span class="font-cormorant italic text-lg md:text-xl text-[#c2a578] hidden sm:block">"Organic structure evolving with living daylight."</span>
+            </div>
+
+            <!-- Title & Bio -->
+            <div class="grid grid-cols-12 gap-6 items-end mb-6">
+              <div class="col-span-12 lg:col-span-6 text-mask">
+                <h2 id="text-a-heading" class="font-italiana text-5xl md:text-[6.5rem] tracking-tight text-[#d9cdb8] leading-none">
+                  RESIDENTIAL
+                </h2>
+              </div>
+              <div class="col-span-12 lg:col-span-6">
+                <p id="text-a-p" class="font-sans-clean text-xs md:text-sm text-[#d9cdb8]/80 leading-relaxed font-light">
+                  Architectural canopy profiles sculpting natural ambient light. Tailored layout configurations engineered for silence and understated elegance.
+                </p>
+              </div>
+            </div>
+
+            <!-- 2 Projects Grid -->
+            <div class="grid grid-cols-12 gap-6">
+              <!-- Project 1 -->
+              <div class="col-span-12 md:col-span-6 project-card-a group">
+                <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                  <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1000&q=80" 
+                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90" alt="Pokrovskoe Private House" />
+                </div>
+                <div class="flex justify-between items-baseline mt-2 px-1">
+                  <div>
+                    <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Pokrovskoe Private House</h4>
+                    <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Moscow Oblast &bull; Completed 2025</span>
+                  </div>
+                  <span class="font-mono text-xs text-white/80">611 m²</span>
+                </div>
+              </div>
+
+              <!-- Project 2 -->
+              <div class="col-span-12 md:col-span-6 project-card-a group">
+                <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                  <img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1000&q=80" 
+                       class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90" alt="Millennium Private Park" />
+                </div>
+                <div class="flex justify-between items-baseline mt-2 px-1">
+                  <div>
+                    <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Millennium Private Park</h4>
+                    <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Istra Valley &bull; Completed 2026</span>
+                  </div>
+                  <span class="font-mono text-xs text-white/80">1,360 m²</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- ================= PANEL 2: VERTICAL SLIDE UP ([B] INDUSTRIAL - 2 Projects Added) ================= -->
+      <div id="panel-b" class="absolute top-0 left-0 w-screen h-full flex items-center justify-center px-8 lg:px-16 bg-[#0e120b] will-change-transform translate-y-full z-20 border-t border-[#424934]/60 overflow-hidden">
+        <div class="w-full max-w-7xl">
+          <!-- Header Block -->
+          <div class="flex items-center justify-between border-b border-[#424934]/40 pb-4 mb-6">
+            <div class="flex items-center space-x-4">
+              <span class="font-mono text-3xl md:text-5xl text-[#c2a578]">[B]</span>
+              <div class="h-[1px] w-16 bg-[#c2a578]/40"></div>
+              <span class="font-mono text-xs uppercase tracking-[0.3em] text-[#c2a578]">02 &mdash; VERTICAL TRANSIT SHIFT</span>
+            </div>
+            <span class="font-grotesk text-sm text-[#c2a578] uppercase tracking-wider hidden sm:block">0.02 / Monolithic Infrastructure</span>
+          </div>
+
+          <!-- Title & Bio -->
+          <div class="grid grid-cols-12 gap-6 items-end mb-6">
+            <div class="col-span-12 lg:col-span-6 text-mask">
+              <h2 id="text-b-heading" class="font-syne text-5xl md:text-[6.5rem] uppercase font-extrabold tracking-tight text-[#d9cdb8] leading-none">
+                INDUSTRIAL
+              </h2>
+            </div>
+            <div class="col-span-12 lg:col-span-6">
+              <p id="text-b-p" class="font-mono text-xs text-[#d9cdb8]/80 leading-relaxed uppercase tracking-wider">
+                Heavy structural logistics frameworks // Monolithic load distribution portals // High-capacity continuous engineering grids.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2 Projects Grid -->
+          <div class="grid grid-cols-12 gap-6">
+            <!-- Project 1 -->
+            <div class="col-span-12 md:col-span-6 project-card-b group">
+              <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?auto=format&fit=crop&w=1000&q=80" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-85" alt="Nordic Logistics Hub" />
+              </div>
+              <div class="flex justify-between items-baseline mt-2 px-1">
+                <div>
+                  <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Nordic Freight & Automation Port</h4>
+                  <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Rotterdam Sector 4 &bull; Completed 2025</span>
+                </div>
+                <span class="font-mono text-xs text-white/80">48,200 m²</span>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="col-span-12 md:col-span-6 project-card-b group">
+              <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=1000&q=80" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-85" alt="Titan Matrix Terminal" />
+              </div>
+              <div class="flex justify-between items-baseline mt-2 px-1">
+                <div>
+                  <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Titan Matrix Assembly Hub</h4>
+                  <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Frankfurt East &bull; Completed 2026</span>
+                </div>
+                <span class="font-mono text-xs text-white/80">32,500 m²</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PANEL 3: HORIZONTAL SLIDE IN ([C] COMMERCIAL - 2 Projects Added) ================= -->
+      <div id="panel-c" class="absolute top-0 left-0 w-screen h-full flex items-center justify-center px-8 lg:px-16 bg-[#1b2216] will-change-transform translate-x-full z-30 border-l border-[#424934]/60 overflow-hidden">
+        <div class="w-full max-w-7xl">
+          <!-- Header Block -->
+          <div class="flex items-center justify-between border-b border-[#424934]/40 pb-4 mb-6">
+            <div class="flex items-center space-x-4">
+              <span class="font-mono text-3xl md:text-5xl text-[#c2a578]">[C]</span>
+              <div class="h-[1px] w-16 bg-[#c2a578]/40"></div>
+              <span class="font-mono text-xs uppercase tracking-[0.3em] text-[#c2a578]">03 &mdash; LATERAL DISPLACEMENT</span>
+            </div>
+            <span class="font-cormorant italic text-lg md:text-xl text-[#c2a578] hidden sm:block">"Spaces sculpted to accelerate enterprise growth."</span>
+          </div>
+
+          <!-- Title & Bio -->
+          <div class="grid grid-cols-12 gap-6 items-end mb-6">
+            <div class="col-span-12 lg:col-span-6 text-mask">
+              <h2 id="text-c-heading" class="font-cormorant text-5xl md:text-[6.5rem] tracking-tight uppercase text-[#d9cdb8] leading-none">
+                COMMERCIAL
+              </h2>
+            </div>
+            <div class="col-span-12 lg:col-span-6">
+              <p id="text-c-p" class="font-grotesk text-xs md:text-sm text-[#d9cdb8]/80 leading-relaxed font-light">
+                Modern corporate plazas, high-visibility retail pavilions, and contemporary executive towers designed for presence, connectivity, and natural illumination.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2 Projects Grid -->
+          <div class="grid grid-cols-12 gap-6">
+            <!-- Project 1 -->
+            <div class="col-span-12 md:col-span-6 project-card-c group">
+              <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1000&q=80" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90" alt="Apex Financial Tower" />
+              </div>
+              <div class="flex justify-between items-baseline mt-2 px-1">
+                <div>
+                  <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Apex Financial Tower & Plaza</h4>
+                  <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Canary Wharf, London &bull; Completed 2025</span>
+                </div>
+                <span class="font-mono text-xs text-white/80">14,200 m²</span>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="col-span-12 md:col-span-6 project-card-c group">
+              <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                <img src="https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1000&q=80" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90" alt="Solarium Retail Pavilion" />
+              </div>
+              <div class="flex justify-between items-baseline mt-2 px-1">
+                <div>
+                  <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Solarium Glass Pavilion & Headquarters</h4>
+                  <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Milan Design District &bull; Completed 2026</span>
+                </div>
+                <span class="font-mono text-xs text-white/80">8,900 m²</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================= PANEL 4: VERTICAL SLIDE UP ([D] ASSEMBLY - 2 Projects Added) ================= -->
+      <div id="panel-d" class="absolute top-0 left-0 w-screen h-full flex items-center justify-center px-8 lg:px-16 bg-[#0a0d08] will-change-transform translate-y-full z-40 border-t border-[#424934]/60 overflow-hidden">
+        <div class="w-full max-w-7xl">
+          <!-- Header Block -->
+          <div class="flex items-center justify-between border-b border-[#424934]/40 pb-4 mb-6">
+            <div class="flex items-center space-x-4">
+              <span class="font-mono text-3xl md:text-5xl text-[#c2a578]">[D]</span>
+              <div class="h-[1px] w-16 bg-[#c2a578]/40"></div>
+              <span class="font-mono text-xs uppercase tracking-[0.3em] text-[#c2a578]">04 &mdash; TERMINAL ELEVATION</span>
+            </div>
+            <span class="font-italiana text-lg md:text-xl text-[#c2a578] hidden sm:block">"Monumental architecture for collective assembly."</span>
+          </div>
+
+          <!-- Title & Bio -->
+          <div class="grid grid-cols-12 gap-6 items-end mb-6">
+            <div class="col-span-12 lg:col-span-6 text-mask">
+              <h2 id="text-d-heading" class="font-cinzel text-5xl md:text-[6.5rem] uppercase tracking-widest text-[#d9cdb8] leading-none">
+                ASSEMBLY
+              </h2>
+            </div>
+            <div class="col-span-12 lg:col-span-6">
+              <p id="text-d-p" class="font-sans-clean text-xs md:text-sm text-[#d9cdb8]/80 leading-relaxed font-light">
+                Public gathering zones, conference halls, and amphitheatre arenas constructed with precision acoustic design and unified civic ergonomics.
+              </p>
+            </div>
+          </div>
+
+          <!-- 2 Projects Grid -->
+          <div class="grid grid-cols-12 gap-6">
+            <!-- Project 1 -->
+            <div class="col-span-12 md:col-span-6 project-card-d group">
+              <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1000&q=80" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90" alt="Civic Auditorium" />
+              </div>
+              <div class="flex justify-between items-baseline mt-2 px-1">
+                <div>
+                  <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">Kyoto Civic Acoustic Amphitheatre</h4>
+                  <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Higashiyama &bull; Completed 2025</span>
+                </div>
+                <span class="font-mono text-xs text-white/80">6,400 m²</span>
+              </div>
+            </div>
+
+            <!-- Project 2 -->
+            <div class="col-span-12 md:col-span-6 project-card-d group">
+              <div class="w-full h-52 sm:h-64 lg:h-72 overflow-hidden rounded bg-black/40 border border-[#424934]/30 relative">
+                <img src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1000&q=80" 
+                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out opacity-90" alt="National Convention Dome" />
+              </div>
+              <div class="flex justify-between items-baseline mt-2 px-1">
+                <div>
+                  <h4 class="font-grotesk text-sm font-medium text-white tracking-wide">National Convention & Cultural Dome</h4>
+                  <span class="font-mono text-[10px] text-[#c2a578] uppercase tracking-wider">Geneva Lakefront &bull; Completed 2026</span>
+                </div>
+                <span class="font-mono text-xs text-white/80">18,500 m²</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= OUTRO SECTION ================= -->
+  <section class="h-screen flex flex-col items-center justify-center text-center px-6 bg-[#080a06] border-t border-[#424934]/40">
+    <span class="font-mono text-xs uppercase tracking-[0.4em] text-[#c2a578] mb-6">Achyutam Redesign Concept</span>
+    <h2 class="font-syne text-6xl md:text-9xl uppercase font-bold text-[#d9cdb8] leading-none mb-8">
+      SHAPE REALITY
+    </h2>
+    <p class="font-grotesk text-sm uppercase tracking-widest text-[#d9cdb8]/60">
+      Multi-Axis Kinetic Experience Complete
+    </p>
+  </section>
+
+  <!-- ================= GSAP ANIMATION ENGINE ================= -->
+  <script>
+    gsap.registerPlugin(ScrollTrigger);
+
+    // 1. Lenis Smooth Scroll Configuration
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      smoothWheel: true,
+    });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // 2. Hero Section Load Sequence
+    const heroTl = gsap.timeline();
+    heroTl
+      .to(".hero-sub", { y: "0%", opacity: 1, duration: 0.9, ease: "power3.out", delay: 0.2 })
+      .to(".hero-title", { y: "0%", opacity: 1, duration: 1.1, ease: "power4.out" }, "-=0.6")
+      .to(".hero-sub-title", { y: "0%", opacity: 1, duration: 1.1, ease: "power4.out" }, "-=0.8")
+      .to(".hero-desc", { y: "0%", opacity: 1, duration: 0.9, ease: "power3.out" }, "-=0.7");
+
+    // 3. Master Multi-Axis & Kinetic Projects Timeline
+    const stepLabel = document.getElementById("active-step-label");
+    const progressBar = document.getElementById("text-progress-bar");
+
+    const masterTl = gsap.timeline({
+      scrollTrigger: {
+        trigger: "#master-pin-wrapper",
+        start: "top top",
+        end: "+=6000",
+        pin: "#master-viewport",
+        scrub: 1,
+        anticipatePin: 1,
+        onUpdate: (self) => {
+          progressBar.style.width = `${Math.round(self.progress * 100)}%`;
+        }
+      }
+    });
+
+    masterTl
+      // PHASE 1: Slide Track 1 Across Horizontally
+      .to("#track-1", {
+        x: () => -(window.innerWidth),
+        duration: 3,
+        ease: "none",
+        onStart: () => { stepLabel.innerText = "01 / [A] RESIDENTIAL"; }
+      })
+      // Text A Reveal
+      .fromTo("#text-a-heading", 
+        { y: "60%", opacity: 0, filter: "blur(10px)", letterSpacing: "-0.05em" },
+        { y: "0%", opacity: 1, filter: "blur(0px)", letterSpacing: "0em", duration: 1.5, ease: "power2.out" },
+        "-=2"
+      )
+      .fromTo("#text-a-p",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" },
+        "-=1.2"
+      )
+      // Project Cards [A] Stagger Reveal
+      .fromTo(".project-card-a",
+        { opacity: 0, y: 40, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.4, stagger: 0.2, ease: "power3.out" },
+        "-=1.4"
+      )
+
+      // PHASE 2: Slide Panel B Up Vertically
+      .to("#panel-b", {
+        y: "0%",
+        duration: 3,
+        ease: "power2.inOut",
+        onStart: () => { stepLabel.innerText = "02 / [B] INDUSTRIAL"; }
+      })
+      // Text B Kinetic Entrance
+      .fromTo("#text-b-heading",
+        { y: "100%", opacity: 0, scale: 0.95 },
+        { y: "0%", opacity: 1, scale: 1, duration: 1.6, ease: "power3.out" },
+        "-=2"
+      )
+      .fromTo("#text-b-p",
+        { opacity: 0, x: -30 },
+        { opacity: 1, x: 0, duration: 1.2, ease: "power2.out" },
+        "-=1.2"
+      )
+      // Project Cards [B] Stagger Reveal
+      .fromTo(".project-card-b",
+        { opacity: 0, y: 50, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.4, stagger: 0.2, ease: "power3.out" },
+        "-=1.4"
+      )
+
+      // PHASE 3: Slide Panel C In Horizontally
+      .to("#panel-c", {
+        x: "0%",
+        duration: 3,
+        ease: "power2.inOut",
+        onStart: () => { stepLabel.innerText = "03 / [C] COMMERCIAL"; }
+      })
+      // Text C Reveal
+      .fromTo("#text-c-heading",
+        { y: "50%", opacity: 0, filter: "blur(8px)", letterSpacing: "0.1em" },
+        { y: "0%", opacity: 1, filter: "blur(0px)", letterSpacing: "0em", duration: 1.6, ease: "power2.out" },
+        "-=2"
+      )
+      .fromTo("#text-c-p",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" },
+        "-=1.2"
+      )
+      // Project Cards [C] Stagger Reveal
+      .fromTo(".project-card-c",
+        { opacity: 0, y: 40, scale: 0.95 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.4, stagger: 0.2, ease: "power3.out" },
+        "-=1.4"
+      )
+
+      // PHASE 4: Slide Panel D Up Vertically
+      .to("#panel-d", {
+        y: "0%",
+        duration: 3,
+        ease: "power2.inOut",
+        onStart: () => { stepLabel.innerText = "04 / [D] ASSEMBLY"; }
+      })
+      // Text D Monumental Cinematic Entry
+      .fromTo("#text-d-heading",
+        { y: "100%", opacity: 0, letterSpacing: "0.25em" },
+        { y: "0%", opacity: 1, letterSpacing: "0.05em", duration: 1.8, ease: "power3.out" },
+        "-=2"
+      )
+      .fromTo("#text-d-p",
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1.2, ease: "power2.out" },
+        "-=1.2"
+      )
+      // Project Cards [D] Stagger Reveal
+      .fromTo(".project-card-d",
+        { opacity: 0, y: 50, scale: 0.96 },
+        { opacity: 1, y: 0, scale: 1, duration: 1.4, stagger: 0.2, ease: "power3.out" },
+        "-=1.4"
+      );
+  </script>
+</body>
+</html>
