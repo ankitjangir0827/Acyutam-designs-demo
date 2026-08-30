@@ -1,22 +1,24 @@
 {
-  "name": "belgrade-arbor",
+  "name": "achyutam-builder",
   "version": "1.0.0",
-  "description": "Belgrade Arbor - HTML, Tailwind CSS, Vanilla JS & GSAP Rebuild",
-  "main": "index.html",
+  "private": true,
+  "description": "ACHYUTAM BUILDER - Modern Architectural Engineering & Turnkey Construction Web Application",
+  "type": "module",
   "scripts": {
-    "dev": "serve . -l 3000",
-    "start": "serve . -l 3000",
-    "serve": "serve . -l 3000"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "serve": "^14.2.4"
+    "vite": "^5.4.21"
   },
   "keywords": [
-    "belgrade-arbor",
+    "achyutam-builder",
     "gsap",
     "tailwind",
-    "html5"
+    "vite",
+    "architecture"
   ],
-  "author": "",
+  "author": "Ram Gopal Jangir",
   "license": "ISC"
 }

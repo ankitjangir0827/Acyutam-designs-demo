@@ -1,12 +1,9 @@
 @echo off
-title Belgrade Arbor - Local Web Server
+title Achyutam Builder - Vite Development Server
 echo ========================================================
-echo   Launching Belgrade Arbor Website on Local Server...
+echo   Launching Achyutam Builder on Vite Dev Server...
 echo ========================================================
 echo.
-echo Opening browser at http://localhost:3000
-start http://localhost:3000
-echo.
-echo Starting local static server on port 3000...
-npx -y serve . -l 3000
+echo Starting Vite server on http://localhost:3000...
+npm run dev
 pause
